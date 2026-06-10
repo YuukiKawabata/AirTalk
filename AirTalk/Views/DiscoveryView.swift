@@ -1,5 +1,6 @@
 import SwiftUI
 import MultipeerConnectivity
+import PhotosUI
 
 struct DiscoveryView: View {
     @EnvironmentObject var multipeerManager: MultipeerManager
@@ -8,44 +9,32 @@ struct DiscoveryView: View {
     @State private var switchTargetPeerID: MCPeerID?
     @State private var showInvitationAlert = false
     @State private var showDeclinedAlert = false
+    
+    @State private var myProfile: UserProfile?
 
     var body: some View {
         NavigationStack {
-            Group {
-                if multipeerManager.discoveredPeers.isEmpty {
-                    VStack {
-                        Spacer()
-                        Text("周囲にユーザーがいません")
-                            .foregroundColor(.gray)
-                        Spacer()
-                    }
-                } else {
-                    List {
-                        ForEach(multipeerManager.discoveredPeers, id: \.peerID) { peer in
-                            let connected = multipeerManager.connectedPeers.contains(peer.peerID)
-                            let inviting = multipeerManager.invitingPeerID == peer.peerID
-                            ProfileCard(profile: peer.profile, isConnected: connected, isInviting: inviting)
-                                .listRowInsets(EdgeInsets(top: 6, leading: 16, bottom: 6, trailing: 16))
-                                .listRowSeparator(.hidden)
-                                .onTapGesture {
-                                    handlePeerTap(peer.peerID)
-                                }
-                                .transition(.opacity)
-                        }
-                    }
-                    .listStyle(.plain)
-                    .animation(.default, value: multipeerManager.discoveredPeers.map(\.peerID))
-                }
+            ZStack {
+                AuroraBackgroundView(themeColor: ThemeColor(rawValue: myProfile?.themeColor ?? "purple") ?? .purple)
+                
+                RadarView(
+                    peers: multipeerManager.discoveredPeers,
+                    myProfile: myProfile,
+                    permissionDenied: multipeerManager.permissionDenied,
+                    onPeerTap: handlePeerTap
+                )
             }
             .navigationTitle("AirTalk")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbarBackground(.hidden, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         showingProfileEditor = true
                     } label: {
                         Image(systemName: "gear")
-                            .symbolRenderingMode(.monochrome)
+                            .font(.system(size: 20, weight: .semibold))
+                            .foregroundColor(.primary)
                     }
                 }
             }
@@ -54,9 +43,15 @@ struct DiscoveryView: View {
                     .environmentObject(multipeerManager)
             }
         }
+        .onAppear {
+            myProfile = UserProfile.load()
+        }
         .sheet(isPresented: $showingProfileEditor) {
             ProfileEditorSheet()
                 .environmentObject(multipeerManager)
+                .onDisappear {
+                    myProfile = UserProfile.load()
+                }
         }
         .alert("チャット相手を切り替えますか？", isPresented: $showSwitchAlert) {
             Button("切り替える") {
@@ -120,6 +115,160 @@ extension MCPeerID: @retroactive Identifiable {
     public var id: String { displayName }
 }
 
+// MARK: - Avatar View (Helper)
+struct AvatarView: View {
+    let profile: UserProfile?
+    let size: CGFloat
+    let themeColor: Color
+    
+    var body: some View {
+        Group {
+            if let data = profile?.imageData, let uiImage = UIImage(data: data) {
+                Image(uiImage: uiImage)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: size, height: size)
+                    .clipShape(Circle())
+            } else {
+                Image(systemName: profile?.iconID ?? "person.fill")
+                    .font(.system(size: size * 0.45))
+                    .frame(width: size, height: size)
+                    .background(.ultraThinMaterial)
+                    .clipShape(Circle())
+            }
+        }
+        .overlay(
+            Circle().stroke(themeColor, lineWidth: 2)
+        )
+        .shadow(color: themeColor.opacity(0.3), radius: size * 0.15)
+    }
+}
+
+// MARK: - Radar View
+
+struct RadarView: View {
+    let peers: [DiscoveredPeer]
+    let myProfile: UserProfile?
+    var permissionDenied: Bool = false
+    let onPeerTap: (MCPeerID) -> Void
+
+    @State private var rippleScale: CGFloat = 0.5
+    @State private var rippleOpacity: Double = 1.0
+
+    var body: some View {
+        GeometryReader { geometry in
+            let center = CGPoint(x: geometry.size.width / 2, y: geometry.size.height / 2)
+
+            ZStack {
+                // Ripple Effects
+                ForEach(0..<3) { i in
+                    Circle()
+                        .stroke(Color.primary.opacity(0.2), lineWidth: 1)
+                        .scaleEffect(rippleScale + CGFloat(i) * 0.5)
+                        .opacity(rippleOpacity - Double(i) * 0.3)
+                }
+
+                // My Avatar in Center
+                VStack(spacing: 8) {
+                    let theme = ThemeColor(rawValue: myProfile?.themeColor ?? "purple")?.color ?? .purple
+                    AvatarView(profile: myProfile, size: 64, themeColor: theme)
+
+                    Text("あなた")
+                        .font(.caption)
+                        .fontWeight(.bold)
+                }
+                .position(center)
+                .zIndex(10)
+
+                // 状態メッセージ（権限拒否 / 探索中）— ピアがいない時のみ
+                if peers.isEmpty {
+                    statusOverlay
+                        .position(x: center.x, y: geometry.size.height - 80)
+                        .zIndex(20)
+                }
+
+                // Peers
+                ForEach(Array(peers.enumerated()), id: \.element.peerID) { index, peer in
+                    let angle = Double(index) * (360.0 / Double(peers.count == 0 ? 1 : peers.count))
+                    let radius = geometry.size.width * 0.35
+                    let position = getPosition(center: center, radius: radius, angle: angle)
+                    let theme = ThemeColor(rawValue: peer.profile.themeColor) ?? .purple
+                    
+                    VStack(spacing: 8) {
+                        AvatarView(profile: peer.profile, size: 56, themeColor: theme.color)
+                        
+                        Text(peer.profile.name)
+                            .font(.caption)
+                            .bold()
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 4)
+                            .background(.ultraThinMaterial)
+                            .cornerRadius(8)
+                    }
+                    .position(position)
+                    .onTapGesture {
+                        onPeerTap(peer.peerID)
+                    }
+                    .transition(.scale.combined(with: .opacity))
+                }
+            }
+            .animation(.spring(response: 0.5, dampingFraction: 0.7), value: peers.map(\.peerID))
+            .onAppear {
+                withAnimation(.linear(duration: 2.0).repeatForever(autoreverses: false)) {
+                    rippleScale = 1.5
+                    rippleOpacity = 0.0
+                }
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private var statusOverlay: some View {
+        if permissionDenied {
+            VStack(spacing: 12) {
+                Image(systemName: "wifi.slash")
+                    .font(.title2)
+                Text("近くのデバイスに接続できません")
+                    .font(.subheadline.weight(.semibold))
+                Text("「設定」でローカルネットワークと\nBluetoothの許可をオンにしてください")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+                Button {
+                    if let url = URL(string: UIApplication.openSettingsURLString) {
+                        UIApplication.shared.open(url)
+                    }
+                } label: {
+                    Text("設定を開く")
+                        .font(.caption.weight(.semibold))
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(.ultraThinMaterial, in: Capsule())
+                }
+            }
+            .padding(20)
+            .frame(maxWidth: 300)
+            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 20))
+        } else {
+            HStack(spacing: 8) {
+                ProgressView()
+                Text("周囲のユーザーを探しています…")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 10)
+            .background(.ultraThinMaterial, in: Capsule())
+        }
+    }
+
+    private func getPosition(center: CGPoint, radius: CGFloat, angle: Double) -> CGPoint {
+        let x = center.x + radius * CGFloat(cos(angle * .pi / 180))
+        let y = center.y + radius * CGFloat(sin(angle * .pi / 180))
+        return CGPoint(x: x, y: y)
+    }
+}
+
 // MARK: - Profile Editor Sheet
 
 struct ProfileEditorSheet: View {
@@ -129,6 +278,11 @@ struct ProfileEditorSheet: View {
     @State private var name: String = ""
     @State private var status: String = ""
     @State private var selectedIconID: String = "person.fill"
+    @State private var selectedTheme: ThemeColor = .purple
+    
+    // カスタム画像用
+    @State private var selectedPhotoItem: PhotosPickerItem?
+    @State private var customImageData: Data?
 
     private let iconOptions = [
         "person.fill", "star.fill", "flame.fill", "heart.fill", "bolt.fill",
@@ -137,54 +291,131 @@ struct ProfileEditorSheet: View {
 
     var body: some View {
         NavigationStack {
-            VStack(spacing: 20) {
-                TextField("ニックネーム", text: $name)
-                    .textFieldStyle(.plain)
-                    .padding()
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 0)
-                            .stroke(Color.primary, lineWidth: 1)
-                    )
+            ZStack {
+                AuroraBackgroundView(themeColor: selectedTheme)
+                
+                VStack(spacing: 24) {
+                    // 名前の入力
+                    TextField("ニックネーム", text: $name)
+                        .textFieldStyle(.plain)
+                        .padding()
+                        .background(.ultraThinMaterial)
+                        .cornerRadius(16)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 16)
+                                .stroke(Color.primary.opacity(0.1), lineWidth: 1)
+                        )
 
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 16) {
-                        ForEach(iconOptions, id: \.self) { iconID in
-                            Image(systemName: iconID)
-                                .font(.title2)
-                                .frame(width: 48, height: 48)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 0)
-                                        .stroke(Color.primary, lineWidth: selectedIconID == iconID ? 2 : 1)
-                                )
-                                .background(selectedIconID == iconID ? Color.primary.opacity(0.1) : Color.clear)
-                                .onTapGesture {
-                                    selectedIconID = iconID
+                    // アイコン選択 & カスタム画像
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 16) {
+                            // PhotosPicker
+                            PhotosPicker(selection: $selectedPhotoItem, matching: .images, photoLibrary: .shared()) {
+                                if let data = customImageData, let uiImage = UIImage(data: data) {
+                                    Image(uiImage: uiImage)
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(width: 56, height: 56)
+                                        .clipShape(Circle())
+                                        .overlay(
+                                            Circle().stroke(selectedIconID.isEmpty ? selectedTheme.color : Color.clear, lineWidth: selectedIconID.isEmpty ? 2 : 0)
+                                        )
+                                } else {
+                                    Image(systemName: "photo.badge.plus")
+                                        .font(.title2)
+                                        .frame(width: 56, height: 56)
+                                        .background(.ultraThinMaterial)
+                                        .cornerRadius(16)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 16)
+                                                .stroke(Color.primary.opacity(0.1), lineWidth: 1)
+                                        )
+                                        .foregroundColor(.primary)
                                 }
+                            }
+                            .onChange(of: selectedPhotoItem) { _, newItem in
+                                Task {
+                                    if let data = try? await newItem?.loadTransferable(type: Data.self),
+                                       let image = UIImage(data: data) {
+                                        await MainActor.run {
+                                            customImageData = image.compressedThumbnailData()
+                                            selectedIconID = "" // カスタム画像選択時はシステムアイコン選択を解除
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            ForEach(iconOptions, id: \.self) { iconID in
+                                Image(systemName: iconID)
+                                    .font(.title2)
+                                    .frame(width: 56, height: 56)
+                                    .background(selectedIconID == iconID ? selectedTheme.color.opacity(0.2) : Color.clear)
+                                    .background(.ultraThinMaterial)
+                                    .cornerRadius(16)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 16)
+                                            .stroke(selectedIconID == iconID ? selectedTheme.color : Color.primary.opacity(0.1), lineWidth: selectedIconID == iconID ? 2 : 1)
+                                    )
+                                    .onTapGesture {
+                                        withAnimation { 
+                                            selectedIconID = iconID 
+                                            customImageData = nil
+                                            selectedPhotoItem = nil
+                                        }
+                                    }
+                            }
                         }
+                        .padding(.horizontal, 4)
+                        .padding(.vertical, 4)
                     }
-                    .padding(.horizontal, 1)
+
+                    // テーマカラー選択
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 16) {
+                            ForEach(ThemeColor.allCases) { theme in
+                                Circle()
+                                    .fill(theme.color)
+                                    .frame(width: 44, height: 44)
+                                    .overlay(
+                                        Circle()
+                                            .stroke(Color.primary, lineWidth: selectedTheme == theme ? 3 : 0)
+                                            .padding(-4)
+                                    )
+                                    .onTapGesture {
+                                        withAnimation { selectedTheme = theme }
+                                    }
+                            }
+                        }
+                        .padding(.horizontal, 4)
+                        .padding(.vertical, 8)
+                    }
+
+                    // ステータス入力
+                    TextField("ひとこと", text: $status)
+                        .textFieldStyle(.plain)
+                        .padding()
+                        .background(.ultraThinMaterial)
+                        .cornerRadius(16)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 16)
+                                .stroke(Color.primary.opacity(0.1), lineWidth: 1)
+                        )
+                    
+                    Spacer()
                 }
-
-                TextField("ひとこと", text: $status)
-                    .textFieldStyle(.plain)
-                    .padding()
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 0)
-                            .stroke(Color.primary, lineWidth: 1)
-                    )
-
-                Spacer()
+                .padding()
+                .padding(.top, 20)
             }
-            .padding()
             .navigationTitle("プロフィール編集")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbarBackground(.hidden, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("キャンセル") { dismiss() }
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("保存") {
-                        let profile = UserProfile(name: name, status: status, iconID: selectedIconID)
+                        let profile = UserProfile(name: name, status: status, iconID: selectedIconID, themeColor: selectedTheme.rawValue, imageData: customImageData)
                         profile.save()
                         multipeerManager.updateProfile(profile)
                         dismiss()
@@ -198,6 +429,10 @@ struct ProfileEditorSheet: View {
                 name = profile.name
                 status = profile.status
                 selectedIconID = profile.iconID
+                customImageData = profile.imageData
+                if let theme = ThemeColor(rawValue: profile.themeColor) {
+                    selectedTheme = theme
+                }
             }
         }
     }

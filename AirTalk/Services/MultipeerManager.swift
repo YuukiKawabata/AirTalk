@@ -16,6 +16,10 @@ class MultipeerManager: NSObject, ObservableObject {
     @Published var pendingInvitation: (peerID: MCPeerID, name: String)?
     @Published var invitingPeerID: MCPeerID?
     @Published var declinedByPeerName: String?
+    /// 接続確立後に相手から受信したフルプロフィール（画像含む）。発見時の軽量プロフィールを上書きする。
+    @Published var connectedPeerProfiles: [MCPeerID: UserProfile] = [:]
+    /// ローカルネットワーク／Bluetooth 権限が拒否され、広告・探索を開始できなかった状態。
+    @Published var permissionDenied = false
     private(set) var isRunning = false
 
     private var myPeerID: MCPeerID?
@@ -54,6 +58,7 @@ class MultipeerManager: NSObject, ObservableObject {
 
     func start() {
         guard myPeerID != nil else { return }
+        permissionDenied = false
         advertiser?.startAdvertisingPeer()
         browser?.startBrowsingForPeers()
         isRunning = true
@@ -86,10 +91,11 @@ class MultipeerManager: NSObject, ObservableObject {
 
     func send(text: String, to peerID: MCPeerID) {
         guard let myProfile = myProfile else { return }
+        let trimmed = String(text.prefix(AirMessage.maxTextLength))
         let message = AirMessage(
             id: UUID(),
             sender: myProfile.name,
-            text: text,
+            text: trimmed,
             timestamp: Date(),
             isMe: true
         )
@@ -98,8 +104,30 @@ class MultipeerManager: NSObject, ObservableObject {
         }
         messages[peerID]?.append(message)
 
-        guard let data = try? JSONEncoder().encode(message) else { return }
-        try? session?.send(data, toPeers: [peerID], with: .reliable)
+        sendPacket(.message(message), to: peerID)
+    }
+
+    func sendReaction(_ reaction: String, for messageID: UUID, to peerID: MCPeerID) {
+        let event = ReactionEvent(messageID: messageID, reaction: reaction)
+
+        // ローカル側のメッセージも更新する
+        if let index = messages[peerID]?.firstIndex(where: { $0.id == messageID }) {
+            messages[peerID]?[index].reaction = reaction
+        }
+
+        sendPacket(.reaction(event), to: peerID)
+    }
+
+    /// 接続確立後、自分のフルプロフィール（画像含む）を相手に送る。
+    private func sendProfile(to peerID: MCPeerID) {
+        guard let myProfile = myProfile else { return }
+        sendPacket(.profile(myProfile), to: peerID)
+    }
+
+    private func sendPacket(_ packet: NetworkPacket, to peerID: MCPeerID) {
+        guard let session = session, session.connectedPeers.contains(peerID) else { return }
+        guard let data = try? JSONEncoder().encode(packet) else { return }
+        try? session.send(data, toPeers: [peerID], with: .reliable)
     }
 
     func disconnect(from peerID: MCPeerID) {
@@ -136,6 +164,7 @@ class MultipeerManager: NSObject, ObservableObject {
         stop()
         messages.removeAll()
         connectedPeers.removeAll()
+        connectedPeerProfiles.removeAll()
         discoveredPeers.removeAll()
         activeChatPeerID = nil
         invitingPeerID = nil
@@ -172,10 +201,13 @@ extension MultipeerManager: MCSessionDelegate {
                 self.activeChatPeerID = peerID
                 // チャット中は他のユーザーから見えないようにする
                 self.advertiser?.stopAdvertisingPeer()
+                // 自分のフルプロフィール（画像含む）を相手に送る
+                self.sendProfile(to: peerID)
             case .notConnected:
                 let wasInChat = self.activeChatPeerID == peerID
                 self.messages[peerID] = []
                 self.connectedPeers.removeAll { $0 == peerID }
+                self.connectedPeerProfiles[peerID] = nil
                 if self.invitingPeerID == peerID {
                     self.declinedByPeerName = peerID.displayName
                     self.invitingPeerID = nil
@@ -200,19 +232,36 @@ extension MultipeerManager: MCSessionDelegate {
     }
 
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
-        guard let message = try? JSONDecoder().decode(AirMessage.self, from: data) else { return }
-        let receivedMessage = AirMessage(
-            id: message.id,
-            sender: message.sender,
-            text: message.text,
-            timestamp: message.timestamp,
-            isMe: false
-        )
+        guard let packet = try? JSONDecoder().decode(NetworkPacket.self, from: data) else { return }
+
         DispatchQueue.main.async {
-            if self.messages[peerID] == nil {
-                self.messages[peerID] = []
+            switch packet {
+            case .reaction(let event):
+                if let index = self.messages[peerID]?.firstIndex(where: { $0.id == event.messageID }) {
+                    self.messages[peerID]?[index].reaction = event.reaction
+                }
+
+            case .message(let message):
+                let receivedMessage = AirMessage(
+                    id: message.id,
+                    sender: message.sender,
+                    text: message.text,
+                    timestamp: message.timestamp,
+                    isMe: false,
+                    reaction: message.reaction
+                )
+                if self.messages[peerID] == nil {
+                    self.messages[peerID] = []
+                }
+                self.messages[peerID]?.append(receivedMessage)
+
+            case .profile(let profile):
+                // 相手のフルプロフィール（画像含む）を保存し、発見時の軽量情報を上書き
+                self.connectedPeerProfiles[peerID] = profile
+                if let index = self.discoveredPeers.firstIndex(where: { $0.peerID == peerID }) {
+                    self.discoveredPeers[index] = DiscoveredPeer(peerID: peerID, profile: profile)
+                }
             }
-            self.messages[peerID]?.append(receivedMessage)
         }
     }
 
@@ -240,6 +289,13 @@ extension MultipeerManager: MCNearbyServiceBrowserDelegate {
             self.discoveredPeers.removeAll { $0.peerID == peerID }
         }
     }
+
+    // 探索を開始できなかった（多くはローカルネットワーク権限拒否）
+    func browser(_ browser: MCNearbyServiceBrowser, didNotStartBrowsingForPeers error: Error) {
+        DispatchQueue.main.async {
+            self.permissionDenied = true
+        }
+    }
 }
 
 // MARK: - MCNearbyServiceAdvertiserDelegate
@@ -249,6 +305,13 @@ extension MultipeerManager: MCNearbyServiceAdvertiserDelegate {
         DispatchQueue.main.async {
             self.pendingInvitationHandler = invitationHandler
             self.pendingInvitation = (peerID: peerID, name: peerID.displayName)
+        }
+    }
+
+    // 広告を開始できなかった（多くはローカルネットワーク権限拒否）
+    func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didNotStartAdvertisingPeer error: Error) {
+        DispatchQueue.main.async {
+            self.permissionDenied = true
         }
     }
 }
