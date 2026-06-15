@@ -3,6 +3,7 @@ import SwiftUI
 struct MessageBubble: View {
     let message: AirMessage
     var onReaction: ((AirMessage, String) -> Void)?
+    var onReport: ((AirMessage) -> Void)?
 
     @State private var showReactionPicker = false
     private let reactions = ["❤️", "👍", "😂", "😮", "😢", "👏"]
@@ -32,6 +33,15 @@ struct MessageBubble: View {
                                 if !message.isMe {
                                     withAnimation {
                                         showReactionPicker.toggle()
+                                    }
+                                }
+                            }
+                            .contextMenu {
+                                if !message.isMe {
+                                    Button(role: .destructive) {
+                                        onReport?(message)
+                                    } label: {
+                                        Label("メッセージを通報", systemImage: "flag.fill")
                                     }
                                 }
                             }

@@ -25,6 +25,36 @@ xcodebuild -project AirTalk.xcodeproj -scheme AirTalk -showdestinations
 
 現時点でユニットテストは存在しない。手動テストのみ。
 
+## デモモード & App Store スクショ生成
+
+P2P アプリのため実機2台がないとレーダー／チャット画面を再現できない。シミュレータ単体で
+見栄えの良いスクショを撮るためのデモモードを用意している（`AirTalk/Demo/`）。
+
+- 起動引数 `-demo YES` で有効化（本番ビルドには無影響）。`-demoScene <scene>` で画面を選択。
+  - scene: `discovery`（レーダー）/ `invite`（チャットリクエスト着信）/ `chat`（会話）/ `onboarding`（初回設定）
+- 注入する架空データは `Demo/DemoData.swift` に集約（自分のプロフィール・周囲のピア・会話・招待主）。
+- 手動撮影例: `xcrun simctl launch <UDID> com.yuuki.AirTalk -demo YES -demoScene chat`
+
+### 一括生成パイプライン
+
+`./docs/capture-screenshots.sh` で iPhone と iPad の各4画面を撮影し、キャッチコピー付きの
+App Store パネルまで生成する。
+
+- 生スクショ → `docs/screenshots/raw/<device>/`（`iphone` / `ipad`。端末そのままの画像）
+- マーケティングパネル → `docs/screenshots/store/<device>/`（コピー＋端末フレーム＋グラデ背景。これを審査提出）
+- 出力解像度（`make-store-panels.swift` の `deviceClasses` で定義・変更可）:
+  - iPhone: **1284×2778px**（6.5 インチ枠。他に 1242×2688 等も可）
+  - iPad: **2048×2732px**（12.9 インチ枠。他に 2064×2752 等も可）
+  - 端末スクショは縦横比を保ったままキャンバスに収めるので、撮影機種が変わってもサイズは一定。
+  - iPad はレイアウト係数（`deviceWidthFrac`/`deviceTopFrac`/`cornerFrac`）を別に持つ。
+    特に角丸（`cornerFrac`）は小さめ（0.035）にしないと iPad のステータスバー隅が削れて見切れる。
+- 機種変更: `IPHONE="iPhone 17 Pro" IPAD="iPad Pro 13-inch (M5)" ./docs/capture-screenshots.sh`
+- パネルだけ作り直す: `swift docs/make-store-panels.swift`
+- コピー文言・配色は `docs/make-store-panels.swift` 冒頭の `panels` 配列で編集する。
+
+注意: `xcodebuild -showBuildSettings` は `-sdk iphonesimulator` を付けないと実機パスを返し、
+シミュレータ起動が SBMainWorkspace に拒否される（スクリプトでは対応済み）。
+
 ## アーキテクチャ
 
 ### MVVM + EnvironmentObject パターン

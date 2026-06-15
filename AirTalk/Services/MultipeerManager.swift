@@ -20,6 +20,7 @@ class MultipeerManager: NSObject, ObservableObject {
     @Published var connectedPeerProfiles: [MCPeerID: UserProfile] = [:]
     /// ローカルネットワーク／Bluetooth 権限が拒否され、広告・探索を開始できなかった状態。
     @Published var permissionDenied = false
+    @Published private(set) var blockedPeerNames: Set<String> = MultipeerManager.loadBlockedPeerNames()
     private(set) var isRunning = false
 
     private var myPeerID: MCPeerID?
@@ -28,6 +29,7 @@ class MultipeerManager: NSObject, ObservableObject {
     private var browser: MCNearbyServiceBrowser?
     private var myProfile: UserProfile?
     private var pendingInvitationHandler: ((Bool, MCSession?) -> Void)?
+    private static let blockedPeerNamesKey = "blockedPeerNames"
 
     override init() {
         super.init()
@@ -89,6 +91,10 @@ class MultipeerManager: NSObject, ObservableObject {
         pendingInvitation = nil
     }
 
+    func isBlocked(_ peerID: MCPeerID) -> Bool {
+        blockedPeerNames.contains(peerID.displayName)
+    }
+
     func send(text: String, to peerID: MCPeerID) {
         guard let myProfile = myProfile else { return }
         let trimmed = String(text.prefix(AirMessage.maxTextLength))
@@ -133,6 +139,7 @@ class MultipeerManager: NSObject, ObservableObject {
     func disconnect(from peerID: MCPeerID) {
         messages[peerID] = []
         connectedPeers.removeAll { $0 == peerID }
+        connectedPeerProfiles[peerID] = nil
         if activeChatPeerID == peerID {
             activeChatPeerID = nil
         }
@@ -146,6 +153,7 @@ class MultipeerManager: NSObject, ObservableObject {
         if let peer = activeChatPeerID {
             messages[peer] = []
             connectedPeers.removeAll { $0 == peer }
+            connectedPeerProfiles[peer] = nil
         }
         activeChatPeerID = nil
         // セッション切断 → 相手にも .notConnected が通知される
@@ -160,6 +168,19 @@ class MultipeerManager: NSObject, ObservableObject {
         advertiser?.startAdvertisingPeer()
     }
 
+    func block(_ peerID: MCPeerID) {
+        blockedPeerNames.insert(peerID.displayName)
+        Self.saveBlockedPeerNames(blockedPeerNames)
+        removePeerState(peerID)
+        session?.disconnect()
+        if let myPeerID = myPeerID {
+            let newSession = MCSession(peer: myPeerID, securityIdentity: nil, encryptionPreference: .required)
+            newSession.delegate = self
+            self.session = newSession
+        }
+        advertiser?.startAdvertisingPeer()
+    }
+
     func clearAll() {
         stop()
         messages.removeAll()
@@ -168,8 +189,85 @@ class MultipeerManager: NSObject, ObservableObject {
         discoveredPeers.removeAll()
         activeChatPeerID = nil
         invitingPeerID = nil
+        declinedByPeerName = nil
         pendingInvitation = nil
         pendingInvitationHandler = nil
+    }
+
+    func deleteLocalAccountData() {
+        clearAll()
+        UserProfile.delete()
+        blockedPeerNames.removeAll()
+        Self.saveBlockedPeerNames(blockedPeerNames)
+        myProfile = nil
+        myPeerID = nil
+        session = nil
+        advertiser = nil
+        browser = nil
+        permissionDenied = false
+    }
+
+    private func removePeerState(_ peerID: MCPeerID) {
+        discoveredPeers.removeAll { $0.peerID == peerID || $0.profile.name == peerID.displayName }
+        messages[peerID] = []
+        connectedPeers.removeAll { $0 == peerID }
+        connectedPeerProfiles[peerID] = nil
+        if activeChatPeerID == peerID {
+            activeChatPeerID = nil
+        }
+        if invitingPeerID == peerID {
+            invitingPeerID = nil
+        }
+        if pendingInvitation?.peerID == peerID {
+            pendingInvitationHandler?(false, nil)
+            pendingInvitationHandler = nil
+            pendingInvitation = nil
+        }
+    }
+
+    private static func loadBlockedPeerNames() -> Set<String> {
+        let names = UserDefaults.standard.stringArray(forKey: blockedPeerNamesKey) ?? []
+        return Set(names)
+    }
+
+    private static func saveBlockedPeerNames(_ names: Set<String>) {
+        UserDefaults.standard.set(Array(names).sorted(), forKey: blockedPeerNamesKey)
+    }
+
+    // MARK: - Demo Mode
+
+    /// スクショ撮影用にデモデータを注入する。実ネットワークは起動せず、架空のピア・会話を表示する。
+    /// 本番ビルドでは `DemoMode.isEnabled` が false のため呼ばれない。
+    func loadDemoData(scene: DemoMode.Scene) {
+        // 実ネットワークが動いていれば止めて、状態をクリーンにする
+        stop()
+        myProfile = DemoData.myProfile
+        myPeerID = MCPeerID(displayName: DemoData.myProfile.name)
+
+        // レーダーに並べる架空のピア
+        let peers = DemoData.discoveredPeers()
+        discoveredPeers = peers
+
+        switch scene {
+        case .chat:
+            // チャット相手を「接続済み」状態にして、会話とプロフィールを注入する
+            guard let partner = peers.first else { return }
+            let partnerID = partner.peerID
+            connectedPeers = [partnerID]
+            connectedPeerProfiles[partnerID] = partner.profile
+            messages[partnerID] = DemoData.chatMessages(partnerName: partner.profile.name)
+            activeChatPeerID = partnerID
+
+        case .invite:
+            // 誰かからチャットリクエストが届いた瞬間を再現する
+            let inviter = peers.first(where: { $0.profile.name == DemoData.inviterName }) ?? peers.first
+            if let inviter = inviter {
+                pendingInvitation = (peerID: inviter.peerID, name: inviter.profile.name)
+            }
+
+        case .discovery, .onboarding:
+            break
+        }
     }
 
     func updateProfile(_ profile: UserProfile) {
@@ -193,6 +291,11 @@ extension MultipeerManager: MCSessionDelegate {
         DispatchQueue.main.async {
             switch state {
             case .connected:
+                if self.isBlocked(peerID) {
+                    session.disconnect()
+                    self.removePeerState(peerID)
+                    return
+                }
                 if !self.connectedPeers.contains(peerID) {
                     self.connectedPeers.append(peerID)
                 }
@@ -232,6 +335,7 @@ extension MultipeerManager: MCSessionDelegate {
     }
 
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
+        guard !Self.loadBlockedPeerNames().contains(peerID.displayName) else { return }
         guard let packet = try? JSONDecoder().decode(NetworkPacket.self, from: data) else { return }
 
         DispatchQueue.main.async {
@@ -276,6 +380,10 @@ extension MultipeerManager: MCNearbyServiceBrowserDelegate {
     func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String: String]?) {
         guard let info = info, let profile = UserProfile.from(discoveryInfo: info) else { return }
         DispatchQueue.main.async {
+            guard !self.isBlocked(peerID) && !self.blockedPeerNames.contains(profile.name) else {
+                self.discoveredPeers.removeAll { $0.peerID == peerID || $0.profile.name == profile.name }
+                return
+            }
             if let index = self.discoveredPeers.firstIndex(where: { $0.peerID == peerID }) {
                 self.discoveredPeers[index] = DiscoveredPeer(peerID: peerID, profile: profile)
             } else {
@@ -302,6 +410,10 @@ extension MultipeerManager: MCNearbyServiceBrowserDelegate {
 
 extension MultipeerManager: MCNearbyServiceAdvertiserDelegate {
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
+        guard !Self.loadBlockedPeerNames().contains(peerID.displayName) else {
+            invitationHandler(false, nil)
+            return
+        }
         DispatchQueue.main.async {
             self.pendingInvitationHandler = invitationHandler
             self.pendingInvitation = (peerID: peerID, name: peerID.displayName)

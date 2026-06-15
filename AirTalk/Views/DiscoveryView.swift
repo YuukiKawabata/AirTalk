@@ -44,7 +44,15 @@ struct DiscoveryView: View {
             }
         }
         .onAppear {
-            myProfile = UserProfile.load()
+            myProfile = DemoMode.isEnabled ? DemoData.myProfile : UserProfile.load()
+            if DemoMode.isEnabled {
+                // デモデータを注入（レーダー／チャット／着信）
+                multipeerManager.loadDemoData(scene: DemoMode.scene)
+                // 着信シーンはリクエストのアラートを確実に表示する
+                if DemoMode.scene == .invite {
+                    showInvitationAlert = true
+                }
+            }
         }
         .sheet(isPresented: $showingProfileEditor) {
             ProfileEditorSheet()
@@ -274,11 +282,15 @@ struct RadarView: View {
 struct ProfileEditorSheet: View {
     @EnvironmentObject var multipeerManager: MultipeerManager
     @Environment(\.dismiss) private var dismiss
+    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
+    @AppStorage("hasAcceptedEULA") private var hasAcceptedEULA = false
 
     @State private var name: String = ""
     @State private var status: String = ""
     @State private var selectedIconID: String = "person.fill"
     @State private var selectedTheme: ThemeColor = .purple
+    @State private var showDeleteConfirm = false
+    @State private var showDeleteComplete = false
     
     // カスタム画像用
     @State private var selectedPhotoItem: PhotosPickerItem?
@@ -400,6 +412,25 @@ struct ProfileEditorSheet: View {
                             RoundedRectangle(cornerRadius: 16)
                                 .stroke(Color.primary.opacity(0.1), lineWidth: 1)
                         )
+
+                    Divider()
+                        .padding(.vertical, 4)
+
+                    VStack(alignment: .leading, spacing: 10) {
+                        Button(role: .destructive) {
+                            showDeleteConfirm = true
+                        } label: {
+                            Label("アカウントを削除", systemImage: "trash")
+                                .font(.headline)
+                                .frame(maxWidth: .infinity)
+                                .padding()
+                                .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16))
+                        }
+
+                        Text("プロフィール、ブロックリスト、現在の会話など、この端末内のAirTalkデータを完全に削除します。AirTalkはサーバーアカウントを作成しません。")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
                     
                     Spacer()
                 }
@@ -434,6 +465,24 @@ struct ProfileEditorSheet: View {
                     selectedTheme = theme
                 }
             }
+        }
+        .alert("アカウントを削除しますか？", isPresented: $showDeleteConfirm) {
+            Button("削除", role: .destructive) {
+                multipeerManager.deleteLocalAccountData()
+                showDeleteComplete = true
+            }
+            Button("キャンセル", role: .cancel) {}
+        } message: {
+            Text("プロフィールとローカルデータを完全に削除します。この操作は取り消せません。")
+        }
+        .alert("アカウント削除が完了しました", isPresented: $showDeleteComplete) {
+            Button("OK") {
+                hasAcceptedEULA = false
+                hasCompletedOnboarding = false
+                dismiss()
+            }
+        } message: {
+            Text("端末内のプロフィールとAirTalkデータを削除しました。")
         }
     }
 }

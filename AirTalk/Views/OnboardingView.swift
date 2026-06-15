@@ -4,11 +4,14 @@ import PhotosUI
 struct OnboardingView: View {
     @Binding var hasCompletedOnboarding: Bool
     @EnvironmentObject var multipeerManager: MultipeerManager
+    @AppStorage("hasAcceptedEULA") private var hasAcceptedEULA = false
 
     @State private var name = ""
     @State private var status = ""
     @State private var selectedIconID = "person.fill"
     @State private var selectedTheme: ThemeColor = .purple
+    @State private var hasCheckedEULA = false
+    @State private var showingTerms = false
     
     // カスタム画像用
     @State private var selectedPhotoItem: PhotosPickerItem?
@@ -139,10 +142,34 @@ struct OnboardingView: View {
                 }
                 .padding(.horizontal, 24)
 
+                VStack(spacing: 12) {
+                    Toggle(isOn: $hasCheckedEULA) {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("利用規約 / EULA に同意します")
+                                .font(.subheadline.weight(.semibold))
+                            Text("不適切な内容や迷惑行為を許容しないポリシーを含みます。")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                    .toggleStyle(.checkboxLike(theme: selectedTheme.color))
+
+                    Button {
+                        showingTerms = true
+                    } label: {
+                        Text("利用規約を確認")
+                            .font(.caption.weight(.semibold))
+                            .underline()
+                    }
+                    .foregroundColor(.primary)
+                }
+                .padding(.horizontal, 24)
+
                 Button {
                     let profile = UserProfile(name: name, status: status, iconID: selectedIconID, themeColor: selectedTheme.rawValue, imageData: customImageData)
                     profile.save()
                     multipeerManager.updateProfile(profile)
+                    hasAcceptedEULA = true
                     hasCompletedOnboarding = true
                 } label: {
                     Text("はじめる")
@@ -154,12 +181,64 @@ struct OnboardingView: View {
                         .cornerRadius(16)
                         .shadow(color: selectedTheme.color.opacity(0.5), radius: 10, x: 0, y: 5)
                 }
-                .disabled(name.trimmingCharacters(in: .whitespaces).isEmpty)
-                .opacity(name.trimmingCharacters(in: .whitespaces).isEmpty ? 0.4 : 1.0)
+                .disabled(name.trimmingCharacters(in: .whitespaces).isEmpty || !hasCheckedEULA)
+                .opacity(name.trimmingCharacters(in: .whitespaces).isEmpty || !hasCheckedEULA ? 0.4 : 1.0)
                 .padding(.horizontal, 24)
 
                 Spacer()
             }
         }
+        .onAppear {
+            // スクショ撮影用: 空フォームではなくデモプロフィールを入れて見栄えを良くする
+            if DemoMode.isEnabled {
+                let demo = DemoData.myProfile
+                name = demo.name
+                status = demo.status
+                selectedIconID = demo.iconID
+                selectedTheme = ThemeColor(rawValue: demo.themeColor) ?? .purple
+                hasCheckedEULA = true
+            } else if let profile = UserProfile.load(), name.isEmpty {
+                name = profile.name
+                status = profile.status
+                selectedIconID = profile.iconID
+                selectedTheme = ThemeColor(rawValue: profile.themeColor) ?? .purple
+                customImageData = profile.imageData
+            }
+        }
+        .sheet(isPresented: $showingTerms) {
+            TermsOfUseView()
+        }
+    }
+}
+
+private struct CheckboxToggleStyle: ToggleStyle {
+    let tint: Color
+
+    func makeBody(configuration: Configuration) -> some View {
+        Button {
+            configuration.isOn.toggle()
+        } label: {
+            HStack(alignment: .top, spacing: 12) {
+                Image(systemName: configuration.isOn ? "checkmark.square.fill" : "square")
+                    .font(.title3)
+                    .foregroundColor(configuration.isOn ? tint : .secondary)
+                configuration.label
+                    .foregroundColor(.primary)
+                Spacer(minLength: 0)
+            }
+            .padding(14)
+            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16))
+            .overlay(
+                RoundedRectangle(cornerRadius: 16)
+                    .stroke(Color.primary.opacity(0.1), lineWidth: 1)
+            )
+        }
+        .buttonStyle(.plain)
+    }
+}
+
+private extension ToggleStyle where Self == CheckboxToggleStyle {
+    static func checkboxLike(theme: Color) -> CheckboxToggleStyle {
+        CheckboxToggleStyle(tint: theme)
     }
 }

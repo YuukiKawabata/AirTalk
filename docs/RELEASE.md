@@ -50,7 +50,8 @@ App Store 提出に必要な情報・手順をまとめる。`docs/SPEC.md` が�
 
 ### サポートURL / マーケティングURL
 
-- 要準備（GitHub Pages か簡易LPで可）。プライバシーポリシーページも用意すると審査がスムーズ。
+- **サポートURL**: https://yuukikawabata.github.io/airwish-support/
+- サポート、プライバシーポリシー、利用規約（UGC無許容ポリシー）、アカウント削除手順を1ページに収録。
 
 ---
 
@@ -81,7 +82,14 @@ MultipeerConnectivity は **シミュレータでは安定動作せず、物理�
 >
 > On first launch, iOS will ask for **Local Network** and **Bluetooth** permission — both must be allowed for discovery to work.
 >
-> No account or login is required. No data is collected or sent to any server.
+> No server-side account or login is required. Users create only a local profile on their device. No data is collected or sent to our server.
+>
+> Safety / UGC controls:
+> - On first launch, users must agree to the EULA before creating their local profile.
+> - The EULA states that AirTalk has no tolerance for objectionable content or abusive users.
+> - Users can long-press an incoming chat message and choose "メッセージを通報" to report objectionable content.
+> - Users can open the chat menu and choose "このユーザーをブロックして通報" to block an abusive user. Blocking immediately removes the chat/user from the app and opens a prefilled report email to notify the developer.
+> - Users can delete their local AirTalk account/profile from the gear icon → "アカウントを削除" → confirm → completion screen.
 
 ### デモアカウント
 
@@ -121,7 +129,7 @@ MultipeerConnectivity は **シミュレータでは安定動作せず、物理�
 
 ## 6. リリース前チェックリスト
 
-- [ ] `MARKETING_VERSION` / `CURRENT_PROJECT_VERSION` を確認（現状 1.0 / 1）
+- [ ] `MARKETING_VERSION` / `CURRENT_PROJECT_VERSION` を確認（現状 1.0 / 3）
 - [ ] Bundle ID `com.yuuki.AirTalk` で App Store Connect にアプリ登録
 - [ ] 配布用 App Icon が 1024×1024（アルファなし）であることを確認
 - [ ] 実機2台で発見 → 接続 → 送受信 → 切断（自動消去）を通しでテスト

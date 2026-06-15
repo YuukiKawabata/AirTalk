@@ -1,5 +1,6 @@
 import SwiftUI
 import MultipeerConnectivity
+import UIKit
 
 struct ChatView: View {
     let peerID: MCPeerID
@@ -9,6 +10,8 @@ struct ChatView: View {
     @State private var showDisconnectBanner = false
     @State private var dismissTask: Task<Void, Never>?
     @State private var myProfile: UserProfile?
+    @State private var reportTargetMessage: AirMessage?
+    @State private var showBlockAlert = false
 
     private var isConnected: Bool {
         multipeerManager.connectedPeers.contains(peerID)
@@ -39,6 +42,31 @@ struct ChatView: View {
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
     }
 
+    private func openReportMail(kind: SafetyReportKind, message: AirMessage? = nil) {
+        guard let url = SafetyReport.mailURL(
+            kind: kind,
+            peerID: peerID,
+            message: message,
+            recentMessages: peerMessages
+        ) else { return }
+        UIApplication.shared.open(url)
+    }
+
+    private func blockAndReportPeer() {
+        let recentMessages = peerMessages
+        multipeerManager.block(peerID)
+        if let url = SafetyReport.mailURL(
+            kind: .block,
+            peerID: peerID,
+            message: nil,
+            recentMessages: recentMessages
+        ) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                UIApplication.shared.open(url)
+            }
+        }
+    }
+
     var body: some View {
         NavigationStack {
             ZStack {
@@ -60,9 +88,15 @@ struct ChatView: View {
                         ScrollView {
                             LazyVStack(spacing: 12) {
                                 ForEach(peerMessages) { message in
-                                    MessageBubble(message: message) { msg, reaction in
-                                        multipeerManager.sendReaction(reaction, for: msg.id, to: peerID)
-                                    }
+                                    MessageBubble(
+                                        message: message,
+                                        onReaction: { msg, reaction in
+                                            multipeerManager.sendReaction(reaction, for: msg.id, to: peerID)
+                                        },
+                                        onReport: { msg in
+                                            reportTargetMessage = msg
+                                        }
+                                    )
                                     .id(message.id)
                                     .transition(.scale.combined(with: .opacity))
                                 }
@@ -142,24 +176,38 @@ struct ChatView: View {
                     }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    HStack(spacing: 6) {
-                        Circle()
-                            .fill(isConnected ? Color.green : Color.gray)
-                            .frame(width: 8, height: 8)
-                            .shadow(color: isConnected ? Color.green.opacity(0.5) : .clear, radius: 4)
-                        Text(isConnected ? "Connected" : "Disconnected")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
+                    HStack(spacing: 8) {
+                        HStack(spacing: 6) {
+                            Circle()
+                                .fill(isConnected ? Color.green : Color.gray)
+                                .frame(width: 8, height: 8)
+                                .shadow(color: isConnected ? Color.green.opacity(0.5) : .clear, radius: 4)
+                            Text(isConnected ? "Connected" : "Disconnected")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 4)
+                        .background(.ultraThinMaterial)
+                        .clipShape(Capsule())
+
+                        Menu {
+                            Button(role: .destructive) {
+                                showBlockAlert = true
+                            } label: {
+                                Label("このユーザーをブロックして通報", systemImage: "hand.raised.fill")
+                            }
+                        } label: {
+                            Image(systemName: "ellipsis.circle")
+                                .font(.system(size: 20, weight: .semibold))
+                                .foregroundColor(.primary)
+                        }
                     }
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 4)
-                    .background(.ultraThinMaterial)
-                    .clipShape(Capsule())
                 }
             }
         }
         .onAppear {
-            myProfile = UserProfile.load()
+            myProfile = DemoMode.isEnabled ? DemoData.myProfile : UserProfile.load()
         }
         .onChange(of: isConnected) { _, connected in
             if !connected && !showDisconnectBanner {
@@ -177,6 +225,30 @@ struct ChatView: View {
         }
         .onDisappear {
             dismissTask?.cancel()
+        }
+        .alert("メッセージを通報しますか？", isPresented: Binding(
+            get: { reportTargetMessage != nil },
+            set: { if !$0 { reportTargetMessage = nil } }
+        )) {
+            Button("通報する", role: .destructive) {
+                if let message = reportTargetMessage {
+                    openReportMail(kind: .message, message: message)
+                }
+                reportTargetMessage = nil
+            }
+            Button("キャンセル", role: .cancel) {
+                reportTargetMessage = nil
+            }
+        } message: {
+            Text("開発者へ不適切な内容を通知するメール作成画面を開きます。")
+        }
+        .alert("このユーザーをブロックしますか？", isPresented: $showBlockAlert) {
+            Button("ブロックして通報", role: .destructive) {
+                blockAndReportPeer()
+            }
+            Button("キャンセル", role: .cancel) {}
+        } message: {
+            Text("このユーザーとの会話をすぐに削除し、今後レーダーと招待に表示しません。開発者へ通報メールも作成します。")
         }
     }
 }

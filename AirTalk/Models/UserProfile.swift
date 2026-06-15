@@ -44,4 +44,8 @@ struct UserProfile: Codable {
               let profile = try? JSONDecoder().decode(UserProfile.self, from: data) else { return nil }
         return profile
     }
+
+    static func delete() {
+        UserDefaults.standard.removeObject(forKey: Self.key)
+    }
 }
