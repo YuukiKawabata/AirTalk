@@ -21,7 +21,8 @@ struct DiscoveryView: View {
                     peers: multipeerManager.discoveredPeers,
                     myProfile: myProfile,
                     permissionDenied: multipeerManager.permissionDenied,
-                    onPeerTap: handlePeerTap
+                    onPeerTap: handlePeerTap,
+                    onRescan: { multipeerManager.restartDiscovery() }
                 )
             }
             .navigationTitle("AirTalk")
@@ -159,9 +160,16 @@ struct RadarView: View {
     let myProfile: UserProfile?
     var permissionDenied: Bool = false
     let onPeerTap: (MCPeerID) -> Void
+    var onRescan: () -> Void = {}
 
     @State private var rippleScale: CGFloat = 0.5
     @State private var rippleOpacity: Double = 1.0
+    /// 一定時間ピアが見つからないときに「近くに誰もいない」案内へ切り替えるフラグ。
+    /// 永久に回り続けるスピナーが「ハング」に見えるのを避けるための表示制御。
+    @State private var searchTimedOut = false
+
+    /// この秒数ピアが0件のままなら、探索中スピナーから空状態案内へ切り替える。
+    private let noPeersTimeout: Duration = .seconds(12)
 
     var body: some View {
         GeometryReader { geometry in
@@ -227,6 +235,19 @@ struct RadarView: View {
                     rippleOpacity = 0.0
                 }
             }
+            // ピアの有無が変わるたびにタイマーをリセットする。
+            // 0件のまま noPeersTimeout 経過したら空状態案内へ切り替える。
+            .task(id: peers.isEmpty) {
+                guard peers.isEmpty else {
+                    searchTimedOut = false
+                    return
+                }
+                searchTimedOut = false
+                try? await Task.sleep(for: noPeersTimeout)
+                if !Task.isCancelled {
+                    searchTimedOut = true
+                }
+            }
         }
     }
     
@@ -248,6 +269,31 @@ struct RadarView: View {
                     }
                 } label: {
                     Text("設定を開く")
+                        .font(.caption.weight(.semibold))
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(.ultraThinMaterial, in: Capsule())
+                }
+            }
+            .padding(20)
+            .frame(maxWidth: 300)
+            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 20))
+        } else if searchTimedOut {
+            // 近くに誰もいない状態。探索は継続中だがハングに見えないよう案内を出す。
+            VStack(spacing: 12) {
+                Image(systemName: "person.2.slash")
+                    .font(.title2)
+                Text("近くにAirTalkユーザーがいません")
+                    .font(.subheadline.weight(.semibold))
+                Text("AirTalkは半径50m以内にいる相手とつながります。\n2台以上の端末で近くにいる人とお試しください。")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+                Button {
+                    searchTimedOut = false
+                    onRescan()
+                } label: {
+                    Label("もう一度さがす", systemImage: "arrow.clockwise")
                         .font(.caption.weight(.semibold))
                         .padding(.horizontal, 16)
                         .padding(.vertical, 8)

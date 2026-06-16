@@ -73,6 +73,18 @@ class MultipeerManager: NSObject, ObservableObject {
         isRunning = false
     }
 
+    /// 探索／広告を再起動する。ピアが見つからないときに UI から手動で叩く。
+    /// 探索中であることをユーザーが能動的に確認できるようにし、「固まっている」印象を避ける。
+    func restartDiscovery() {
+        guard isRunning else { return }
+        permissionDenied = false
+        browser?.stopBrowsingForPeers()
+        advertiser?.stopAdvertisingPeer()
+        discoveredPeers.removeAll()
+        browser?.startBrowsingForPeers()
+        advertiser?.startAdvertisingPeer()
+    }
+
     func invitePeer(_ peerID: MCPeerID) {
         guard let session = session else { return }
         invitingPeerID = peerID
