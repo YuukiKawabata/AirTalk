@@ -32,7 +32,7 @@ struct TermsOfUseView: View {
 
                     section(
                         title: "5. Support",
-                        body: "Questions, abuse reports, and support requests can be sent to \(SafetyPolicy.supportEmail). Support information is available at \(SafetyPolicy.supportURL.absoluteString)."
+                        body: "Questions, abuse reports, and support requests can be sent to \(SafetyPolicy.supportEmail). Support information is available at \(SafetyPolicy.supportURL.absoluteString). Terms of Use: \(SafetyPolicy.termsURL.absoluteString). Privacy Policy: \(SafetyPolicy.privacyURL.absoluteString)."
                     )
 
                     Text("Last updated: June 13, 2026")

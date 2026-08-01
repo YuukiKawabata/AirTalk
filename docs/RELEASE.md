@@ -35,12 +35,15 @@ App Store 提出に必要な情報・手順をまとめる。`docs/SPEC.md` が�
 > ・カフェやコワーキングで近くの人と
 > ・旅先で同じ宿の人と
 >
-> 名乗って、話して、離れたら忘れる。AirTalk は、その場かぎりの軽やかな出会いのためのアプリです。
+> 名乗って、話して、離れたら忘れる。AirTalk は、その場かぎりの軽やかな会話のためのアプリです。
+>
+> 利用規約（EULA）: https://yuukikawabata.github.io/airwish-support/#terms
+> プライバシーポリシー: https://yuukikawabata.github.io/airwish-support/#privacy
 
 ### キーワード（100字以内・カンマ区切り）
 
 ```
-近く,チャット,P2P,オフライン,匿名,一期一会,ローカル,すれ違い,Bluetooth,イベント,会話,プライバシー
+近距離,チャット,P2P,オフライン,ローカル通信,Bluetooth,Wi-Fi,イベント,会話,プライバシー,サーバーレス
 ```
 
 ### カテゴリ
@@ -52,6 +55,40 @@ App Store 提出に必要な情報・手順をまとめる。`docs/SPEC.md` が�
 
 - **サポートURL**: https://yuukikawabata.github.io/airwish-support/
 - サポート、プライバシーポリシー、利用規約（UGC無許容ポリシー）、アカウント削除手順を1ページに収録。
+
+### AirTalk Plus / サブスクリプション
+
+| 項目 | 値 |
+|------|-----|
+| グループ | `AirTalk Plus` (`22193555`) |
+| 月額 | `com.yuuki.AirTalk.plus.monthly` (`6785129209`) / 300円基準 |
+| 年額 | `com.yuuki.AirTalk.plus.yearly` (`6785129341`) / 2,900円基準 |
+| 導入オファー | 月額のみ 1週間無料トライアル |
+| 提供国 | 全 App Store 地域（基準テリトリ: 日本 `JPN`） |
+| 審査用スクリーンショット | `docs/screenshots/raw/iphone/05-paywall-review.jpg` |
+
+AirTalk Plus は任意のプロフィール表現機能のみを解放する。近くのユーザー発見、招待、1対1チャット、通報、ブロックは無料のまま維持する。
+
+ASC のサブスクリプション設定を再作成/確認する場合:
+
+```bash
+node scripts/asc/setup-subscriptions.mjs
+node scripts/asc/configure-subscription-commerce.mjs
+node scripts/asc/configure-subscription-equalized-prices.mjs
+swift docs/make-subscription-review-screenshot.swift
+node scripts/asc/upload-subscription-review-screenshots.mjs docs/screenshots/raw/iphone/05-paywall-review.jpg 6785129209 6785129341
+```
+
+プロモーション画像を更新する場合:
+
+```bash
+sips -z 1024 1024 -s format jpeg docs/screenshots/raw/iphone/05-paywall-review.jpg --out docs/screenshots/raw/iphone/05-paywall-promo.jpg
+node scripts/asc/upload-subscription-images.mjs docs/screenshots/raw/iphone/05-paywall-promo.jpg 6785129209
+```
+
+> 2026-06-28 時点で、月額のプロモーション画像は登録済み。年額のプロモーション画像は Apple API が `500 UNEXPECTED_ERROR` を返すため未登録だが、プロモーション画像は審査用スクリーンショットとは別枠。
+>
+> 2026-06-29 時点で、サブスクリプション2商品は全地域価格・提供地域・日本語ローカライズ・審査用スクリーンショットまで設定済みで `READY_TO_SUBMIT`。初回サブスクリプションは Apple の公開 API ではアプリバージョン提出 item に直接追加できないため、App Store Connect Web UI 側で 1.2 の提出にサブスクリプションを追加する必要がある。
 
 ---
 
@@ -83,6 +120,8 @@ MultipeerConnectivity は **シミュレータでは安定動作せず、物理�
 > On first launch, iOS will ask for **Local Network** and **Bluetooth** permission — both must be allowed for discovery to work.
 >
 > No server-side account or login is required. Users create only a local profile on their device. No data is collected or sent to our server.
+>
+> AirTalk Plus is an optional auto-renewable subscription. It unlocks profile presentation features only: Host badge, profile frames, saved profile presets, icebreakers, extra reactions, and premium profile themes. Nearby discovery, chat requests, one-to-one chat, reporting, and blocking remain available for free.
 >
 > Safety / UGC controls:
 > - On first launch, users must agree to the EULA before creating their local profile.
@@ -129,7 +168,7 @@ MultipeerConnectivity は **シミュレータでは安定動作せず、物理�
 
 ## 6. リリース前チェックリスト
 
-- [ ] `MARKETING_VERSION` / `CURRENT_PROJECT_VERSION` を確認（現状 1.0 / 3）
+- [x] `MARKETING_VERSION` / `CURRENT_PROJECT_VERSION` を確認（AirTalk Plus は 1.2 / 7）
 - [ ] Bundle ID `com.yuuki.AirTalk` で App Store Connect にアプリ登録
 - [ ] 配布用 App Icon が 1024×1024（アルファなし）であることを確認
 - [ ] 実機2台で発見 → 接続 → 送受信 → 切断（自動消去）を通しでテスト
@@ -139,6 +178,8 @@ MultipeerConnectivity は **シミュレータでは安定動作せず、物理�
 - [ ] Archive → Validate → App Store Connect へアップロード
 - [ ] App Privacy「データを収集していません」を選択
 - [ ] 審査メモに「物理デバイス2台必須」を記載（§3）
+- [x] `1.2(7)` はアップロード済み。App Store version 1.2 に Build 7 を紐づけ済み（`PREPARE_FOR_SUBMISSION`）
+- [ ] サブスクリプション2商品は `READY_TO_SUBMIT`。初回サブスクリプション同時提出は App Store Connect Web UI で 1.2 の提出に追加する
 
 ---
 
@@ -146,5 +187,5 @@ MultipeerConnectivity は **シミュレータでは安定動作せず、物理�
 
 - **バックグラウンドで接続維持不可**: iOS の制約。仕様として受容（離れたら終わり）。
 - **同名ユーザーの区別**: 現状 displayName のみ。将来、識別子の付加を検討。
-- **ブロック/通報機能**: 現状なし。招待は手動承認制（知らない相手を拒否可能）だが、Apple ガイドライン 1.2（UGC）対応として、将来的に通報・ブロックの導入を検討（審査で求められる可能性あり）。
+- **初回サブスクリプション提出**: 月額・年額とも `READY_TO_SUBMIT` だが、Apple 公開 API の `reviewSubmissionItems` はサブスクリプションを relationship として受け付けない。App Store Connect Web UI 側で 1.2 提出に追加する。
 - **テキストのみ**: 画像・スタンプ送信は未対応。

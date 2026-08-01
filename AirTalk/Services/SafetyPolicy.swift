@@ -4,6 +4,8 @@ import MultipeerConnectivity
 enum SafetyPolicy {
     static let supportEmail = "kakabata.man@gmail.com"
     static let supportURL = URL(string: "https://yuukikawabata.github.io/airwish-support/")!
+    static let privacyURL = URL(string: "https://yuukikawabata.github.io/airwish-support/#privacy")!
+    static let termsURL = URL(string: "https://yuukikawabata.github.io/airwish-support/#terms")!
 }
 
 enum SafetyReportKind {

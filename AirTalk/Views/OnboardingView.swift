@@ -111,7 +111,7 @@ struct OnboardingView: View {
                     // テーマカラー選択
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 16) {
-                            ForEach(ThemeColor.allCases) { theme in
+                            ForEach(AirTalkPlus.freeThemes) { theme in
                                 Circle()
                                     .fill(theme.color)
                                     .frame(width: 44, height: 44)

@@ -4,6 +4,7 @@ import PhotosUI
 
 struct DiscoveryView: View {
     @EnvironmentObject var multipeerManager: MultipeerManager
+    @EnvironmentObject var purchaseManager: PurchaseManager
     @State private var showingProfileEditor = false
     @State private var showSwitchAlert = false
     @State private var switchTargetPeerID: MCPeerID?
@@ -42,6 +43,7 @@ struct DiscoveryView: View {
             .fullScreenCover(item: $multipeerManager.activeChatPeerID) { peerID in
                 ChatView(peerID: peerID)
                     .environmentObject(multipeerManager)
+                    .environmentObject(purchaseManager)
             }
         }
         .onAppear {
@@ -58,6 +60,7 @@ struct DiscoveryView: View {
         .sheet(isPresented: $showingProfileEditor) {
             ProfileEditorSheet()
                 .environmentObject(multipeerManager)
+                .environmentObject(purchaseManager)
                 .onDisappear {
                     myProfile = UserProfile.load()
                 }
@@ -129,6 +132,14 @@ struct AvatarView: View {
     let profile: UserProfile?
     let size: CGFloat
     let themeColor: Color
+
+    private var frame: ProfileFrame {
+        ProfileFrame(rawValue: profile?.profileFrameID ?? ProfileFrame.none.rawValue) ?? .none
+    }
+
+    private var ringColor: Color {
+        frame == .none ? themeColor : frame.color
+    }
     
     var body: some View {
         Group {
@@ -147,9 +158,30 @@ struct AvatarView: View {
             }
         }
         .overlay(
-            Circle().stroke(themeColor, lineWidth: 2)
+            Circle().stroke(ringColor, lineWidth: frame == .none ? 2 : 3)
         )
-        .shadow(color: themeColor.opacity(0.3), radius: size * 0.15)
+        .overlay {
+            if frame != .none {
+                Circle()
+                    .stroke(Color.white.opacity(0.7), lineWidth: 1)
+                    .padding(-5)
+            }
+        }
+        .shadow(color: ringColor.opacity(0.35), radius: size * 0.18)
+    }
+}
+
+struct HostBadge: View {
+    var body: some View {
+        Text("HOST")
+            .font(.system(size: 9, weight: .black))
+            .foregroundColor(.primary)
+            .padding(.horizontal, 6)
+            .padding(.vertical, 3)
+            .background(.ultraThinMaterial, in: Capsule())
+            .overlay(
+                Capsule().stroke(Color.primary.opacity(0.16), lineWidth: 1)
+            )
     }
 }
 
@@ -189,9 +221,14 @@ struct RadarView: View {
                     let theme = ThemeColor(rawValue: myProfile?.themeColor ?? "purple")?.color ?? .purple
                     AvatarView(profile: myProfile, size: 64, themeColor: theme)
 
-                    Text("あなた")
-                        .font(.caption)
-                        .fontWeight(.bold)
+                    VStack(spacing: 4) {
+                        Text("あなた")
+                            .font(.caption)
+                            .fontWeight(.bold)
+                        if myProfile?.isHostBadgeEnabled == true {
+                            HostBadge()
+                        }
+                    }
                 }
                 .position(center)
                 .zIndex(10)
@@ -213,13 +250,18 @@ struct RadarView: View {
                     VStack(spacing: 8) {
                         AvatarView(profile: peer.profile, size: 56, themeColor: theme.color)
                         
-                        Text(peer.profile.name)
-                            .font(.caption)
-                            .bold()
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 4)
-                            .background(.ultraThinMaterial)
-                            .cornerRadius(8)
+                        VStack(spacing: 4) {
+                            Text(peer.profile.name)
+                                .font(.caption)
+                                .bold()
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 4)
+                                .background(.ultraThinMaterial)
+                                .cornerRadius(8)
+                            if peer.profile.isHostBadgeEnabled {
+                                HostBadge()
+                            }
+                        }
                     }
                     .position(position)
                     .onTapGesture {
@@ -327,6 +369,7 @@ struct RadarView: View {
 
 struct ProfileEditorSheet: View {
     @EnvironmentObject var multipeerManager: MultipeerManager
+    @EnvironmentObject var purchaseManager: PurchaseManager
     @Environment(\.dismiss) private var dismiss
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
     @AppStorage("hasAcceptedEULA") private var hasAcceptedEULA = false
@@ -335,8 +378,12 @@ struct ProfileEditorSheet: View {
     @State private var status: String = ""
     @State private var selectedIconID: String = "person.fill"
     @State private var selectedTheme: ThemeColor = .purple
+    @State private var isHostBadgeEnabled = false
+    @State private var selectedFrame: ProfileFrame = .none
+    @State private var savedPresets: [ProfilePreset] = []
     @State private var showDeleteConfirm = false
     @State private var showDeleteComplete = false
+    @State private var showingPaywall = false
     
     // カスタム画像用
     @State private var selectedPhotoItem: PhotosPickerItem?
@@ -352,17 +399,18 @@ struct ProfileEditorSheet: View {
             ZStack {
                 AuroraBackgroundView(themeColor: selectedTheme)
                 
-                VStack(spacing: 24) {
-                    // 名前の入力
-                    TextField("ニックネーム", text: $name)
-                        .textFieldStyle(.plain)
-                        .padding()
-                        .background(.ultraThinMaterial)
-                        .cornerRadius(16)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 16)
-                                .stroke(Color.primary.opacity(0.1), lineWidth: 1)
-                        )
+                ScrollView {
+                    VStack(spacing: 24) {
+                        // 名前の入力
+                        TextField("ニックネーム", text: $name)
+                            .textFieldStyle(.plain)
+                            .padding()
+                            .background(.ultraThinMaterial)
+                            .cornerRadius(16)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 16)
+                                    .stroke(Color.primary.opacity(0.1), lineWidth: 1)
+                            )
 
                     // アイコン選択 & カスタム画像
                     ScrollView(.horizontal, showsIndicators: false) {
@@ -431,17 +479,30 @@ struct ProfileEditorSheet: View {
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 16) {
                             ForEach(ThemeColor.allCases) { theme in
-                                Circle()
-                                    .fill(theme.color)
-                                    .frame(width: 44, height: 44)
-                                    .overlay(
-                                        Circle()
-                                            .stroke(Color.primary, lineWidth: selectedTheme == theme ? 3 : 0)
-                                            .padding(-4)
-                                    )
-                                    .onTapGesture {
-                                        withAnimation { selectedTheme = theme }
+                                let isLocked = AirTalkPlus.isPremiumTheme(theme) && !purchaseManager.isPlusActive
+                                ZStack {
+                                    Circle()
+                                        .fill(theme.color)
+                                        .frame(width: 44, height: 44)
+                                        .opacity(isLocked ? 0.45 : 1)
+                                    if isLocked {
+                                        Image(systemName: "lock.fill")
+                                            .font(.caption.weight(.bold))
+                                            .foregroundColor(.primary)
                                     }
+                                }
+                                .overlay(
+                                    Circle()
+                                        .stroke(Color.primary, lineWidth: selectedTheme == theme ? 3 : 0)
+                                        .padding(-4)
+                                )
+                                .onTapGesture {
+                                    guard !isLocked else {
+                                        showingPaywall = true
+                                        return
+                                    }
+                                    withAnimation { selectedTheme = theme }
+                                }
                             }
                         }
                         .padding(.horizontal, 4)
@@ -458,6 +519,8 @@ struct ProfileEditorSheet: View {
                             RoundedRectangle(cornerRadius: 16)
                                 .stroke(Color.primary.opacity(0.1), lineWidth: 1)
                         )
+
+                    plusSection
 
                     Divider()
                         .padding(.vertical, 4)
@@ -478,10 +541,10 @@ struct ProfileEditorSheet: View {
                             .foregroundColor(.secondary)
                     }
                     
-                    Spacer()
+                    }
+                    .padding()
+                    .padding(.top, 20)
                 }
-                .padding()
-                .padding(.top, 20)
             }
             .navigationTitle("プロフィール編集")
             .navigationBarTitleDisplayMode(.inline)
@@ -492,7 +555,7 @@ struct ProfileEditorSheet: View {
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("保存") {
-                        let profile = UserProfile(name: name, status: status, iconID: selectedIconID, themeColor: selectedTheme.rawValue, imageData: customImageData)
+                        let profile = buildProfileForSave()
                         profile.save()
                         multipeerManager.updateProfile(profile)
                         dismiss()
@@ -507,9 +570,25 @@ struct ProfileEditorSheet: View {
                 status = profile.status
                 selectedIconID = profile.iconID
                 customImageData = profile.imageData
+                isHostBadgeEnabled = purchaseManager.isPlusActive && profile.isHostBadgeEnabled
+                selectedFrame = purchaseManager.isPlusActive ? profile.selectedFrame : .none
                 if let theme = ThemeColor(rawValue: profile.themeColor) {
-                    selectedTheme = theme
+                    selectedTheme = purchaseManager.isPlusActive || !AirTalkPlus.isPremiumTheme(theme) ? theme : .purple
                 }
+            }
+            savedPresets = ProfilePresetStore.load()
+        }
+        .sheet(isPresented: $showingPaywall) {
+            PaywallView()
+                .environmentObject(purchaseManager)
+        }
+        .onChange(of: purchaseManager.isPlusActive) { _, isPlusActive in
+            if !isPlusActive {
+                if AirTalkPlus.isPremiumTheme(selectedTheme) {
+                    selectedTheme = .purple
+                }
+                isHostBadgeEnabled = false
+                selectedFrame = .none
             }
         }
         .alert("アカウントを削除しますか？", isPresented: $showDeleteConfirm) {
@@ -530,5 +609,180 @@ struct ProfileEditorSheet: View {
         } message: {
             Text("端末内のプロフィールとAirTalkデータを削除しました。")
         }
+    }
+
+    private var plusSection: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            HStack {
+                Label("AirTalk Plus", systemImage: "sparkles")
+                    .font(.headline)
+                Spacer()
+                if purchaseManager.isPlusActive {
+                    Text("有効")
+                        .font(.caption.weight(.semibold))
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 4)
+                        .background(.ultraThinMaterial, in: Capsule())
+                } else {
+                    Button("詳細") {
+                        showingPaywall = true
+                    }
+                    .font(.caption.weight(.semibold))
+                }
+            }
+
+            if purchaseManager.isPlusActive {
+                Toggle(isOn: $isHostBadgeEnabled) {
+                    Label("Hostバッジ", systemImage: "person.crop.circle.badge.checkmark")
+                }
+                .toggleStyle(.switch)
+
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("フレーム")
+                        .font(.subheadline.weight(.semibold))
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 10) {
+                            ForEach(ProfileFrame.allCases) { frame in
+                                Button {
+                                    selectedFrame = frame
+                                } label: {
+                                    VStack(spacing: 6) {
+                                        Circle()
+                                            .stroke(frame == .none ? Color.primary.opacity(0.25) : frame.color, lineWidth: 3)
+                                            .frame(width: 34, height: 34)
+                                            .overlay {
+                                                if selectedFrame == frame {
+                                                    Image(systemName: "checkmark")
+                                                        .font(.caption.weight(.bold))
+                                                }
+                                            }
+                                        Text(frame.displayName)
+                                            .font(.caption2.weight(.semibold))
+                                    }
+                                    .padding(10)
+                                    .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 14))
+                                }
+                                .buttonStyle(.plain)
+                            }
+                        }
+                        .padding(.vertical, 2)
+                    }
+                }
+
+                VStack(alignment: .leading, spacing: 8) {
+                    HStack {
+                        Text("プリセット")
+                            .font(.subheadline.weight(.semibold))
+                        Spacer()
+                        Button {
+                            saveCurrentPreset()
+                        } label: {
+                            Label("保存", systemImage: "plus")
+                                .font(.caption.weight(.semibold))
+                        }
+                        .disabled(name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                    }
+
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 10) {
+                            ForEach(savedPresets) { preset in
+                                Button {
+                                    applyPreset(preset)
+                                } label: {
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        Text(preset.name)
+                                            .font(.caption.weight(.bold))
+                                            .lineLimit(1)
+                                        Text(preset.status.isEmpty ? "ひとことなし" : preset.status)
+                                            .font(.caption2)
+                                            .foregroundColor(.secondary)
+                                            .lineLimit(1)
+                                    }
+                                    .frame(width: 120, alignment: .leading)
+                                    .padding(10)
+                                    .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 14))
+                                }
+                                .buttonStyle(.plain)
+                                .contextMenu {
+                                    Button(role: .destructive) {
+                                        deletePreset(preset)
+                                    } label: {
+                                        Label("削除", systemImage: "trash")
+                                    }
+                                }
+                            }
+
+                            if savedPresets.isEmpty {
+                                Text("未保存")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                                    .padding(.vertical, 10)
+                            }
+                        }
+                        .padding(.vertical, 2)
+                    }
+                }
+            } else {
+                Button {
+                    showingPaywall = true
+                } label: {
+                    HStack {
+                        Image(systemName: "lock.fill")
+                        Text("Hostバッジ、フレーム、プリセットを使う")
+                            .font(.subheadline.weight(.semibold))
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .font(.caption.weight(.bold))
+                    }
+                    .padding()
+                    .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16))
+                }
+                .buttonStyle(.plain)
+            }
+        }
+        .padding()
+        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 18))
+    }
+
+    private func buildProfileForSave() -> UserProfile {
+        let profile = UserProfile(
+            name: name.trimmingCharacters(in: .whitespacesAndNewlines),
+            status: status.trimmingCharacters(in: .whitespacesAndNewlines),
+            iconID: selectedIconID,
+            themeColor: selectedTheme.rawValue,
+            imageData: customImageData,
+            isHostBadgeEnabled: isHostBadgeEnabled,
+            profileFrameID: selectedFrame.rawValue
+        )
+
+        return purchaseManager.isPlusActive ? profile : profile.removingPlusFeatures()
+    }
+
+    private func saveCurrentPreset() {
+        let preset = ProfilePreset(profile: buildProfileForSave())
+        var next = savedPresets.filter {
+            $0.name != preset.name || $0.status != preset.status || $0.iconID != preset.iconID
+        }
+        next.insert(preset, at: 0)
+        ProfilePresetStore.save(next)
+        savedPresets = ProfilePresetStore.load()
+    }
+
+    private func applyPreset(_ preset: ProfilePreset) {
+        let profile = purchaseManager.isPlusActive ? preset.profile : preset.profile.removingPlusFeatures()
+        name = profile.name
+        status = profile.status
+        selectedIconID = profile.iconID
+        selectedTheme = profile.selectedTheme
+        customImageData = profile.imageData
+        isHostBadgeEnabled = profile.isHostBadgeEnabled
+        selectedFrame = profile.selectedFrame
+        selectedPhotoItem = nil
+    }
+
+    private func deletePreset(_ preset: ProfilePreset) {
+        let next = savedPresets.filter { $0.id != preset.id }
+        ProfilePresetStore.save(next)
+        savedPresets = ProfilePresetStore.load()
     }
 }

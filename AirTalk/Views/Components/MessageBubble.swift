@@ -2,11 +2,11 @@ import SwiftUI
 
 struct MessageBubble: View {
     let message: AirMessage
+    var availableReactions: [String] = AirTalkPlus.freeReactions
     var onReaction: ((AirMessage, String) -> Void)?
     var onReport: ((AirMessage) -> Void)?
 
     @State private var showReactionPicker = false
-    private let reactions = ["❤️", "👍", "😂", "😮", "😢", "👏"]
 
     var body: some View {
         HStack {
@@ -69,7 +69,7 @@ struct MessageBubble: View {
                 // リアクションピッカー
                 if showReactionPicker {
                     HStack(spacing: 8) {
-                        ForEach(reactions, id: \.self) { reaction in
+                        ForEach(availableReactions, id: \.self) { reaction in
                             Text(reaction)
                                 .font(.title3)
                                 .onTapGesture {

@@ -209,6 +209,7 @@ class MultipeerManager: NSObject, ObservableObject {
     func deleteLocalAccountData() {
         clearAll()
         UserProfile.delete()
+        ProfilePresetStore.deleteAll()
         blockedPeerNames.removeAll()
         Self.saveBlockedPeerNames(blockedPeerNames)
         myProfile = nil
