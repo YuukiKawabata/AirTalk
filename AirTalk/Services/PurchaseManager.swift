@@ -64,8 +64,10 @@ final class PurchaseManager: ObservableObject {
                 await refreshPurchasedProducts()
                 await transaction.finish()
                 errorMessage = nil
-            case .userCancelled, .pending:
-                break
+            case .userCancelled:
+                errorMessage = nil
+            case .pending:
+                errorMessage = "購入は承認待ちです。承認後にAirTalk Plusが自動で有効になります。"
             @unknown default:
                 break
             }

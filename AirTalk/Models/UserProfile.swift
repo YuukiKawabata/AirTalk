@@ -1,6 +1,10 @@
 import Foundation
 
 struct UserProfile: Codable {
+    static let maximumNameUTF8Bytes = 48
+    static let maximumStatusUTF8Bytes = 120
+    static let maximumImageBytes = 32 * 1024
+
     var name: String
     var status: String
     var iconID: String
@@ -18,13 +22,13 @@ struct UserProfile: Codable {
         isHostBadgeEnabled: Bool = false,
         profileFrameID: String = ProfileFrame.none.rawValue
     ) {
-        self.name = name
-        self.status = status
-        self.iconID = iconID
-        self.themeColor = themeColor
-        self.imageData = imageData
+        self.name = Self.sanitizedName(name)
+        self.status = Self.sanitizedStatus(status)
+        self.iconID = Self.sanitizedIdentifier(iconID, maximumUTF8Bytes: 64)
+        self.themeColor = ThemeColor(rawValue: themeColor)?.rawValue ?? ThemeColor.purple.rawValue
+        self.imageData = imageData.flatMap { $0.count <= Self.maximumImageBytes ? $0 : nil }
         self.isHostBadgeEnabled = isHostBadgeEnabled
-        self.profileFrameID = profileFrameID
+        self.profileFrameID = ProfileFrame(rawValue: profileFrameID)?.rawValue ?? ProfileFrame.none.rawValue
     }
 
     // 注意: MCNearbyServiceAdvertiser の discoveryInfo は辞書全体で約400バイト未満という
@@ -61,6 +65,34 @@ struct UserProfile: Codable {
             iconID: iconID,
             themeColor: themeColor,
             imageData: data,
+            isHostBadgeEnabled: isHostBadgeEnabled,
+            profileFrameID: profileFrameID
+        )
+    }
+
+    static func sanitizedName(_ value: String) -> String {
+        sanitizedText(value, maximumUTF8Bytes: maximumNameUTF8Bytes)
+    }
+
+    static func sanitizedStatus(_ value: String) -> String {
+        sanitizedText(value, maximumUTF8Bytes: maximumStatusUTF8Bytes)
+    }
+
+    static func limitedNameInput(_ value: String) -> String {
+        utf8Prefix(value, maximumBytes: maximumNameUTF8Bytes)
+    }
+
+    static func limitedStatusInput(_ value: String) -> String {
+        utf8Prefix(value, maximumBytes: maximumStatusUTF8Bytes)
+    }
+
+    func replacingName(_ value: String) -> UserProfile {
+        UserProfile(
+            name: value,
+            status: status,
+            iconID: iconID,
+            themeColor: themeColor,
+            imageData: imageData,
             isHostBadgeEnabled: isHostBadgeEnabled,
             profileFrameID: profileFrameID
         )
@@ -122,12 +154,43 @@ struct UserProfile: Codable {
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.decode(String.self, forKey: .name)
-        status = try container.decode(String.self, forKey: .status)
-        iconID = try container.decode(String.self, forKey: .iconID)
-        themeColor = try container.decodeIfPresent(String.self, forKey: .themeColor) ?? ThemeColor.purple.rawValue
-        imageData = try container.decodeIfPresent(Data.self, forKey: .imageData)
+        name = Self.sanitizedName(try container.decode(String.self, forKey: .name))
+        status = Self.sanitizedStatus(try container.decode(String.self, forKey: .status))
+        iconID = Self.sanitizedIdentifier(
+            try container.decode(String.self, forKey: .iconID),
+            maximumUTF8Bytes: 64
+        )
+        let decodedTheme = try container.decodeIfPresent(String.self, forKey: .themeColor)
+        themeColor = decodedTheme.flatMap(ThemeColor.init(rawValue:))?.rawValue ?? ThemeColor.purple.rawValue
+        let decodedImage = try container.decodeIfPresent(Data.self, forKey: .imageData)
+        imageData = decodedImage.flatMap { $0.count <= Self.maximumImageBytes ? $0 : nil }
         isHostBadgeEnabled = try container.decodeIfPresent(Bool.self, forKey: .isHostBadgeEnabled) ?? false
-        profileFrameID = try container.decodeIfPresent(String.self, forKey: .profileFrameID) ?? ProfileFrame.none.rawValue
+        let decodedFrame = try container.decodeIfPresent(String.self, forKey: .profileFrameID)
+        profileFrameID = decodedFrame.flatMap(ProfileFrame.init(rawValue:))?.rawValue ?? ProfileFrame.none.rawValue
+    }
+
+    private static func sanitizedIdentifier(_ value: String, maximumUTF8Bytes: Int) -> String {
+        utf8Prefix(value.trimmingCharacters(in: .whitespacesAndNewlines), maximumBytes: maximumUTF8Bytes)
+    }
+
+    private static func sanitizedText(_ value: String, maximumUTF8Bytes: Int) -> String {
+        let singleLine = value
+            .split(whereSeparator: { $0.isWhitespace })
+            .joined(separator: " ")
+        return utf8Prefix(singleLine, maximumBytes: maximumUTF8Bytes)
+    }
+
+    private static func utf8Prefix(_ value: String, maximumBytes: Int) -> String {
+        var result = ""
+        var byteCount = 0
+
+        for character in value {
+            let characterByteCount = String(character).utf8.count
+            guard byteCount + characterByteCount <= maximumBytes else { break }
+            result.append(character)
+            byteCount += characterByteCount
+        }
+
+        return result
     }
 }

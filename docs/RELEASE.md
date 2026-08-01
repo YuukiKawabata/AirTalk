@@ -88,7 +88,7 @@ node scripts/asc/upload-subscription-images.mjs docs/screenshots/raw/iphone/05-p
 
 > 2026-06-28 時点で、月額のプロモーション画像は登録済み。年額のプロモーション画像は Apple API が `500 UNEXPECTED_ERROR` を返すため未登録だが、プロモーション画像は審査用スクリーンショットとは別枠。
 >
-> 2026-06-29 時点で、サブスクリプション2商品は全地域価格・提供地域・日本語ローカライズ・審査用スクリーンショットまで設定済みで `READY_TO_SUBMIT`。初回サブスクリプションは Apple の公開 API ではアプリバージョン提出 item に直接追加できないため、App Store Connect Web UI 側で 1.2 の提出にサブスクリプションを追加する必要がある。
+> 2026-08-01 時点で、サブスクリプション2商品とアプリ本体 1.2 は承認・公開済み。通常のアプリ更新でサブスクリプションを再提出する必要はない。
 
 ---
 
@@ -168,9 +168,9 @@ MultipeerConnectivity は **シミュレータでは安定動作せず、物理�
 
 ## 6. リリース前チェックリスト
 
-- [x] `MARKETING_VERSION` / `CURRENT_PROJECT_VERSION` を確認（AirTalk Plus は 1.2 / 7）
-- [ ] Bundle ID `com.yuuki.AirTalk` で App Store Connect にアプリ登録
-- [ ] 配布用 App Icon が 1024×1024（アルファなし）であることを確認
+- [x] `MARKETING_VERSION` / `CURRENT_PROJECT_VERSION` を確認（1.2.1 / 8）
+- [x] Bundle ID `com.yuuki.AirTalk` で App Store Connect にアプリ登録
+- [x] 配布用 App Icon が 1024×1024（アルファなし）であることを確認
 - [ ] 実機2台で発見 → 接続 → 送受信 → 切断（自動消去）を通しでテスト
 - [ ] 権限を「許可しない」にした場合の案内表示を確認
 - [ ] プロフィール画像が相手側にも鮮明に表示されることを確認（接続後にP2P交換）
@@ -178,8 +178,8 @@ MultipeerConnectivity は **シミュレータでは安定動作せず、物理�
 - [ ] Archive → Validate → App Store Connect へアップロード
 - [ ] App Privacy「データを収集していません」を選択
 - [ ] 審査メモに「物理デバイス2台必須」を記載（§3）
-- [x] `1.2(7)` はアップロード済み。App Store version 1.2 に Build 7 を紐づけ済み（`PREPARE_FOR_SUBMISSION`）
-- [ ] サブスクリプション2商品は `READY_TO_SUBMIT`。初回サブスクリプション同時提出は App Store Connect Web UI で 1.2 の提出に追加する
+- [x] `1.2(7)` とサブスクリプション2商品は承認・公開済み
+- [ ] `1.2.1(8)` をアップロードし、審査提出する
 
 ---
 
@@ -187,5 +187,5 @@ MultipeerConnectivity は **シミュレータでは安定動作せず、物理�
 
 - **バックグラウンドで接続維持不可**: iOS の制約。仕様として受容（離れたら終わり）。
 - **同名ユーザーの区別**: 現状 displayName のみ。将来、識別子の付加を検討。
-- **初回サブスクリプション提出**: 月額・年額とも `READY_TO_SUBMIT` だが、Apple 公開 API の `reviewSubmissionItems` はサブスクリプションを relationship として受け付けない。App Store Connect Web UI 側で 1.2 提出に追加する。
+- **実機確認**: 近距離通信の発見・招待・送受信・切断消去は、物理 iPhone 2台でリリースごとに確認する。
 - **テキストのみ**: 画像・スタンプ送信は未対応。

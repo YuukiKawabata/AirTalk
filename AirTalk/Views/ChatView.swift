@@ -43,9 +43,10 @@ struct ChatView: View {
     private func sendMessage() {
         let text = inputText.trimmingCharacters(in: .whitespacesAndNewlines)
         guard isConnected, !text.isEmpty else { return }
-        multipeerManager.send(text: text, to: peerID)
-        inputText = ""
-        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        if multipeerManager.send(text: text, to: peerID) {
+            inputText = ""
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        }
     }
 
     private func openReportMail(kind: SafetyReportKind, message: AirMessage? = nil) {

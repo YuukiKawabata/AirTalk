@@ -88,6 +88,14 @@ struct PaywallView: View {
                 Text("App Storeの購入情報を取得できませんでした。ネットワーク接続を確認してもう一度お試しください。")
                     .font(.caption)
                     .foregroundStyle(.secondary)
+
+                Button("もう一度読み込む") {
+                    Task {
+                        await purchaseManager.loadProducts()
+                    }
+                }
+                .font(.subheadline.weight(.semibold))
+                .padding(.top, 4)
             }
             .padding()
             .frame(maxWidth: .infinity, alignment: .leading)

@@ -411,6 +411,10 @@ struct ProfileEditorSheet: View {
                                 RoundedRectangle(cornerRadius: 16)
                                     .stroke(Color.primary.opacity(0.1), lineWidth: 1)
                             )
+                            .onChange(of: name) { _, newValue in
+                                let sanitized = UserProfile.limitedNameInput(newValue)
+                                if sanitized != newValue { name = sanitized }
+                            }
 
                     // アイコン選択 & カスタム画像
                     ScrollView(.horizontal, showsIndicators: false) {
@@ -519,6 +523,10 @@ struct ProfileEditorSheet: View {
                             RoundedRectangle(cornerRadius: 16)
                                 .stroke(Color.primary.opacity(0.1), lineWidth: 1)
                         )
+                        .onChange(of: status) { _, newValue in
+                            let sanitized = UserProfile.limitedStatusInput(newValue)
+                            if sanitized != newValue { status = sanitized }
+                        }
 
                     plusSection
 

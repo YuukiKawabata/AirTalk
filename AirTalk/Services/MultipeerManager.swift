@@ -1,5 +1,6 @@
 import Foundation
 import MultipeerConnectivity
+import OSLog
 
 struct DiscoveredPeer {
     let peerID: MCPeerID
@@ -8,6 +9,7 @@ struct DiscoveredPeer {
 
 class MultipeerManager: NSObject, ObservableObject {
     private static let serviceType = "airtalk"
+    private let logger = Logger(subsystem: "com.yuuki.AirTalk", category: "Multipeer")
 
     @Published var discoveredPeers: [DiscoveredPeer] = []
     @Published var connectedPeers: [MCPeerID] = []
@@ -36,24 +38,34 @@ class MultipeerManager: NSObject, ObservableObject {
     }
 
     func configure(with profile: UserProfile) {
-        guard !profile.name.isEmpty else { return }
+        let safeProfile = UserProfile(
+            name: profile.name,
+            status: profile.status,
+            iconID: profile.iconID,
+            themeColor: profile.themeColor,
+            imageData: profile.imageData,
+            isHostBadgeEnabled: profile.isHostBadgeEnabled,
+            profileFrameID: profile.profileFrameID
+        )
+        guard !safeProfile.name.isEmpty else { return }
 
-        self.myProfile = profile
-        self.myPeerID = MCPeerID(displayName: profile.name)
+        self.myProfile = safeProfile
+        let peerID = MCPeerID(displayName: safeProfile.name)
+        self.myPeerID = peerID
 
-        let session = MCSession(peer: myPeerID!, securityIdentity: nil, encryptionPreference: .required)
+        let session = MCSession(peer: peerID, securityIdentity: nil, encryptionPreference: .required)
         session.delegate = self
         self.session = session
 
         let advertiser = MCNearbyServiceAdvertiser(
-            peer: myPeerID!,
-            discoveryInfo: profile.asDiscoveryInfo,
+            peer: peerID,
+            discoveryInfo: safeProfile.asDiscoveryInfo,
             serviceType: Self.serviceType
         )
         advertiser.delegate = self
         self.advertiser = advertiser
 
-        let browser = MCNearbyServiceBrowser(peer: myPeerID!, serviceType: Self.serviceType)
+        let browser = MCNearbyServiceBrowser(peer: peerID, serviceType: Self.serviceType)
         browser.delegate = self
         self.browser = browser
     }
@@ -107,9 +119,11 @@ class MultipeerManager: NSObject, ObservableObject {
         blockedPeerNames.contains(peerID.displayName)
     }
 
-    func send(text: String, to peerID: MCPeerID) {
-        guard let myProfile = myProfile else { return }
+    @discardableResult
+    func send(text: String, to peerID: MCPeerID) -> Bool {
+        guard let myProfile = myProfile else { return false }
         let trimmed = String(text.prefix(AirMessage.maxTextLength))
+        guard !trimmed.isEmpty else { return false }
         let message = AirMessage(
             id: UUID(),
             sender: myProfile.name,
@@ -117,23 +131,20 @@ class MultipeerManager: NSObject, ObservableObject {
             timestamp: Date(),
             isMe: true
         )
-        if messages[peerID] == nil {
-            messages[peerID] = []
-        }
-        messages[peerID]?.append(message)
-
-        sendPacket(.message(message), to: peerID)
+        guard sendPacket(.message(message), to: peerID) else { return false }
+        appendMessage(message, for: peerID)
+        return true
     }
 
     func sendReaction(_ reaction: String, for messageID: UUID, to peerID: MCPeerID) {
         let event = ReactionEvent(messageID: messageID, reaction: reaction)
 
-        // ローカル側のメッセージも更新する
+        guard AirTalkPlus.allReactions.contains(reaction),
+              sendPacket(.reaction(event), to: peerID) else { return }
+
         if let index = messages[peerID]?.firstIndex(where: { $0.id == messageID }) {
             messages[peerID]?[index].reaction = reaction
         }
-
-        sendPacket(.reaction(event), to: peerID)
     }
 
     /// 接続確立後、自分のフルプロフィール（画像含む）を相手に送る。
@@ -142,10 +153,22 @@ class MultipeerManager: NSObject, ObservableObject {
         sendPacket(.profile(myProfile), to: peerID)
     }
 
-    private func sendPacket(_ packet: NetworkPacket, to peerID: MCPeerID) {
-        guard let session = session, session.connectedPeers.contains(peerID) else { return }
-        guard let data = try? JSONEncoder().encode(packet) else { return }
-        try? session.send(data, toPeers: [peerID], with: .reliable)
+    @discardableResult
+    private func sendPacket(_ packet: NetworkPacket, to peerID: MCPeerID) -> Bool {
+        guard let session = session, session.connectedPeers.contains(peerID) else { return false }
+
+        do {
+            let data = try JSONEncoder().encode(packet)
+            guard data.count <= AirMessage.maxPacketBytes else {
+                logger.error("Refused oversized outgoing packet: \(data.count, privacy: .public) bytes")
+                return false
+            }
+            try session.send(data, toPeers: [peerID], with: .reliable)
+            return true
+        } catch {
+            logger.error("Failed to send packet: \(error.localizedDescription, privacy: .public)")
+            return false
+        }
     }
 
     func disconnect(from peerID: MCPeerID) {
@@ -195,6 +218,7 @@ class MultipeerManager: NSObject, ObservableObject {
 
     func clearAll() {
         stop()
+        pendingInvitationHandler?(false, nil)
         messages.removeAll()
         connectedPeers.removeAll()
         connectedPeerProfiles.removeAll()
@@ -236,6 +260,16 @@ class MultipeerManager: NSObject, ObservableObject {
             pendingInvitationHandler = nil
             pendingInvitation = nil
         }
+    }
+
+    private func appendMessage(_ message: AirMessage, for peerID: MCPeerID) {
+        var history = messages[peerID] ?? []
+        guard !history.contains(where: { $0.id == message.id }) else { return }
+        history.append(message)
+        if history.count > AirMessage.maxHistoryCount {
+            history.removeFirst(history.count - AirMessage.maxHistoryCount)
+        }
+        messages[peerID] = history
     }
 
     private static func loadBlockedPeerNames() -> Set<String> {
@@ -349,34 +383,39 @@ extension MultipeerManager: MCSessionDelegate {
 
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
         guard !Self.loadBlockedPeerNames().contains(peerID.displayName) else { return }
+        guard data.count <= AirMessage.maxPacketBytes else {
+            logger.error("Ignored oversized incoming packet: \(data.count, privacy: .public) bytes")
+            return
+        }
         guard let packet = try? JSONDecoder().decode(NetworkPacket.self, from: data) else { return }
 
         DispatchQueue.main.async {
             switch packet {
             case .reaction(let event):
+                guard AirTalkPlus.allReactions.contains(event.reaction) else { return }
                 if let index = self.messages[peerID]?.firstIndex(where: { $0.id == event.messageID }) {
                     self.messages[peerID]?[index].reaction = event.reaction
                 }
 
             case .message(let message):
+                let safeText = String(message.text.prefix(AirMessage.maxTextLength))
+                    .trimmingCharacters(in: .whitespacesAndNewlines)
+                guard !safeText.isEmpty else { return }
                 let receivedMessage = AirMessage(
                     id: message.id,
-                    sender: message.sender,
-                    text: message.text,
+                    sender: peerID.displayName,
+                    text: safeText,
                     timestamp: message.timestamp,
                     isMe: false,
-                    reaction: message.reaction
+                    reaction: message.reaction.flatMap { AirTalkPlus.allReactions.contains($0) ? $0 : nil }
                 )
-                if self.messages[peerID] == nil {
-                    self.messages[peerID] = []
-                }
-                self.messages[peerID]?.append(receivedMessage)
+                self.appendMessage(receivedMessage, for: peerID)
 
             case .profile(let profile):
-                // 相手のフルプロフィール（画像含む）を保存し、発見時の軽量情報を上書き
-                self.connectedPeerProfiles[peerID] = profile
+                let safeProfile = profile.replacingName(peerID.displayName)
+                self.connectedPeerProfiles[peerID] = safeProfile
                 if let index = self.discoveredPeers.firstIndex(where: { $0.peerID == peerID }) {
-                    self.discoveredPeers[index] = DiscoveredPeer(peerID: peerID, profile: profile)
+                    self.discoveredPeers[index] = DiscoveredPeer(peerID: peerID, profile: safeProfile)
                 }
             }
         }
@@ -391,7 +430,8 @@ extension MultipeerManager: MCSessionDelegate {
 
 extension MultipeerManager: MCNearbyServiceBrowserDelegate {
     func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String: String]?) {
-        guard let info = info, let profile = UserProfile.from(discoveryInfo: info) else { return }
+        guard let info = info, let decodedProfile = UserProfile.from(discoveryInfo: info) else { return }
+        let profile = decodedProfile.replacingName(peerID.displayName)
         DispatchQueue.main.async {
             guard !self.isBlocked(peerID) && !self.blockedPeerNames.contains(profile.name) else {
                 self.discoveredPeers.removeAll { $0.peerID == peerID || $0.profile.name == profile.name }
@@ -428,6 +468,7 @@ extension MultipeerManager: MCNearbyServiceAdvertiserDelegate {
             return
         }
         DispatchQueue.main.async {
+            self.pendingInvitationHandler?(false, nil)
             self.pendingInvitationHandler = invitationHandler
             self.pendingInvitation = (peerID: peerID, name: peerID.displayName)
         }
