@@ -1,0 +1,22 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "NSBluetoothAlwaysUsageDescription" : {
+      "comment" : "Bluetooth permission prompt",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "AirTalk uses Bluetooth to find people nearby who are also using AirTalk." } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "近くのデバイスを発見するためにBluetoothを使用します。" } }
+      }
+    },
+    "NSLocalNetworkUsageDescription" : {
+      "comment" : "Local network permission prompt",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "AirTalk uses your local network to chat directly with people nearby. No internet connection is needed." } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "周囲のユーザーと通信するためにローカルネットワークを使用します。" } }
+      }
+    }
+  },
+  "version" : "1.0"
+}

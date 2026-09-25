@@ -14,7 +14,7 @@ enum DemoData {
 
     static let myProfile = UserProfile(
         name: "Yuki",
-        status: "新しい出会いを探し中 ✨",
+        status: String(localized: "新しい出会いを探し中 ✨"),
         iconID: "bolt.fill",
         themeColor: "purple",
         imageData: nil
@@ -25,11 +25,11 @@ enum DemoData {
     /// レーダーに並べる架空のユーザーたち。アイコン・テーマ・ひとことに変化を持たせて
     /// 賑わっている雰囲気を出す。
     static let discoveredProfiles: [UserProfile] = [
-        UserProfile(name: "Aoi",   status: "カフェで作業中 ☕️",      iconID: "moon.fill",     themeColor: "blue",   imageData: nil),
-        UserProfile(name: "Haru",  status: "音楽の話しよう 🎧",       iconID: "music.note",    themeColor: "green",  imageData: nil),
-        UserProfile(name: "Mina",  status: "はじめまして！",          iconID: "heart.fill",    themeColor: "pink",   imageData: nil),
-        UserProfile(name: "Ren",   status: "ランチ仲間募集中 🍜",     iconID: "flame.fill",    themeColor: "orange", imageData: nil),
-        UserProfile(name: "Sora",  status: "ひとやすみ 🌙",           iconID: "star.fill",     themeColor: "purple", imageData: nil),
+        UserProfile(name: "Aoi",   status: String(localized: "カフェで作業中 ☕️"),      iconID: "moon.fill",     themeColor: "blue",   imageData: nil),
+        UserProfile(name: "Haru",  status: String(localized: "音楽の話しよう 🎧"),       iconID: "music.note",    themeColor: "green",  imageData: nil),
+        UserProfile(name: "Mina",  status: String(localized: "はじめまして！"),          iconID: "heart.fill",    themeColor: "pink",   imageData: nil),
+        UserProfile(name: "Ren",   status: String(localized: "ランチ仲間募集中 🍜"),     iconID: "flame.fill",    themeColor: "orange", imageData: nil),
+        UserProfile(name: "Sora",  status: String(localized: "ひとやすみ 🌙"),           iconID: "star.fill",     themeColor: "purple", imageData: nil),
     ]
 
     /// 発見されたピア（MCPeerID + プロフィール）の一覧。
@@ -53,13 +53,13 @@ enum DemoData {
         func at(_ minutesAgo: Int) -> Date { now.addingTimeInterval(TimeInterval(-minutesAgo * 60)) }
 
         return [
-            AirMessage(id: UUID(), sender: partnerName, text: "こんにちは！近くにいたので話しかけてみました 👋", timestamp: at(8),  isMe: false, reaction: nil),
-            AirMessage(id: UUID(), sender: "Yuki",      text: "わ、はじめまして！同じカフェですか？",          timestamp: at(7),  isMe: true,  reaction: "❤️"),
-            AirMessage(id: UUID(), sender: partnerName, text: "そうです、窓際の席です ☕️",                   timestamp: at(6),  isMe: false, reaction: nil),
-            AirMessage(id: UUID(), sender: "Yuki",      text: "AirTalk、ネット無しで繋がるの不思議ですね",     timestamp: at(5),  isMe: true,  reaction: nil),
-            AirMessage(id: UUID(), sender: partnerName, text: "離れると会話が消えるのが逆に良いよね 🌫️",       timestamp: at(3),  isMe: false, reaction: "👍"),
-            AirMessage(id: UUID(), sender: "Yuki",      text: "まさに一期一会！この後おすすめのお店あります？", timestamp: at(2),  isMe: true,  reaction: nil),
-            AirMessage(id: UUID(), sender: partnerName, text: "向かいのベーカリー超おすすめです 🥐",          timestamp: at(1),  isMe: false, reaction: nil),
+            AirMessage(id: UUID(), sender: partnerName, text: String(localized: "こんにちは！近くにいたので話しかけてみました 👋"), timestamp: at(8),  isMe: false, reaction: nil),
+            AirMessage(id: UUID(), sender: "Yuki",      text: String(localized: "わ、はじめまして！同じカフェですか？"),          timestamp: at(7),  isMe: true,  reaction: "❤️"),
+            AirMessage(id: UUID(), sender: partnerName, text: String(localized: "そうです、窓際の席です ☕️"),                   timestamp: at(6),  isMe: false, reaction: nil),
+            AirMessage(id: UUID(), sender: "Yuki",      text: String(localized: "AirTalk、ネット無しで繋がるの不思議ですね"),     timestamp: at(5),  isMe: true,  reaction: nil),
+            AirMessage(id: UUID(), sender: partnerName, text: String(localized: "離れると会話が消えるのが逆に良いよね 🌫️"),       timestamp: at(3),  isMe: false, reaction: "👍"),
+            AirMessage(id: UUID(), sender: "Yuki",      text: String(localized: "まさに一期一会！この後おすすめのお店あります？"), timestamp: at(2),  isMe: true,  reaction: nil),
+            AirMessage(id: UUID(), sender: partnerName, text: String(localized: "向かいのベーカリー超おすすめです 🥐"),          timestamp: at(1),  isMe: false, reaction: nil),
         ]
     }
 }

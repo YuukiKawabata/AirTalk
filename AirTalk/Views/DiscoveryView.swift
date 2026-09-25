@@ -1,6 +1,7 @@
 import SwiftUI
 import MultipeerConnectivity
 import PhotosUI
+import StoreKit
 
 struct DiscoveryView: View {
     @EnvironmentObject var multipeerManager: MultipeerManager
@@ -10,26 +11,43 @@ struct DiscoveryView: View {
     @State private var switchTargetPeerID: MCPeerID?
     @State private var showInvitationAlert = false
     @State private var showDeclinedAlert = false
-    
+    @State private var showingInvite = false
+    @Environment(\.requestReview) private var requestReview
+
     @State private var myProfile: UserProfile?
+
+    private var myTheme: ThemeColor {
+        ThemeColor(rawValue: myProfile?.themeColor ?? "purple") ?? .purple
+    }
 
     var body: some View {
         NavigationStack {
             ZStack {
-                AuroraBackgroundView(themeColor: ThemeColor(rawValue: myProfile?.themeColor ?? "purple") ?? .purple)
-                
+                AuroraBackgroundView(themeColor: myTheme)
+
                 RadarView(
                     peers: multipeerManager.discoveredPeers,
                     myProfile: myProfile,
                     permissionDenied: multipeerManager.permissionDenied,
                     onPeerTap: handlePeerTap,
-                    onRescan: { multipeerManager.restartDiscovery() }
+                    onRescan: { multipeerManager.restartDiscovery() },
+                    onInvite: { showingInvite = true }
                 )
             }
             .navigationTitle("AirTalk")
             .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(.hidden, for: .navigationBar)
             .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        showingInvite = true
+                    } label: {
+                        Image(systemName: "person.badge.plus")
+                            .font(.system(size: 20, weight: .semibold))
+                            .foregroundColor(.primary)
+                    }
+                    .accessibilityLabel(Text("近くの友だちを誘う"))
+                }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         showingProfileEditor = true
@@ -54,6 +72,20 @@ struct DiscoveryView: View {
                 // 着信シーンはリクエストのアラートを確実に表示する
                 if DemoMode.scene == .invite {
                     showInvitationAlert = true
+                }
+            }
+        }
+        .sheet(isPresented: $showingInvite) {
+            InviteFriendsView(themeColor: myTheme)
+        }
+        .onChange(of: multipeerManager.shouldRequestReview) { _, shouldRequest in
+            guard shouldRequest else { return }
+            multipeerManager.shouldRequestReview = false
+            // チャット画面が閉じてレーダーに戻ってから依頼する
+            Task {
+                try? await Task.sleep(for: .seconds(1.5))
+                if multipeerManager.activeChatPeerID == nil {
+                    requestReview()
                 }
             }
         }
@@ -193,6 +225,7 @@ struct RadarView: View {
     var permissionDenied: Bool = false
     let onPeerTap: (MCPeerID) -> Void
     var onRescan: () -> Void = {}
+    var onInvite: () -> Void = {}
 
     @State private var rippleScale: CGFloat = 0.5
     @State private var rippleOpacity: Double = 1.0
@@ -235,8 +268,11 @@ struct RadarView: View {
 
                 // 状態メッセージ（権限拒否 / 探索中）— ピアがいない時のみ
                 if peers.isEmpty {
+                    // 案内カードは高さが変わるため、下端に揃えて切れないようにする
                     statusOverlay
-                        .position(x: center.x, y: geometry.size.height - 80)
+                        .padding(.horizontal, 16)
+                        .padding(.bottom, 24)
+                        .frame(width: geometry.size.width, height: geometry.size.height, alignment: .bottom)
                         .zIndex(20)
                 }
 
@@ -327,10 +363,21 @@ struct RadarView: View {
                     .font(.title2)
                 Text("近くにAirTalkユーザーがいません")
                     .font(.subheadline.weight(.semibold))
-                Text("AirTalkは半径50m以内にいる相手とつながります。\n2台以上の端末で近くにいる人とお試しください。")
+                Text("半径50m以内でAirTalkを開いている人が、ここに表示されます。一緒にいる友だちを誘ってみましょう。")
                     .font(.caption)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+                Button {
+                    onInvite()
+                } label: {
+                    Label("友だちを誘う", systemImage: "qrcode")
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 10)
+                        .background(themeColor, in: Capsule())
+                }
                 Button {
                     searchTimedOut = false
                     onRescan()
@@ -356,6 +403,10 @@ struct RadarView: View {
             .padding(.vertical, 10)
             .background(.ultraThinMaterial, in: Capsule())
         }
+    }
+
+    private var themeColor: Color {
+        ThemeColor(rawValue: myProfile?.themeColor ?? "purple")?.color ?? .purple
     }
 
     private func getPosition(center: CGPoint, radius: CGFloat, angle: Double) -> CGPoint {
@@ -701,7 +752,7 @@ struct ProfileEditorSheet: View {
                                         Text(preset.name)
                                             .font(.caption.weight(.bold))
                                             .lineLimit(1)
-                                        Text(preset.status.isEmpty ? "ひとことなし" : preset.status)
+                                        (preset.status.isEmpty ? Text("ひとことなし") : Text(preset.status))
                                             .font(.caption2)
                                             .foregroundColor(.secondary)
                                             .lineLimit(1)

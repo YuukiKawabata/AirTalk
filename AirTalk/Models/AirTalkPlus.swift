@@ -13,13 +13,16 @@ enum AirTalkPlus {
     static let premiumReactions = ["😮", "😢", "👏", "🔥", "✨", "🙌", "☕️", "🎧"]
     static let allReactions = freeReactions + premiumReactions
 
-    static let icebreakers = [
-        "こんにちは！近くにいたので話しかけてみました",
-        "このあたりでおすすめのお店ありますか？",
-        "同じイベントに参加していますか？",
-        "少しだけ話しませんか？",
-        "AirTalkでつながるの不思議ですね"
-    ]
+    /// 最初の一言に使える定型文。1.3 から無料で提供している（Plus 限定ではない）。
+    static var icebreakers: [String] {
+        [
+            String(localized: "こんにちは！近くにいたので話しかけてみました"),
+            String(localized: "このあたりでおすすめのお店ありますか？"),
+            String(localized: "同じイベントに参加していますか？"),
+            String(localized: "少しだけ話しませんか？"),
+            String(localized: "AirTalkでつながるの不思議ですね")
+        ]
+    }
 
     static func isPremiumTheme(_ theme: ThemeColor) -> Bool {
         premiumThemes.contains(theme)
@@ -37,7 +40,7 @@ enum ProfileFrame: String, CaseIterable, Identifiable, Codable {
     var displayName: String {
         switch self {
         case .none:
-            return "なし"
+            return String(localized: "なし")
         case .aurora:
             return "Aurora"
         case .pulse:

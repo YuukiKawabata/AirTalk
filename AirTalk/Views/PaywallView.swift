@@ -63,7 +63,8 @@ struct PaywallView: View {
             FeatureRow(icon: "person.crop.circle.badge.checkmark", title: "Hostバッジ", detail: "イベントや場の主催者として見つけてもらいやすくする")
             FeatureRow(icon: "circle.hexagongrid.circle", title: "プレミアムフレーム", detail: "レーダーとチャットでプロフィールを少し目立たせる")
             FeatureRow(icon: "rectangle.stack.badge.person.crop", title: "プロフィールプリセット", detail: "イベント用、作業用、旅先用などをすぐ切り替える")
-            FeatureRow(icon: "text.bubble", title: "アイスブレイク", detail: "最初の一言に使える定型文と追加リアクション")
+            FeatureRow(icon: "face.smiling", title: "追加リアクション", detail: "🔥 👏 ✨ など8種類のリアクションで気持ちを伝える")
+            FeatureRow(icon: "paintpalette", title: "プレミアムテーマ", detail: "オレンジ、ピンク、ミントなど7色のテーマカラー")
         }
         .padding(18)
         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16))
@@ -180,8 +181,8 @@ struct PaywallView: View {
 
 private struct FeatureRow: View {
     let icon: String
-    let title: String
-    let detail: String
+    let title: LocalizedStringKey
+    let detail: LocalizedStringKey
 
     var body: some View {
         HStack(alignment: .top, spacing: 12) {

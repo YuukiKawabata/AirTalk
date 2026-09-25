@@ -12,7 +12,9 @@ struct OnboardingView: View {
     @State private var selectedTheme: ThemeColor = .purple
     @State private var hasCheckedEULA = false
     @State private var showingTerms = false
-    
+
+    /// 最初にアプリの使い方を1画面で説明する。スクショ撮影（デモ）ではプロフィール入力を直接表示する。
+    @State private var showingIntro = !DemoMode.isEnabled
     // カスタム画像用
     @State private var selectedPhotoItem: PhotosPickerItem?
     @State private var customImageData: Data?
@@ -25,175 +27,13 @@ struct OnboardingView: View {
     var body: some View {
         ZStack {
             AuroraBackgroundView(themeColor: selectedTheme)
-            
-            VStack(spacing: 32) {
-                Spacer()
 
-                Text("AirTalk")
-                    .font(.system(size: 42, weight: .bold))
-                    .foregroundColor(.primary)
-
-                VStack(spacing: 24) {
-                    // 名前の入力
-                    TextField("ニックネーム", text: $name)
-                        .textFieldStyle(.plain)
-                        .padding()
-                        .background(.ultraThinMaterial)
-                        .cornerRadius(16)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 16)
-                                .stroke(Color.primary.opacity(0.1), lineWidth: 1)
-                        )
-                        .onChange(of: name) { _, newValue in
-                            let sanitized = UserProfile.limitedNameInput(newValue)
-                            if sanitized != newValue { name = sanitized }
-                        }
-
-                    // アイコン選択 & カスタム画像
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 16) {
-                            // PhotosPicker
-                            PhotosPicker(selection: $selectedPhotoItem, matching: .images, photoLibrary: .shared()) {
-                                if let data = customImageData, let uiImage = UIImage(data: data) {
-                                    Image(uiImage: uiImage)
-                                        .resizable()
-                                        .scaledToFill()
-                                        .frame(width: 56, height: 56)
-                                        .clipShape(Circle())
-                                        .overlay(
-                                            Circle().stroke(selectedIconID.isEmpty ? selectedTheme.color : Color.clear, lineWidth: selectedIconID.isEmpty ? 2 : 0)
-                                        )
-                                } else {
-                                    Image(systemName: "photo.badge.plus")
-                                        .font(.title2)
-                                        .frame(width: 56, height: 56)
-                                        .background(.ultraThinMaterial)
-                                        .cornerRadius(16)
-                                        .overlay(
-                                            RoundedRectangle(cornerRadius: 16)
-                                                .stroke(Color.primary.opacity(0.1), lineWidth: 1)
-                                        )
-                                        .foregroundColor(.primary)
-                                }
-                            }
-                            .onChange(of: selectedPhotoItem) { _, newItem in
-                                Task {
-                                    if let data = try? await newItem?.loadTransferable(type: Data.self),
-                                       let image = UIImage(data: data) {
-                                        await MainActor.run {
-                                            customImageData = image.compressedThumbnailData()
-                                            selectedIconID = "" // カスタム画像選択時はシステムアイコン選択を解除
-                                        }
-                                    }
-                                }
-                            }
-                        
-                            ForEach(iconOptions, id: \.self) { iconID in
-                                Image(systemName: iconID)
-                                    .font(.title2)
-                                    .frame(width: 56, height: 56)
-                                    .background(selectedIconID == iconID ? selectedTheme.color.opacity(0.2) : Color.clear)
-                                    .background(.ultraThinMaterial)
-                                    .cornerRadius(16)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 16)
-                                            .stroke(selectedIconID == iconID ? selectedTheme.color : Color.primary.opacity(0.1), lineWidth: selectedIconID == iconID ? 2 : 1)
-                                    )
-                                    .onTapGesture {
-                                        withAnimation { 
-                                            selectedIconID = iconID 
-                                            customImageData = nil // システムアイコン選択時はカスタム画像を解除
-                                            selectedPhotoItem = nil
-                                        }
-                                    }
-                            }
-                        }
-                        .padding(.horizontal, 4)
-                        .padding(.vertical, 4)
-                    }
-
-                    // テーマカラー選択
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 16) {
-                            ForEach(AirTalkPlus.freeThemes) { theme in
-                                Circle()
-                                    .fill(theme.color)
-                                    .frame(width: 44, height: 44)
-                                    .overlay(
-                                        Circle()
-                                            .stroke(Color.primary, lineWidth: selectedTheme == theme ? 3 : 0)
-                                            .padding(-4)
-                                    )
-                                    .onTapGesture {
-                                        withAnimation { selectedTheme = theme }
-                                    }
-                            }
-                        }
-                        .padding(.horizontal, 4)
-                        .padding(.vertical, 8)
-                    }
-
-                    // ステータス入力
-                    TextField("ひとこと", text: $status)
-                        .textFieldStyle(.plain)
-                        .padding()
-                        .background(.ultraThinMaterial)
-                        .cornerRadius(16)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 16)
-                                .stroke(Color.primary.opacity(0.1), lineWidth: 1)
-                        )
-                        .onChange(of: status) { _, newValue in
-                            let sanitized = UserProfile.limitedStatusInput(newValue)
-                            if sanitized != newValue { status = sanitized }
-                        }
-                }
-                .padding(.horizontal, 24)
-
-                VStack(spacing: 12) {
-                    Toggle(isOn: $hasCheckedEULA) {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text("利用規約 / EULA に同意します")
-                                .font(.subheadline.weight(.semibold))
-                            Text("不適切な内容や迷惑行為を許容しないポリシーを含みます。")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-                        }
-                    }
-                    .toggleStyle(.checkboxLike(theme: selectedTheme.color))
-
-                    Button {
-                        showingTerms = true
-                    } label: {
-                        Text("利用規約を確認")
-                            .font(.caption.weight(.semibold))
-                            .underline()
-                    }
-                    .foregroundColor(.primary)
-                }
-                .padding(.horizontal, 24)
-
-                Button {
-                    let profile = UserProfile(name: name, status: status, iconID: selectedIconID, themeColor: selectedTheme.rawValue, imageData: customImageData)
-                    profile.save()
-                    multipeerManager.updateProfile(profile)
-                    hasAcceptedEULA = true
-                    hasCompletedOnboarding = true
-                } label: {
-                    Text("はじめる")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(selectedTheme.color)
-                        .cornerRadius(16)
-                        .shadow(color: selectedTheme.color.opacity(0.5), radius: 10, x: 0, y: 5)
-                }
-                .disabled(name.trimmingCharacters(in: .whitespaces).isEmpty || !hasCheckedEULA)
-                .opacity(name.trimmingCharacters(in: .whitespaces).isEmpty || !hasCheckedEULA ? 0.4 : 1.0)
-                .padding(.horizontal, 24)
-
-                Spacer()
+            if showingIntro {
+                intro
+                    .transition(.opacity)
+            } else {
+                profileForm
+                    .transition(.opacity)
             }
         }
         .onAppear {
@@ -215,6 +55,239 @@ struct OnboardingView: View {
         }
         .sheet(isPresented: $showingTerms) {
             TermsOfUseView()
+        }
+    }
+
+    // MARK: - Intro
+
+    private var intro: some View {
+        VStack(spacing: 28) {
+            Spacer()
+
+            VStack(spacing: 8) {
+                Text("AirTalk")
+                    .font(.system(size: 42, weight: .bold))
+                Text("半径50mの一期一会チャット")
+                    .font(.headline)
+                    .foregroundColor(.secondary)
+            }
+
+            VStack(alignment: .leading, spacing: 20) {
+                IntroRow(
+                    icon: "antenna.radiowaves.left.and.right",
+                    title: "近くにいる人とだけ話せる",
+                    detail: "Wi-FiとBluetoothで、半径50m以内のAirTalkユーザーと直接つながります。インターネットもアカウントも不要です。"
+                )
+                IntroRow(
+                    icon: "wind",
+                    title: "会話は残らない",
+                    detail: "相手と離れたりアプリを閉じたりすると、メッセージは自動で消えます。"
+                )
+                IntroRow(
+                    icon: "person.2.fill",
+                    title: "友だちと一緒に始めよう",
+                    detail: "近くに誰もいないときは、QRコードで友だちを誘えます。"
+                )
+            }
+            .padding(20)
+            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 20))
+            .padding(.horizontal, 24)
+
+            Text("近くのデバイスを探すため、このあとローカルネットワークとBluetoothの利用許可を求めます。")
+                .font(.caption)
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 32)
+
+            Button {
+                withAnimation { showingIntro = false }
+            } label: {
+                Text("つぎへ")
+                    .font(.headline)
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(selectedTheme.color)
+                    .cornerRadius(16)
+                    .shadow(color: selectedTheme.color.opacity(0.5), radius: 10, x: 0, y: 5)
+            }
+            .padding(.horizontal, 24)
+
+            Spacer()
+        }
+    }
+
+    // MARK: - Profile Form
+
+    private var profileForm: some View {
+        VStack(spacing: 32) {
+            Spacer()
+
+            Text("AirTalk")
+                .font(.system(size: 42, weight: .bold))
+                .foregroundColor(.primary)
+
+            VStack(spacing: 24) {
+                // 名前の入力
+                TextField("ニックネーム", text: $name)
+                    .textFieldStyle(.plain)
+                    .padding()
+                    .background(.ultraThinMaterial)
+                    .cornerRadius(16)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 16)
+                            .stroke(Color.primary.opacity(0.1), lineWidth: 1)
+                    )
+                    .onChange(of: name) { _, newValue in
+                        let sanitized = UserProfile.limitedNameInput(newValue)
+                        if sanitized != newValue { name = sanitized }
+                    }
+
+                // アイコン選択 & カスタム画像
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 16) {
+                        // PhotosPicker
+                        PhotosPicker(selection: $selectedPhotoItem, matching: .images, photoLibrary: .shared()) {
+                            if let data = customImageData, let uiImage = UIImage(data: data) {
+                                Image(uiImage: uiImage)
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 56, height: 56)
+                                    .clipShape(Circle())
+                                    .overlay(
+                                        Circle().stroke(selectedIconID.isEmpty ? selectedTheme.color : Color.clear, lineWidth: selectedIconID.isEmpty ? 2 : 0)
+                                    )
+                            } else {
+                                Image(systemName: "photo.badge.plus")
+                                    .font(.title2)
+                                    .frame(width: 56, height: 56)
+                                    .background(.ultraThinMaterial)
+                                    .cornerRadius(16)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 16)
+                                            .stroke(Color.primary.opacity(0.1), lineWidth: 1)
+                                    )
+                                    .foregroundColor(.primary)
+                            }
+                        }
+                        .onChange(of: selectedPhotoItem) { _, newItem in
+                            Task {
+                                if let data = try? await newItem?.loadTransferable(type: Data.self),
+                                   let image = UIImage(data: data) {
+                                    await MainActor.run {
+                                        customImageData = image.compressedThumbnailData()
+                                        selectedIconID = "" // カスタム画像選択時はシステムアイコン選択を解除
+                                    }
+                                }
+                            }
+                        }
+                    
+                        ForEach(iconOptions, id: \.self) { iconID in
+                            Image(systemName: iconID)
+                                .font(.title2)
+                                .frame(width: 56, height: 56)
+                                .background(selectedIconID == iconID ? selectedTheme.color.opacity(0.2) : Color.clear)
+                                .background(.ultraThinMaterial)
+                                .cornerRadius(16)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 16)
+                                        .stroke(selectedIconID == iconID ? selectedTheme.color : Color.primary.opacity(0.1), lineWidth: selectedIconID == iconID ? 2 : 1)
+                                )
+                                .onTapGesture {
+                                    withAnimation { 
+                                        selectedIconID = iconID 
+                                        customImageData = nil // システムアイコン選択時はカスタム画像を解除
+                                        selectedPhotoItem = nil
+                                    }
+                                }
+                        }
+                    }
+                    .padding(.horizontal, 4)
+                    .padding(.vertical, 4)
+                }
+
+                // テーマカラー選択
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 16) {
+                        ForEach(AirTalkPlus.freeThemes) { theme in
+                            Circle()
+                                .fill(theme.color)
+                                .frame(width: 44, height: 44)
+                                .overlay(
+                                    Circle()
+                                        .stroke(Color.primary, lineWidth: selectedTheme == theme ? 3 : 0)
+                                        .padding(-4)
+                                )
+                                .onTapGesture {
+                                    withAnimation { selectedTheme = theme }
+                                }
+                        }
+                    }
+                    .padding(.horizontal, 4)
+                    .padding(.vertical, 8)
+                }
+
+                // ステータス入力
+                TextField("ひとこと", text: $status)
+                    .textFieldStyle(.plain)
+                    .padding()
+                    .background(.ultraThinMaterial)
+                    .cornerRadius(16)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 16)
+                            .stroke(Color.primary.opacity(0.1), lineWidth: 1)
+                    )
+                    .onChange(of: status) { _, newValue in
+                        let sanitized = UserProfile.limitedStatusInput(newValue)
+                        if sanitized != newValue { status = sanitized }
+                    }
+            }
+            .padding(.horizontal, 24)
+
+            VStack(spacing: 12) {
+                Toggle(isOn: $hasCheckedEULA) {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("利用規約 / EULA に同意します")
+                            .font(.subheadline.weight(.semibold))
+                        Text("不適切な内容や迷惑行為を許容しないポリシーを含みます。")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                }
+                .toggleStyle(.checkboxLike(theme: selectedTheme.color))
+
+                Button {
+                    showingTerms = true
+                } label: {
+                    Text("利用規約を確認")
+                        .font(.caption.weight(.semibold))
+                        .underline()
+                }
+                .foregroundColor(.primary)
+            }
+            .padding(.horizontal, 24)
+
+            Button {
+                let profile = UserProfile(name: name, status: status, iconID: selectedIconID, themeColor: selectedTheme.rawValue, imageData: customImageData)
+                profile.save()
+                multipeerManager.updateProfile(profile)
+                hasAcceptedEULA = true
+                hasCompletedOnboarding = true
+            } label: {
+                Text("はじめる")
+                    .font(.headline)
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(selectedTheme.color)
+                    .cornerRadius(16)
+                    .shadow(color: selectedTheme.color.opacity(0.5), radius: 10, x: 0, y: 5)
+            }
+            .disabled(name.trimmingCharacters(in: .whitespaces).isEmpty || !hasCheckedEULA)
+            .opacity(name.trimmingCharacters(in: .whitespaces).isEmpty || !hasCheckedEULA ? 0.4 : 1.0)
+            .padding(.horizontal, 24)
+
+            Spacer()
         }
     }
 }
@@ -248,5 +321,27 @@ private struct CheckboxToggleStyle: ToggleStyle {
 private extension ToggleStyle where Self == CheckboxToggleStyle {
     static func checkboxLike(theme: Color) -> CheckboxToggleStyle {
         CheckboxToggleStyle(tint: theme)
+    }
+}
+
+private struct IntroRow: View {
+    let icon: String
+    let title: LocalizedStringKey
+    let detail: LocalizedStringKey
+
+    var body: some View {
+        HStack(alignment: .top, spacing: 14) {
+            Image(systemName: icon)
+                .font(.title3)
+                .frame(width: 28)
+            VStack(alignment: .leading, spacing: 4) {
+                Text(title)
+                    .font(.subheadline.weight(.semibold))
+                Text(detail)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
     }
 }

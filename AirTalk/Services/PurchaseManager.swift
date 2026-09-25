@@ -47,7 +47,7 @@ final class PurchaseManager: ObservableObject {
             errorMessage = nil
         } catch {
             products = []
-            errorMessage = "購入情報を読み込めませんでした。時間をおいてもう一度お試しください。"
+            errorMessage = String(localized: "購入情報を読み込めませんでした。時間をおいてもう一度お試しください。")
         }
     }
 
@@ -67,12 +67,12 @@ final class PurchaseManager: ObservableObject {
             case .userCancelled:
                 errorMessage = nil
             case .pending:
-                errorMessage = "購入は承認待ちです。承認後にAirTalk Plusが自動で有効になります。"
+                errorMessage = String(localized: "購入は承認待ちです。承認後にAirTalk Plusが自動で有効になります。")
             @unknown default:
                 break
             }
         } catch {
-            errorMessage = "購入を完了できませんでした。"
+            errorMessage = String(localized: "購入を完了できませんでした。")
         }
     }
 
@@ -84,9 +84,9 @@ final class PurchaseManager: ObservableObject {
         do {
             try await AppStore.sync()
             await refreshPurchasedProducts()
-            errorMessage = isPlusActive ? nil : "復元できるAirTalk Plusの購入が見つかりませんでした。"
+            errorMessage = isPlusActive ? nil : String(localized: "復元できるAirTalk Plusの購入が見つかりませんでした。")
         } catch {
-            errorMessage = "購入の復元に失敗しました。"
+            errorMessage = String(localized: "購入の復元に失敗しました。")
         }
     }
 
@@ -108,9 +108,9 @@ final class PurchaseManager: ObservableObject {
     func title(for product: Product) -> String {
         switch product.id {
         case AirTalkPlus.monthlyProductID:
-            return "AirTalk Plus 月額プラン"
+            return String(localized: "AirTalk Plus 月額プラン")
         case AirTalkPlus.yearlyProductID:
-            return "AirTalk Plus 年額プラン"
+            return String(localized: "AirTalk Plus 年額プラン")
         default:
             return product.displayName
         }
@@ -119,14 +119,14 @@ final class PurchaseManager: ObservableObject {
     func subtitle(for product: Product) -> String {
         if let introductoryOffer = product.subscription?.introductoryOffer,
            introductoryOffer.paymentMode == .freeTrial {
-            return "\(periodDescription(introductoryOffer.period))の無料トライアル後、\(billingPeriodDescription(for: product))ごとに自動更新"
+            return String(localized: "\(periodDescription(introductoryOffer.period))の無料トライアル後、\(billingPeriodDescription(for: product))ごとに自動更新")
         }
 
         switch product.id {
         case AirTalkPlus.monthlyProductID:
-            return "1か月ごとに自動更新"
+            return String(localized: "1か月ごとに自動更新")
         case AirTalkPlus.yearlyProductID:
-            return "1年ごとに自動更新"
+            return String(localized: "1年ごとに自動更新")
         default:
             return product.description
         }
@@ -136,11 +136,11 @@ final class PurchaseManager: ObservableObject {
         guard let period = product.subscription?.subscriptionPeriod else {
             switch product.id {
             case AirTalkPlus.monthlyProductID:
-                return "1か月"
+                return String(localized: "1か月")
             case AirTalkPlus.yearlyProductID:
-                return "1年"
+                return String(localized: "1年")
             default:
-                return "期間"
+                return String(localized: "期間")
             }
         }
 
@@ -150,13 +150,13 @@ final class PurchaseManager: ObservableObject {
     private func periodDescription(_ period: Product.SubscriptionPeriod) -> String {
         switch period.unit {
         case .day:
-            return "\(period.value)日間"
+            return String(localized: "\(period.value)日間")
         case .week:
-            return "\(period.value)週間"
+            return String(localized: "\(period.value)週間")
         case .month:
-            return "\(period.value)か月間"
+            return String(localized: "\(period.value)か月間")
         case .year:
-            return "\(period.value)年間"
+            return String(localized: "\(period.value)年間")
         @unknown default:
             return ""
         }

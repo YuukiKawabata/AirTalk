@@ -23,6 +23,8 @@ class MultipeerManager: NSObject, ObservableObject {
     /// ローカルネットワーク／Bluetooth 権限が拒否され、広告・探索を開始できなかった状態。
     @Published var permissionDenied = false
     @Published private(set) var blockedPeerNames: Set<String> = MultipeerManager.loadBlockedPeerNames()
+    /// 会話が成立して終わった直後に true。DiscoveryView がレビュー依頼を出したら false に戻す。
+    @Published var shouldRequestReview = false
     private(set) var isRunning = false
 
     private var myPeerID: MCPeerID?
@@ -186,6 +188,7 @@ class MultipeerManager: NSObject, ObservableObject {
 
     func closeChat() {
         if let peer = activeChatPeerID {
+            noteConversationEnded(with: peer)
             messages[peer] = []
             connectedPeers.removeAll { $0 == peer }
             connectedPeerProfiles[peer] = nil
@@ -260,6 +263,14 @@ class MultipeerManager: NSObject, ObservableObject {
             pendingInvitationHandler = nil
             pendingInvitation = nil
         }
+    }
+
+    /// メッセージを破棄する直前に呼び、成立した会話ならレビュー依頼を予約する。
+    private func noteConversationEnded(with peerID: MCPeerID) {
+        guard !DemoMode.isEnabled,
+              ReviewPrompt.isGoodConversation(messages[peerID] ?? []),
+              ReviewPrompt.recordGoodConversation() else { return }
+        shouldRequestReview = true
     }
 
     private func appendMessage(_ message: AirMessage, for peerID: MCPeerID) {
@@ -355,6 +366,7 @@ extension MultipeerManager: MCSessionDelegate {
                 self.sendProfile(to: peerID)
             case .notConnected:
                 let wasInChat = self.activeChatPeerID == peerID
+                self.noteConversationEnded(with: peerID)
                 self.messages[peerID] = []
                 self.connectedPeers.removeAll { $0 == peerID }
                 self.connectedPeerProfiles[peerID] = nil

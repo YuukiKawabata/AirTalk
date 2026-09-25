@@ -1,0 +1,2406 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "%@ / %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ / %@"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ / %@"
+          }
+        }
+      }
+    },
+    "%@ さんがチャットを開始したいです": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ wants to chat with you"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ さんがチャットを開始したいです"
+          }
+        }
+      }
+    },
+    "%@ さんにリクエストが拒否されました": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ declined your request"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ さんにリクエストが拒否されました"
+          }
+        }
+      }
+    },
+    "%@の無料トライアル後、%@ごとに自動更新": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ free trial, then renews every %2$@"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@の無料トライアル後、%@ごとに自動更新"
+          }
+        }
+      }
+    },
+    "%lldか月間": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld month"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld months"
+                }
+              }
+            }
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lldか月間"
+          }
+        }
+      }
+    },
+    "%lld年間": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld year"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld years"
+                }
+              }
+            }
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld年間"
+          }
+        }
+      }
+    },
+    "%lld日間": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld day"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld days"
+                }
+              }
+            }
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld日間"
+          }
+        }
+      }
+    },
+    "%lld週間": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld week"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld weeks"
+                }
+              }
+            }
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld週間"
+          }
+        }
+      }
+    },
+    "1. No tolerance policy": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1. No tolerance policy"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1. No tolerance policy"
+          }
+        }
+      }
+    },
+    "1か月": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 month"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1か月"
+          }
+        }
+      }
+    },
+    "1か月ごとに自動更新": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Renews every month"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1か月ごとに自動更新"
+          }
+        }
+      }
+    },
+    "1年": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 year"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1年"
+          }
+        }
+      }
+    },
+    "1年ごとに自動更新": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Renews every year"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1年ごとに自動更新"
+          }
+        }
+      }
+    },
+    "2. 通報とブロック": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2. Reporting and blocking"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2. 通報とブロック"
+          }
+        }
+      }
+    },
+    "3. User-generated content": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3. User-generated content"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3. User-generated content"
+          }
+        }
+      }
+    },
+    "4. プライバシーとデータ": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "4. Privacy and data"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "4. プライバシーとデータ"
+          }
+        }
+      }
+    },
+    "5. Support": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "5. Support"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "5. Support"
+          }
+        }
+      }
+    },
+    "AirTalk": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AirTalk"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AirTalk"
+          }
+        }
+      }
+    },
+    "AirTalk Plus": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AirTalk Plus"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AirTalk Plus"
+          }
+        }
+      }
+    },
+    "AirTalk Plus 年額プラン": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AirTalk Plus Yearly"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AirTalk Plus 年額プラン"
+          }
+        }
+      }
+    },
+    "AirTalk Plus 月額プラン": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AirTalk Plus Monthly"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AirTalk Plus 月額プラン"
+          }
+        }
+      }
+    },
+    "AirTalk does not tolerate objectionable content or abusive users. Harassment, threats, hate speech, sexual content involving minors, spam, impersonation, and any unlawful or harmful conduct are prohibited.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AirTalk does not tolerate objectionable content or abusive users. Harassment, threats, hate speech, sexual content involving minors, spam, impersonation, and any unlawful or harmful conduct are prohibited."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AirTalk does not tolerate objectionable content or abusive users. Harassment, threats, hate speech, sexual content involving minors, spam, impersonation, and any unlawful or harmful conduct are prohibited."
+          }
+        }
+      }
+    },
+    "AirTalk is a peer-to-peer chat app. You are responsible for the messages and profile text you share with nearby users. Do not share content that violates these terms or another person's rights.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AirTalk is a peer-to-peer chat app. You are responsible for the messages and profile text you share with nearby users. Do not share content that violates these terms or another person's rights."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AirTalk is a peer-to-peer chat app. You are responsible for the messages and profile text you share with nearby users. Do not share content that violates these terms or another person's rights."
+          }
+        }
+      }
+    },
+    "AirTalk はサーバーアカウントを作成せず、チャット履歴をサーバーに保存しません。プロフィールは端末内に保存され、相手と直接接続した場合にのみ相手の端末へ送信されます。設定画面からプロフィールとローカルデータを削除できます。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AirTalk does not create server accounts or store chat history on any server. Your profile is stored on your device and is sent to another device only when you connect directly. You can delete your profile and local data from the settings screen."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AirTalk はサーバーアカウントを作成せず、チャット履歴をサーバーに保存しません。プロフィールは端末内に保存され、相手と直接接続した場合にのみ相手の端末へ送信されます。設定画面からプロフィールとローカルデータを削除できます。"
+          }
+        }
+      }
+    },
+    "AirTalk 利用規約 / EULA": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AirTalk Terms of Use / EULA"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AirTalk 利用規約 / EULA"
+          }
+        }
+      }
+    },
+    "AirTalk、ネット無しで繋がるの不思議ですね": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wild that AirTalk works without internet"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AirTalk、ネット無しで繋がるの不思議ですね"
+          }
+        }
+      }
+    },
+    "AirTalkでつながるの不思議ですね": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Funny how AirTalk connects us, isn't it?"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AirTalkでつながるの不思議ですね"
+          }
+        }
+      }
+    },
+    "AirTalkで話そう！インターネットなしで、近くの人とだけチャットできるアプリです。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Let's chat on AirTalk! It lets you chat with people nearby, no internet needed."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AirTalkで話そう！インターネットなしで、近くの人とだけチャットできるアプリです。"
+          }
+        }
+      }
+    },
+    "AirTalkは、同じアプリを入れた人が近くにいるとつながります。このQRコードを相手のカメラで読み取ってもらいましょう。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AirTalk connects you with people nearby who also have the app. Ask your friend to scan this QR code with their camera."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AirTalkは、同じアプリを入れた人が近くにいるとつながります。このQRコードを相手のカメラで読み取ってもらいましょう。"
+          }
+        }
+      }
+    },
+    "App StoreのAirTalkページへのQRコード": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "QR code for AirTalk on the App Store"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "App StoreのAirTalkページへのQRコード"
+          }
+        }
+      }
+    },
+    "App Storeの購入情報を取得できませんでした。ネットワーク接続を確認してもう一度お試しください。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't load purchase information from the App Store. Check your network connection and try again."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "App Storeの購入情報を取得できませんでした。ネットワーク接続を確認してもう一度お試しください。"
+          }
+        }
+      }
+    },
+    "Connected": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connected"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "接続中"
+          }
+        }
+      }
+    },
+    "Disconnected": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Disconnected"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "未接続"
+          }
+        }
+      }
+    },
+    "HOST": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HOST"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HOST"
+          }
+        }
+      }
+    },
+    "Hostバッジ": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Host Badge"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hostバッジ"
+          }
+        }
+      }
+    },
+    "Hostバッジ、フレーム、プリセットを使う": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unlock Host badge, frames, and presets"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hostバッジ、フレーム、プリセットを使う"
+          }
+        }
+      }
+    },
+    "Last updated: June 13, 2026": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Last updated: June 13, 2026"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Last updated: June 13, 2026"
+          }
+        }
+      }
+    },
+    "OK": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
+          }
+        }
+      }
+    },
+    "Questions, abuse reports, and support requests can be sent to %@. Support information is available at %@. Terms of Use: %@. Privacy Policy: %@.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Questions, abuse reports, and support requests can be sent to %1$@. Support information is available at %2$@. Terms of Use: %3$@. Privacy Policy: %4$@."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Questions, abuse reports, and support requests can be sent to %@. Support information is available at %@. Terms of Use: %@. Privacy Policy: %@."
+          }
+        }
+      }
+    },
+    "Wi-FiとBluetoothで、半径50m以内のAirTalkユーザーと直接つながります。インターネットもアカウントも不要です。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connect directly with AirTalk users within about 50 m (160 ft) over Wi-Fi and Bluetooth. No internet or account needed."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wi-FiとBluetoothで、半径50m以内のAirTalkユーザーと直接つながります。インターネットもアカウントも不要です。"
+          }
+        }
+      }
+    },
+    "「設定」でローカルネットワークと\nBluetoothの許可をオンにしてください": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn on Local Network and\nBluetooth access in Settings"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "「設定」でローカルネットワークと\nBluetoothの許可をオンにしてください"
+          }
+        }
+      }
+    },
+    "あなた": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "あなた"
+          }
+        }
+      }
+    },
+    "おたがいにWi-FiとBluetoothをオンにしてください（インターネット接続は不要です）": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Both of you should turn on Wi-Fi and Bluetooth (no internet connection needed)"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "おたがいにWi-FiとBluetoothをオンにしてください（インターネット接続は不要です）"
+          }
+        }
+      }
+    },
+    "このあたりでおすすめのお店ありますか？": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Any good places around here you recommend?"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "このあたりでおすすめのお店ありますか？"
+          }
+        }
+      }
+    },
+    "このユーザーとの会話をすぐに削除し、今後レーダーと招待に表示しません。開発者へ通報メールも作成します。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your conversation with this user will be deleted immediately, and they won't appear on your radar or be able to invite you. An email report to the developer will also be created."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "このユーザーとの会話をすぐに削除し、今後レーダーと招待に表示しません。開発者へ通報メールも作成します。"
+          }
+        }
+      }
+    },
+    "このユーザーをブロックして通報": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Block and Report User"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "このユーザーをブロックして通報"
+          }
+        }
+      }
+    },
+    "このユーザーをブロックしますか？": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Block this user?"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "このユーザーをブロックしますか？"
+          }
+        }
+      }
+    },
+    "こんにちは！近くにいたので話しかけてみました": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hi! I saw you nearby and thought I'd say hello"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "こんにちは！近くにいたので話しかけてみました"
+          }
+        }
+      }
+    },
+    "こんにちは！近くにいたので話しかけてみました 👋": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hi! I saw you nearby and thought I'd say hello 👋"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "こんにちは！近くにいたので話しかけてみました 👋"
+          }
+        }
+      }
+    },
+    "そうです、窓際の席です ☕️": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yep, I'm at the window seat ☕️"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "そうです、窓際の席です ☕️"
+          }
+        }
+      }
+    },
+    "その場で、もっと見つけてもらう": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stand out wherever you are"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "その場で、もっと見つけてもらう"
+          }
+        }
+      }
+    },
+    "つぎへ": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "つぎへ"
+          }
+        }
+      }
+    },
+    "なし": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "None"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "なし"
+          }
+        }
+      }
+    },
+    "はじめまして！": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nice to meet you!"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "はじめまして！"
+          }
+        }
+      }
+    },
+    "はじめる": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Get Started"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "はじめる"
+          }
+        }
+      }
+    },
+    "ひとこと": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Status"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ひとこと"
+          }
+        }
+      }
+    },
+    "ひとことなし": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No status"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ひとことなし"
+          }
+        }
+      }
+    },
+    "ひとやすみ 🌙": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Taking a break 🌙"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ひとやすみ 🌙"
+          }
+        }
+      }
+    },
+    "まさに一期一会！この後おすすめのお店あります？": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A true once-in-a-lifetime chat! Any food spots you recommend?"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "まさに一期一会！この後おすすめのお店あります？"
+          }
+        }
+      }
+    },
+    "もう一度さがす": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Search Again"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "もう一度さがす"
+          }
+        }
+      }
+    },
+    "もう一度読み込む": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try Again"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "もう一度読み込む"
+          }
+        }
+      }
+    },
+    "わ、はじめまして！同じカフェですか？": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oh, hi! Are you in the same café?"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "わ、はじめまして！同じカフェですか？"
+          }
+        }
+      }
+    },
+    "アイスブレイク": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Icebreakers"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アイスブレイク"
+          }
+        }
+      }
+    },
+    "アカウントを削除": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete Account"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アカウントを削除"
+          }
+        }
+      }
+    },
+    "アカウントを削除しますか？": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete Account?"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アカウントを削除しますか？"
+          }
+        }
+      }
+    },
+    "アカウント削除が完了しました": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Account Deleted"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アカウント削除が完了しました"
+          }
+        }
+      }
+    },
+    "アプリを開いたままにすると、レーダーに相手が表示されます": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep the app open and your friend will appear on the radar"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アプリを開いたままにすると、レーダーに相手が表示されます"
+          }
+        }
+      }
+    },
+    "イベントや場の主催者として見つけてもらいやすくする": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Help people find you as the host of an event or meetup"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "イベントや場の主催者として見つけてもらいやすくする"
+          }
+        }
+      }
+    },
+    "イベント用、作業用、旅先用などをすぐ切り替える": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quickly switch between profiles for events, work, travel, and more"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "イベント用、作業用、旅先用などをすぐ切り替える"
+          }
+        }
+      }
+    },
+    "オレンジ、ピンク、ミントなど7色のテーマカラー": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "7 more theme colors, including orange, pink, and mint"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "オレンジ、ピンク、ミントなど7色のテーマカラー"
+          }
+        }
+      }
+    },
+    "カフェで作業中 ☕️": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Working at the café ☕️"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "カフェで作業中 ☕️"
+          }
+        }
+      }
+    },
+    "キャンセル": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancel"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "キャンセル"
+          }
+        }
+      }
+    },
+    "サブスクリプションは自動更新されます。解約はApp Storeのアカウント設定からいつでも行えます。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subscriptions renew automatically. You can cancel anytime in your App Store account settings."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "サブスクリプションは自動更新されます。解約はApp Storeのアカウント設定からいつでも行えます。"
+          }
+        }
+      }
+    },
+    "チャットリクエスト": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chat Request"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "チャットリクエスト"
+          }
+        }
+      }
+    },
+    "チャット中": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chatting"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "チャット中"
+          }
+        }
+      }
+    },
+    "チャット相手を切り替えますか？": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Switch chat partner?"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "チャット相手を切り替えますか？"
+          }
+        }
+      }
+    },
+    "ニックネーム": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nickname"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ニックネーム"
+          }
+        }
+      }
+    },
+    "フレーム": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Frame"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "フレーム"
+          }
+        }
+      }
+    },
+    "ブロックして通報": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Block and Report"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ブロックして通報"
+          }
+        }
+      }
+    },
+    "プライバシーポリシー": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Privacy Policy"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "プライバシーポリシー"
+          }
+        }
+      }
+    },
+    "プランを表示できません": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Can't show plans"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "プランを表示できません"
+          }
+        }
+      }
+    },
+    "プランを読み込んでいます": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loading plans"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "プランを読み込んでいます"
+          }
+        }
+      }
+    },
+    "プリセット": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Presets"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "プリセット"
+          }
+        }
+      }
+    },
+    "プレミアムテーマ": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Premium Themes"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "プレミアムテーマ"
+          }
+        }
+      }
+    },
+    "プレミアムフレーム": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Premium Frames"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "プレミアムフレーム"
+          }
+        }
+      }
+    },
+    "プロフィール、ブロックリスト、現在の会話など、この端末内のAirTalkデータを完全に削除します。AirTalkはサーバーアカウントを作成しません。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Permanently deletes all AirTalk data on this device, including your profile, block list, and current conversations. AirTalk never creates a server account."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "プロフィール、ブロックリスト、現在の会話など、この端末内のAirTalkデータを完全に削除します。AirTalkはサーバーアカウントを作成しません。"
+          }
+        }
+      }
+    },
+    "プロフィールとローカルデータを完全に削除します。この操作は取り消せません。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your profile and local data will be permanently deleted. This cannot be undone."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "プロフィールとローカルデータを完全に削除します。この操作は取り消せません。"
+          }
+        }
+      }
+    },
+    "プロフィールプリセット": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Profile Presets"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "プロフィールプリセット"
+          }
+        }
+      }
+    },
+    "プロフィール編集": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit Profile"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "プロフィール編集"
+          }
+        }
+      }
+    },
+    "メッセージ": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Message"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "メッセージ"
+          }
+        }
+      }
+    },
+    "メッセージを通報": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Report Message"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "メッセージを通報"
+          }
+        }
+      }
+    },
+    "メッセージを通報しますか？": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Report this message?"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "メッセージを通報しますか？"
+          }
+        }
+      }
+    },
+    "ユーザーは不適切なメッセージを通報できます。また、迷惑行為を行うユーザーをブロックできます。ブロックすると、そのユーザーとの会話は端末上から直ちに削除され、そのユーザーはレーダーや招待に表示されなくなります。通報またはブロック時には、開発者へ内容を通知するためのメール作成画面が開きます。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You can report objectionable messages and block abusive users. When you block a user, your conversation with them is immediately deleted from your device, and they no longer appear on your radar or in invitations. Reporting or blocking opens an email to notify the developer."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ユーザーは不適切なメッセージを通報できます。また、迷惑行為を行うユーザーをブロックできます。ブロックすると、そのユーザーとの会話は端末上から直ちに削除され、そのユーザーはレーダーや招待に表示されなくなります。通報またはブロック時には、開発者へ内容を通知するためのメール作成画面が開きます。"
+          }
+        }
+      }
+    },
+    "ランチ仲間募集中 🍜": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Looking for lunch buddies 🍜"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ランチ仲間募集中 🍜"
+          }
+        }
+      }
+    },
+    "リクエスト拒否": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Request Declined"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "リクエスト拒否"
+          }
+        }
+      }
+    },
+    "リンクを送る": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send Link"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "リンクを送る"
+          }
+        }
+      }
+    },
+    "レーダーとチャットでプロフィールを少し目立たせる": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Make your profile stand out on the radar and in chats"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "レーダーとチャットでプロフィールを少し目立たせる"
+          }
+        }
+      }
+    },
+    "不適切な内容や迷惑行為を許容しないポリシーを含みます。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Includes a zero-tolerance policy for objectionable content and abusive behavior."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "不適切な内容や迷惑行為を許容しないポリシーを含みます。"
+          }
+        }
+      }
+    },
+    "会話は残らない": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing is saved"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "会話は残らない"
+          }
+        }
+      }
+    },
+    "保存": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存"
+          }
+        }
+      }
+    },
+    "切り替える": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Switch"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "切り替える"
+          }
+        }
+      }
+    },
+    "利用規約": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Terms of Use"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "利用規約"
+          }
+        }
+      }
+    },
+    "利用規約 / EULA に同意します": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I agree to the Terms of Use / EULA"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "利用規約 / EULA に同意します"
+          }
+        }
+      }
+    },
+    "利用規約を確認": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Read the Terms of Use"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "利用規約を確認"
+          }
+        }
+      }
+    },
+    "削除": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "削除"
+          }
+        }
+      }
+    },
+    "半径50mの一期一会チャット": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chat with people within 50 m"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "半径50mの一期一会チャット"
+          }
+        }
+      }
+    },
+    "半径50m以内でAirTalkを開いている人が、ここに表示されます。一緒にいる友だちを誘ってみましょう。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "People within about 50 m (160 ft) who have AirTalk open will appear here. Invite a friend who is with you."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "半径50m以内でAirTalkを開いている人が、ここに表示されます。一緒にいる友だちを誘ってみましょう。"
+          }
+        }
+      }
+    },
+    "友だちと一緒に始めよう": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start with a friend"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "友だちと一緒に始めよう"
+          }
+        }
+      }
+    },
+    "友だちを誘う": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Invite a Friend"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "友だちを誘う"
+          }
+        }
+      }
+    },
+    "同じイベントに参加していますか？": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Are you at the same event?"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "同じイベントに参加していますか？"
+          }
+        }
+      }
+    },
+    "向かいのベーカリー超おすすめです 🥐": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The bakery across the street is amazing 🥐"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "向かいのベーカリー超おすすめです 🥐"
+          }
+        }
+      }
+    },
+    "周囲のユーザーを探しています…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Looking for people nearby…"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "周囲のユーザーを探しています…"
+          }
+        }
+      }
+    },
+    "基本の発見・招待・1対1チャットは無料のまま。Plusではイベントや場づくりに便利なプロフィール機能を解放します。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Discovering people, inviting, and 1:1 chat stay free. Plus unlocks profile features that help at events and meetups."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "基本の発見・招待・1対1チャットは無料のまま。Plusではイベントや場づくりに便利なプロフィール機能を解放します。"
+          }
+        }
+      }
+    },
+    "少しだけ話しませんか？": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Want to chat for a bit?"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "少しだけ話しませんか？"
+          }
+        }
+      }
+    },
+    "復元できるAirTalk Plusの購入が見つかりませんでした。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No AirTalk Plus purchase was found to restore."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "復元できるAirTalk Plusの購入が見つかりませんでした。"
+          }
+        }
+      }
+    },
+    "戻る": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Back"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "戻る"
+          }
+        }
+      }
+    },
+    "承認": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Accept"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "承認"
+          }
+        }
+      }
+    },
+    "承認待ち...": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Waiting..."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "承認待ち..."
+          }
+        }
+      }
+    },
+    "拒否": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Decline"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "拒否"
+          }
+        }
+      }
+    },
+    "新しい出会いを探し中 ✨": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open to meeting new people ✨"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "新しい出会いを探し中 ✨"
+          }
+        }
+      }
+    },
+    "有効": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Active"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "有効"
+          }
+        }
+      }
+    },
+    "期間": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "period"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "期間"
+          }
+        }
+      }
+    },
+    "未保存": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "None saved"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "未保存"
+          }
+        }
+      }
+    },
+    "現在のチャットは終了し、メッセージは破棄されます。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your current chat will end and its messages will be deleted."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "現在のチャットは終了し、メッセージは破棄されます。"
+          }
+        }
+      }
+    },
+    "相手と離れたりアプリを閉じたりすると、メッセージは自動で消えます。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Messages disappear automatically when you move apart or close the app."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "相手と離れたりアプリを閉じたりすると、メッセージは自動で消えます。"
+          }
+        }
+      }
+    },
+    "端末内のプロフィールとAirTalkデータを削除しました。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your profile and AirTalk data have been deleted from this device."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "端末内のプロフィールとAirTalkデータを削除しました。"
+          }
+        }
+      }
+    },
+    "設定を開く": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Settings"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "設定を開く"
+          }
+        }
+      }
+    },
+    "詳細": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Details"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "詳細"
+          }
+        }
+      }
+    },
+    "購入の復元に失敗しました。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't restore purchases."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "購入の復元に失敗しました。"
+          }
+        }
+      }
+    },
+    "購入は承認待ちです。承認後にAirTalk Plusが自動で有効になります。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your purchase is pending approval. AirTalk Plus will activate automatically once approved."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "購入は承認待ちです。承認後にAirTalk Plusが自動で有効になります。"
+          }
+        }
+      }
+    },
+    "購入を完了できませんでした。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't complete the purchase."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "購入を完了できませんでした。"
+          }
+        }
+      }
+    },
+    "購入を復元": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restore Purchases"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "購入を復元"
+          }
+        }
+      }
+    },
+    "購入情報を読み込めませんでした。時間をおいてもう一度お試しください。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't load purchase information. Please try again later."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "購入情報を読み込めませんでした。時間をおいてもう一度お試しください。"
+          }
+        }
+      }
+    },
+    "近くにAirTalkユーザーがいません": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No AirTalk users nearby"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "近くにAirTalkユーザーがいません"
+          }
+        }
+      }
+    },
+    "近くにいる人とだけ話せる": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Talk only with people nearby"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "近くにいる人とだけ話せる"
+          }
+        }
+      }
+    },
+    "近くに誰もいないときは、QRコードで友だちを誘えます。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "If no one's around, invite a friend with a QR code."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "近くに誰もいないときは、QRコードで友だちを誘えます。"
+          }
+        }
+      }
+    },
+    "近くのデバイスに接続できません": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Can't connect to nearby devices"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "近くのデバイスに接続できません"
+          }
+        }
+      }
+    },
+    "近くのデバイスを探すため、このあとローカルネットワークとBluetoothの利用許可を求めます。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next, we'll ask for Local Network and Bluetooth access so AirTalk can find devices nearby."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "近くのデバイスを探すため、このあとローカルネットワークとBluetoothの利用許可を求めます。"
+          }
+        }
+      }
+    },
+    "近くの友だちを誘う": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Invite Friends Nearby"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "近くの友だちを誘う"
+          }
+        }
+      }
+    },
+    "追加リアクション": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "More Reactions"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "追加リアクション"
+          }
+        }
+      }
+    },
+    "通信が途絶えました。メッセージは破棄されます。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connection lost. Messages will be deleted."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "通信が途絶えました。メッセージは破棄されます。"
+          }
+        }
+      }
+    },
+    "通報する": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Report"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "通報する"
+          }
+        }
+      }
+    },
+    "閉じる": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Close"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "閉じる"
+          }
+        }
+      }
+    },
+    "開発者へ不適切な内容を通知するメール作成画面を開きます。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This opens an email to report objectionable content to the developer."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "開発者へ不適切な内容を通知するメール作成画面を開きます。"
+          }
+        }
+      }
+    },
+    "離れると会話が消えるのが逆に良いよね 🌫️": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I kind of love that the chat disappears when we leave 🌫️"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "離れると会話が消えるのが逆に良いよね 🌫️"
+          }
+        }
+      }
+    },
+    "音楽の話しよう 🎧": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Let's talk music 🎧"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "音楽の話しよう 🎧"
+          }
+        }
+      }
+    },
+    "🔥 👏 ✨ など8種類のリアクションで気持ちを伝える": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Express yourself with 8 extra reactions like 🔥 👏 ✨"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🔥 👏 ✨ など8種類のリアクションで気持ちを伝える"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

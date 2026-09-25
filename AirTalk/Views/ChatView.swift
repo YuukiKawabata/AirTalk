@@ -13,7 +13,6 @@ struct ChatView: View {
     @State private var myProfile: UserProfile?
     @State private var reportTargetMessage: AirMessage?
     @State private var showBlockAlert = false
-    @State private var showingPaywall = false
 
     private var isConnected: Bool {
         multipeerManager.connectedPeers.contains(peerID)
@@ -123,37 +122,21 @@ struct ChatView: View {
 
                     // 入力エリア
                     HStack(spacing: 12) {
-                        if purchaseManager.isPlusActive {
-                            Menu {
-                                ForEach(AirTalkPlus.icebreakers, id: \.self) { phrase in
-                                    Button(phrase) {
-                                        inputText = phrase
-                                    }
+                        // アイスブレイク（最初の一言の定型文）は会話を始めやすくするため無料で提供する
+                        Menu {
+                            ForEach(AirTalkPlus.icebreakers, id: \.self) { phrase in
+                                Button(phrase) {
+                                    inputText = phrase
                                 }
-                            } label: {
-                                Image(systemName: "sparkles")
-                                    .font(.system(size: 22, weight: .semibold))
-                                    .foregroundColor(.primary)
-                                    .frame(width: 34, height: 34)
-                                    .background(.ultraThinMaterial, in: Circle())
                             }
-                        } else {
-                            Button {
-                                showingPaywall = true
-                            } label: {
-                                Image(systemName: "sparkles")
-                                    .font(.system(size: 22, weight: .semibold))
-                                    .foregroundColor(.secondary)
-                                    .frame(width: 34, height: 34)
-                                    .background(.ultraThinMaterial, in: Circle())
-                                    .overlay(
-                                        Image(systemName: "lock.fill")
-                                            .font(.system(size: 8, weight: .bold))
-                                            .foregroundColor(.primary)
-                                            .offset(x: 10, y: 10)
-                                    )
-                            }
+                        } label: {
+                            Image(systemName: "sparkles")
+                                .font(.system(size: 22, weight: .semibold))
+                                .foregroundColor(.primary)
+                                .frame(width: 34, height: 34)
+                                .background(.ultraThinMaterial, in: Circle())
                         }
+                        .accessibilityLabel(Text("アイスブレイク"))
 
                         TextField("メッセージ", text: $inputText, axis: .vertical)
                             .lineLimit(1...4)
@@ -253,10 +236,6 @@ struct ChatView: View {
         }
         .onAppear {
             myProfile = DemoMode.isEnabled ? DemoData.myProfile : UserProfile.load()
-        }
-        .sheet(isPresented: $showingPaywall) {
-            PaywallView()
-                .environmentObject(purchaseManager)
         }
         .onChange(of: isConnected) { _, connected in
             if !connected && !showDisconnectBanner {

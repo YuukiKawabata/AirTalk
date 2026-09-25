@@ -52,7 +52,7 @@ struct TermsOfUseView: View {
         }
     }
 
-    private func section(title: String, body: String) -> some View {
+    private func section(title: LocalizedStringKey, body: LocalizedStringKey) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(title)
                 .font(.headline)

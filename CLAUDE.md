@@ -49,8 +49,9 @@ App Store パネルまで生成する。
   - iPad はレイアウト係数（`deviceWidthFrac`/`deviceTopFrac`/`cornerFrac`）を別に持つ。
     特に角丸（`cornerFrac`）は小さめ（0.035）にしないと iPad のステータスバー隅が削れて見切れる。
 - 機種変更: `IPHONE="iPhone 17 Pro" IPAD="iPad Pro 13-inch (M5)" ./docs/capture-screenshots.sh`
-- パネルだけ作り直す: `swift docs/make-store-panels.swift`
-- コピー文言・配色は `docs/make-store-panels.swift` 冒頭の `panels` 配列で編集する。
+- 言語: 既定で日本語と英語を撮る（`LANGS="en"` で英語だけ）。英語は `docs/screenshots/en/{raw,store}/<device>/` に出力。
+- パネルだけ作り直す: `swift docs/make-store-panels.swift`（英語は末尾に `en`）
+- コピー文言・配色は `docs/make-store-panels.swift` 冒頭の `jaPanels` / `enPanels` 配列で編集する。
 
 注意: `xcodebuild -showBuildSettings` は `-sdk iphonesimulator` を付けないと実機パスを返し、
 シミュレータ起動が SBMainWorkspace に拒否される（スクリプトでは対応済み）。
@@ -107,6 +108,7 @@ AirTalkApp
 
 - **メッセージは永続化しない**: CoreData・SwiftData・FileManager 不使用。UserDefaults はプロフィールのみ
 - **切断 = 即削除**: ディスコネクト・バックグラウンド移行のどちらもメッセージを消去
+- **ローカライズ**: 日本語と英語。文字列は日本語をキーにして `AirTalk/Localizable.xcstrings` で英訳する（権限の文言は `InfoPlist.xcstrings`）。`Text(String変数)` は翻訳されないので、`LocalizedStringKey` か `String(localized:)` を使う。`developmentRegion` は en のまま（日英以外の端末は英語で表示される）
 - **モノクロデザイン**: Black / White / Gray (#8E8E93) のみ。SF Symbols は `.monochrome`
 - `closeChat()` はセッションを再生成し、再接続を可能にする
 
