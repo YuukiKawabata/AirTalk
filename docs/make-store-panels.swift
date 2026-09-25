@@ -6,9 +6,10 @@
 // 下部に角丸＋影付きの端末スクショを配置した「映える」App Store 画像を
 // docs/screenshots/store/<device>/ に書き出す。iPhone・iPad の両サイズを生成する。
 //
-// macOS 標準の AppKit / CoreText のみ使用（外部依存なし）。日本語はヒラギノを使う。
+// macOS 標準の AppKit / CoreText のみ使用（外部依存なし）。日本語はヒラギノ、英語はシステムフォント。
 //
-// 使い方:  swift docs/make-store-panels.swift
+// 使い方:  swift docs/make-store-panels.swift        # 日本語（screenshots/raw → store）
+//          swift docs/make-store-panels.swift en     # 英語（screenshots/en/raw → en/store）
 //
 import AppKit
 import CoreText
@@ -50,7 +51,7 @@ let deviceClasses: [DeviceClass] = [
 
 // headline は \n で文節区切りの改行位置を明示し、全パネル2行に揃える。
 // （自動折り返しだと「声を／かけよう」のように不自然な位置で割れるため）
-let panels: [Panel] = [
+let jaPanels: [Panel] = [
     Panel(source: "01-discovery.png",
           headline: "近くの人と、\nすぐつながる",
           subline: "半径50m。アプリを開くだけ。",
@@ -69,14 +70,42 @@ let panels: [Panel] = [
           top: rgb(139, 92, 246), bottom: rgb(76, 29, 149)),
 ]
 
+// 英語版。検索語（offline / nearby / no internet）を1枚目に入れる。
+let enPanels: [Panel] = [
+    Panel(source: "01-discovery.png",
+          headline: "Offline chat with\npeople nearby",
+          subline: "Wi-Fi + Bluetooth. No internet needed.",
+          top: rgb(124, 58, 237), bottom: rgb(91, 33, 182)),
+    Panel(source: "02-invite.png",
+          headline: "Say hi to someone\nwithin 50 m",
+          subline: "Chats start only when they accept.",
+          top: rgb(217, 70, 160), bottom: rgb(147, 51, 180)),
+    Panel(source: "03-chat.png",
+          headline: "Chats vanish\nwhen you leave",
+          subline: "Messages auto-delete when you move apart.",
+          top: rgb(99, 102, 241), bottom: rgb(67, 56, 202)),
+    Panel(source: "04-onboarding.png",
+          headline: "No account.\nNo internet.",
+          subline: "Just pick a nickname and start.",
+          top: rgb(139, 92, 246), bottom: rgb(76, 29, 149)),
+]
+
+let lang = CommandLine.arguments.dropFirst().first ?? "ja"
+let panels = lang == "ja" ? jaPanels : enPanels
+
 // MARK: - パス
 
 let scriptURL = URL(fileURLWithPath: CommandLine.arguments[0]).deletingLastPathComponent()
-let screenshotsDir = scriptURL.appendingPathComponent("screenshots")
+let screenshotsDir = lang == "ja"
+    ? scriptURL.appendingPathComponent("screenshots")
+    : scriptURL.appendingPathComponent("screenshots/\(lang)")
 
 // MARK: - 描画ヘルパー
 
 func hiragino(weight: String, size: CGFloat) -> NSFont {
+    if lang != "ja" {
+        return NSFont.systemFont(ofSize: size, weight: weight == "heavy" ? .heavy : (weight == "bold" ? .bold : .regular))
+    }
     // ヒラギノ角ゴシック（W3=Regular, W6=Bold, W8=Heavy 相当）
     let name: String
     switch weight {
