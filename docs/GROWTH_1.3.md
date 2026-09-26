@@ -141,3 +141,26 @@
 - 米国・インドで「offline chat」「bluetooth chat」「nearby chat」に表示されるか
 - 流入元「参照元Web／参照元アプリ／参照元なし」からのDL（QR・リンクによる招待の効果）
 - レビュー数
+
+## 5. 実施記録
+
+| 日時 | 内容 |
+|---|---|
+| 2026-09-26 | 1.2.1 の日本語プロモーションテキストを保存（審査なしで反映） |
+| 2026-09-26 | 1.3(9) をアップロード（`node scripts/asc/upload-build.mjs build/AirTalk-1.3-9.xcarchive`） |
+| 2026-09-26 | 1.3 を作成し、日英のメタデータとスクショを保存（`apply-1.3-metadata.mjs` / `upload-screenshots.mjs`） |
+| 2026-09-26 | AirTalk Plus の日本語の説明を修正し、英語版を追加して審査に提出（`submit-subscriptions.mjs`） |
+| 2026-09-26 | 1.3 を審査に提出（手動公開。`submit-version.mjs 1.3 9`） |
+
+### 公開後に残っている作業
+
+- 審査を通過したら、ASC で 1.3 を手動公開する。
+- 公開後に `node scripts/asc/apply-1.3-metadata.mjs` をもう一度実行し、主要言語を en-US に変える。
+  公開中のバージョンにも英語スクショが必要なため、1.2.1 が公開されている間は Apple が変更を受け付けない（409 MISSING_SCREENSHOTS_PRIMARY_LOCALE）。
+- 公開日を「比較する日」に書き、2週間後と4週間後に4章の指標を比べる。
+
+### アップロードの注意
+
+API キーにはクラウド署名の権限が無いため、`build/ExportOptions-Upload.plist`（自動署名で直接アップロード）は
+"Cloud signing permission error" で失敗する。`upload-build.mjs` は API で App Store 用のプロファイルを作成してから、
+手元の Apple Distribution 証明書で手動署名した IPA を altool でアップロードする。
