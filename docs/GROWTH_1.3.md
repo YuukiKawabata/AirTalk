@@ -155,7 +155,8 @@
 ### 公開後に残っている作業
 
 - 審査を通過したら、ASC で 1.3 を手動公開する。
-- 公開後に `node scripts/asc/apply-1.3-metadata.mjs` をもう一度実行し、主要言語を en-US に変える。
+- 公開後に `node scripts/asc/set-primary-locale.mjs` を実行し、主要言語を en-US に変える（毎日10時の定期タスク `airtalk-primary-locale-en` が自動で行う）。
+  `apply-1.3-metadata.mjs` は公開後のバージョンの説明文を書き換えようとして失敗するので使わない。
   公開中のバージョンにも英語スクショが必要なため、1.2.1 が公開されている間は Apple が変更を受け付けない（409 MISSING_SCREENSHOTS_PRIMARY_LOCALE）。
 - 公開日を「比較する日」に書き、2週間後と4週間後に4章の指標を比べる。
 
