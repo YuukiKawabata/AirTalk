@@ -151,6 +151,7 @@
 | 2026-09-26 | 1.3 を作成し、日英のメタデータとスクショを保存（`apply-1.3-metadata.mjs` / `upload-screenshots.mjs`） |
 | 2026-09-26 | AirTalk Plus の日本語の説明を修正し、英語版を追加して審査に提出（`submit-subscriptions.mjs`） |
 | 2026-09-26 | 1.3 を審査に提出（手動公開。`submit-version.mjs 1.3 9`） |
+| 2026-09-28 | AirTalk Plus 2商品がガイドライン 2.3.2 で却下（プロモーション画像がアプリのスクショ）。独自の画像に差し替えて再提出する（`docs/app-review-reply-plus-promo-2.3.2.md`） |
 
 ### 公開後に残っている作業
 

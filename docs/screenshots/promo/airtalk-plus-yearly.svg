@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0B1030"/>
+      <stop offset="0.55" stop-color="#1E1A5C"/>
+      <stop offset="1" stop-color="#3A1150"/>
+    </linearGradient>
+    <radialGradient id="glowA"><stop offset="0" stop-color="#FFB347" stop-opacity="0.75"/><stop offset="1" stop-color="#FFB347" stop-opacity="0"/></radialGradient>
+    <radialGradient id="glowB"><stop offset="0" stop-color="#C64DFF" stop-opacity="0.55"/><stop offset="1" stop-color="#C64DFF" stop-opacity="0"/></radialGradient>
+    <linearGradient id="frame" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFE58A"/>
+      <stop offset="0.5" stop-color="#FFB347"/>
+      <stop offset="1" stop-color="#FF6F61"/>
+    </linearGradient>
+    <linearGradient id="face" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#E9E2FF"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFE9A3"/>
+      <stop offset="1" stop-color="#FFB627"/>
+    </linearGradient>
+    <filter id="blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="18"/></filter>
+    <filter id="shadow" x="-60%" y="-80%" width="220%" height="280%"><feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#000000" flood-opacity="0.35"/></filter>
+    <clipPath id="avatarClip"><circle cx="512" cy="420" r="112"/></clipPath>
+  </defs>
+
+  <rect width="1024" height="1024" fill="url(#bg)"/>
+  <circle cx="300" cy="260" r="420" fill="url(#glowA)"/>
+  <circle cx="820" cy="760" r="420" fill="url(#glowB)"/>
+
+  <g>
+    <circle cx="512" cy="420" r="170" fill="none" stroke="#FFFFFF" stroke-opacity="0.16" stroke-width="2"/>
+    <circle cx="512" cy="420" r="250" fill="none" stroke="#FFFFFF" stroke-opacity="0.13" stroke-width="2" stroke-dasharray="4 14" stroke-linecap="round"/>
+    <circle cx="512" cy="420" r="330" fill="none" stroke="#FFFFFF" stroke-opacity="0.1" stroke-width="2"/>
+    <circle cx="512" cy="420" r="410" fill="none" stroke="#FFFFFF" stroke-opacity="0.07" stroke-width="2"/>
+    <circle cx="453.9" cy="260.3" r="9" fill="#FFFFFF" opacity="0.35"/>
+    <circle cx="637.0" cy="203.5" r="9" fill="#FFFFFF" opacity="0.35"/>
+    <circle cx="201.9" cy="307.1" r="9" fill="#FFFFFF" opacity="0.35"/>
+    <circle cx="156.9" cy="625.0" r="9" fill="#FFFFFF" opacity="0.35"/>
+    <circle cx="226.2" cy="255.0" r="9" fill="#FFFFFF" opacity="0.35"/>
+    <circle cx="897.3" cy="560.2" r="9" fill="#FFFFFF" opacity="0.35"/>
+  </g>
+
+  <!-- プレミアムフレーム付きのプロフィール -->
+  <circle cx="512" cy="420" r="136" fill="none" stroke="url(#frame)" stroke-width="26" filter="url(#blur)" opacity="0.9"/>
+  <circle cx="512" cy="420" r="128" fill="url(#face)" filter="url(#shadow)"/>
+  <circle cx="512" cy="420" r="128" fill="none" stroke="url(#frame)" stroke-width="16"/>
+  <g clip-path="url(#avatarClip)">
+    <circle cx="512" cy="394" r="42" fill="#5B2DB0"/>
+    <ellipse cx="512" cy="516" rx="86" ry="70" fill="#5B2DB0"/>
+  </g>
+
+  <!-- Host バッジ -->
+  <g filter="url(#shadow)" transform="translate(588 262) rotate(8)">
+    <rect x="0" y="0" width="176" height="62" rx="31" fill="url(#gold)"/>
+    <path d="M36 14 L42.5 27 L57 29 L46.5 39 L49 53 L36 46.3 L23 53 L25.5 39 L15 29 L29.5 27 Z" fill="#5A3A00"/>
+    <text x="68" y="44" font-family="-apple-system, 'SF Pro Display', 'Helvetica Neue', Helvetica, Arial, 'Liberation Sans', sans-serif" font-size="30" font-weight="800" letter-spacing="2" fill="#5A3A00">HOST</text>
+  </g>
+
+  <!-- テーマカラー -->
+  <g filter="url(#shadow)">
+    <circle cx="232" cy="292" r="30" fill="#FF9F43"/>
+    <circle cx="272" cy="292" r="30" fill="#FF5FA2"/>
+    <circle cx="312" cy="292" r="30" fill="#2ED3B7"/>
+  </g>
+
+  <!-- リアクション（吹き出し） -->
+  <g filter="url(#shadow)" transform="translate(176 470)">
+    <path d="M0 34 Q0 0 34 0 H130 Q164 0 164 34 V66 Q164 100 130 100 H58 L28 126 L34 100 Q0 100 0 66 Z" fill="#FFFFFF"/>
+    <circle cx="52" cy="50" r="10" fill="#5B2DB0"/>
+    <circle cx="82" cy="50" r="10" fill="#5B2DB0" opacity="0.7"/>
+    <circle cx="112" cy="50" r="10" fill="#5B2DB0" opacity="0.45"/>
+  </g>
+
+  <!-- プロフィールプリセット（重なったカード） -->
+  <g filter="url(#shadow)" transform="translate(716 478)">
+    <rect x="28" y="-16" width="132" height="92" rx="20" fill="#FFFFFF" opacity="0.45" transform="rotate(10 94 30)"/>
+    <rect x="14" y="-6" width="132" height="92" rx="20" fill="#FFFFFF" opacity="0.7" transform="rotate(4 80 40)"/>
+    <rect x="0" y="4" width="132" height="92" rx="20" fill="#FFFFFF"/>
+    <circle cx="34" cy="38" r="16" fill="url(#frame)"/>
+    <rect x="60" y="28" width="52" height="10" rx="5" fill="#CFC6EA"/>
+    <rect x="60" y="46" width="36" height="10" rx="5" fill="#E3DDF5"/>
+    <rect x="20" y="68" width="92" height="10" rx="5" fill="#E3DDF5"/>
+  </g>
+
+  <path d="M752 192 Q758.16 207.84 774 214 Q758.16 220.16 752 236 Q745.84 220.16 730 214 Q745.84 207.84 752 192Z" fill="#FFFFFF" opacity="0.95"/>
+  <path d="M812 278 Q815.36 286.64 824 290 Q815.36 293.36 812 302 Q808.64 293.36 800 290 Q808.64 286.64 812 278Z" fill="#FFFFFF" opacity="0.7"/>
+  <path d="M198 390 Q201.92 400.08 212 404 Q201.92 407.92 198 418 Q194.08 407.92 184 404 Q194.08 400.08 198 390Z" fill="#FFFFFF" opacity="0.75"/>
+  <path d="M640 624 Q644.48 635.52 656 640 Q644.48 644.48 640 656 Q635.52 644.48 624 640 Q635.52 635.52 640 624Z" fill="#FFFFFF" opacity="0.8"/>
+  <path d="M372 600 Q374.8 607.2 382 610 Q374.8 612.8 372 620 Q369.2 612.8 362 610 Q369.2 607.2 372 600Z" fill="#FFFFFF" opacity="0.6"/>
+
+  <text x="512" y="800" text-anchor="middle" font-family="-apple-system, 'SF Pro Display', 'Helvetica Neue', Helvetica, Arial, 'Liberation Sans', sans-serif" font-size="104" font-weight="800" letter-spacing="-2" fill="#FFFFFF">AirTalk <tspan fill="url(#frame)">Plus</tspan></text>
+  <rect x="392" y="842" width="240" height="60" rx="30" fill="#FFFFFF" fill-opacity="0.12" stroke="#FFFFFF" stroke-opacity="0.45" stroke-width="2"/>
+  <text x="512" y="883" text-anchor="middle" font-family="-apple-system, 'SF Pro Display', 'Helvetica Neue', Helvetica, Arial, 'Liberation Sans', sans-serif" font-size="28" font-weight="700" letter-spacing="6" fill="#FFFFFF">YEARLY</text>
+</svg>

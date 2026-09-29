@@ -79,12 +79,17 @@ swift docs/make-subscription-review-screenshot.swift
 node scripts/asc/upload-subscription-review-screenshots.mjs docs/screenshots/raw/iphone/05-paywall-review.jpg 6785129209 6785129341
 ```
 
-プロモーション画像を更新する場合:
+プロモーション画像を更新する場合（1024×1024。月額・年額で別の画像）:
 
 ```bash
-sips -z 1024 1024 -s format jpeg docs/screenshots/raw/iphone/05-paywall-review.jpg --out docs/screenshots/raw/iphone/05-paywall-promo.jpg
-node scripts/asc/upload-subscription-images.mjs docs/screenshots/raw/iphone/05-paywall-promo.jpg 6785129209
+node docs/make-subscription-promo-images.mjs
+node scripts/asc/upload-subscription-images.mjs docs/screenshots/promo/airtalk-plus-monthly.jpg 6785129209
+node scripts/asc/upload-subscription-images.mjs docs/screenshots/promo/airtalk-plus-yearly.jpg 6785129341
 ```
+
+> ⚠️ プロモーション画像にアプリのスクリーンショット（審査用の Paywall 画像を縮小したものを含む）を使うと
+> ガイドライン 2.3.2 で却下される（2026-09-28）。UI を含まない独自のアートワークにし、価格は入れない。
+> 詳細は `docs/app-review-reply-plus-promo-2.3.2.md`。
 
 > 2026-06-28 時点で、月額のプロモーション画像は登録済み。年額のプロモーション画像は Apple API が `500 UNEXPECTED_ERROR` を返すため未登録だが、プロモーション画像は審査用スクリーンショットとは別枠。
 >
