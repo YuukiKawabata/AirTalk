@@ -1,6 +1,8 @@
 // App Store Connect API の最小ヘルパー（外部依存なし・Node 標準のみ）。
 // 認証情報はアカウント共通の ~/.appstoreconnect/asc.env から読む。
-import { readFileSync } from "node:fs";
+// そのファイルが無い環境（クラウドのセッションなど）では環境変数
+// ASC_KEY_ID / ASC_ISSUER_ID と、ASC_KEY_PATH（.p8 のパス）または ASC_KEY_P8（.p8 の中身）を使う。
+import { existsSync, readFileSync } from "node:fs";
 import { createSign } from "node:crypto";
 import { homedir } from "node:os";
 import { join } from "node:path";
@@ -8,6 +10,7 @@ import { join } from "node:path";
 const ENV_PATH = join(homedir(), ".appstoreconnect", "asc.env");
 
 function loadEnv() {
+  if (!existsSync(ENV_PATH)) return process.env;
   const env = {};
   for (const line of readFileSync(ENV_PATH, "utf8").split("\n")) {
     const m = line.match(/^\s*([A-Z_]+)\s*=\s*(.+?)\s*$/);
@@ -22,7 +25,7 @@ const b64url = (buf) =>
 // ES256 で署名した ASC 用 JWT を作る（有効期限 ~15 分）
 export function makeToken() {
   const env = loadEnv();
-  const key = readFileSync(env.ASC_KEY_PATH, "utf8");
+  const key = env.ASC_KEY_P8 ? env.ASC_KEY_P8.replace(/\\n/g, "\n") : readFileSync(env.ASC_KEY_PATH, "utf8");
   const header = { alg: "ES256", kid: env.ASC_KEY_ID, typ: "JWT" };
   const now = Math.floor(Date.now() / 1000);
   const payload = {

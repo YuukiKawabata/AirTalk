@@ -83,8 +83,7 @@ node scripts/asc/upload-subscription-review-screenshots.mjs docs/screenshots/raw
 
 ```bash
 node docs/make-subscription-promo-images.mjs
-node scripts/asc/upload-subscription-images.mjs docs/screenshots/promo/airtalk-plus-monthly.jpg 6785129209
-node scripts/asc/upload-subscription-images.mjs docs/screenshots/promo/airtalk-plus-yearly.jpg 6785129341
+node scripts/asc/fix-plus-promo-images.mjs   # 2商品の画像を差し替えて再提出
 ```
 
 > ⚠️ プロモーション画像にアプリのスクリーンショット（審査用の Paywall 画像を縮小したものを含む）を使うと

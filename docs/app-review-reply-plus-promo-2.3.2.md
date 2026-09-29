@@ -15,19 +15,19 @@
   - 価格は入れていない（地域ごとに価格が違い、変更すると画像が不正確になるため）。
   - 審査用スクリーンショット（`05-paywall-review.jpg`）はプロモーション画像とは別枠なので変更しない。
 
-## 差し替え手順（Mac で実行）
+## 差し替え手順
 
 ```bash
-node docs/make-subscription-promo-images.mjs        # 画像を作り直す場合のみ（生成済みの JPG はコミット済み）
-node scripts/asc/upload-subscription-images.mjs docs/screenshots/promo/airtalk-plus-monthly.jpg 6785129209
-node scripts/asc/upload-subscription-images.mjs docs/screenshots/promo/airtalk-plus-yearly.jpg 6785129341
-node scripts/asc/submit-subscriptions.mjs           # 2商品を再提出
+node scripts/asc/fix-plus-promo-images.mjs
 ```
 
-- `upload-subscription-images.mjs` は既存の画像を削除してから新しい画像を上げる。
-- 年額で `500 UNEXPECTED_ERROR` が返った場合（2026-06 に発生）は、ASC の Web 画面
-  （サブスクリプション > AirTalk Plus 年間プラン > App Store プロモーション > 画像）から手動で差し替える。
-- 画像の差し替え後、ASC の App Review ページで下の英文を返信する。
+- 月額・年額の画像を差し替え（既存画像は削除）、Apple 側の処理完了を待ってから2商品を再提出する。
+  アップロードの失敗は3回までやり直す（年額は 2026-06 に `500 UNEXPECTED_ERROR` が出たことがある）。
+- 認証情報は `~/.appstoreconnect/asc.env`。無い環境では環境変数 `ASC_KEY_ID` / `ASC_ISSUER_ID` /
+  `ASC_KEY_P8`（.p8 の中身）または `ASC_KEY_PATH` を読む。
+- 画像を作り直す場合は先に `node docs/make-subscription-promo-images.mjs`。
+- App Review への返信は ASC API に無いので、必要なら下の英文を ASC の App Review ページから送る
+  （再提出だけでも審査は進む）。
 
 ## App Store Connect の App Review へ返信する英文
 
