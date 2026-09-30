@@ -21,6 +21,9 @@
 node scripts/asc/fix-plus-promo-images.mjs
 ```
 
+- 却下された提出 `33ddeb23`（未解決の問題）が開いている間は商品がロックされ、画像を消すことも追加することもできない
+  （409 "version is not editable" / "change pending review"）。スクリプトは最初にこの提出を取り消す
+  （Plus の項目だけの提出であることを確かめてから。取り消せなければ項目を提出から外す）。
 - 月額・年額の画像を差し替え（既存画像は削除。公開中で削除できない画像は残し、新しい画像の承認時に差し替わる）、Apple 側の処理完了を待ってから2商品を再提出する。
   アップロードの失敗は3回までやり直す（年額は 2026-06 に `500 UNEXPECTED_ERROR` が出たことがある）。
 - 認証情報は `~/.appstoreconnect/asc.env`。無い環境では環境変数 `ASC_KEY_ID` / `ASC_ISSUER_ID` /

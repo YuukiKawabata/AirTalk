@@ -23,7 +23,12 @@ for (const id of SUBSCRIPTION_IDS) {
 }
 
 for (const id of SUBSCRIPTION_IDS) {
-  const sub = await asc(`/v1/subscriptions/${id}`);
-  const locs = await asc(`/v1/subscriptions/${id}/subscriptionLocalizations`);
-  console.log(`${id}: ${sub.data.attributes.state} / ${locs.data.map((l) => `${l.attributes.locale}:${l.attributes.state}`).join(" ")}`);
+  try {
+    const sub = await asc(`/v1/subscriptions/${id}`);
+    const locs = await asc(`/v1/subscriptions/${id}/subscriptionLocalizations`);
+    console.log(`${id}: ${sub.data.attributes.state} / ${locs.data.map((l) => `${l.attributes.locale}:${l.attributes.state}`).join(" ")}`);
+  } catch (e) {
+    // 却下直後などに Apple が 500 を返すことがある（提出の成否とは無関係）
+    console.log(`${id}: status unavailable (${e.status})`);
+  }
 }
