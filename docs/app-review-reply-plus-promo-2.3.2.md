@@ -31,6 +31,9 @@ node scripts/asc/fix-plus-promo-images.mjs
 - 2026-09-30 の実行では、提出の取り消しと古い画像の削除は成功したが、新しい画像の作成（`POST /v1/subscriptionImages`）に
   Apple が 500 を返し続けた。その場合スクリプトは画像なしで2商品を提出する（Apple も画像の削除を解決策として挙げている）。
   画像はあとで ASC の Web 画面（サブスクリプション > 各プラン > App Store プロモーション）から `docs/screenshots/promo/` の JPG を追加できる。
+- 2026-09-30 の最終状態: 提出の取り消し、古い画像の削除、新しい画像の登録（2商品とも `WAITING_FOR_REVIEW`）までは API で完了。
+  ただし取り消し後は `subscriptionSubmissions` が 409 "has no pending version for submission" を返し、下書きの提出も API から見えないため、
+  再提出は ASC の Web 画面で行う（配信 > App Review で2商品を審査に追加して提出）。
 - 画像を作り直す場合は先に `node docs/make-subscription-promo-images.mjs`。
 - App Review への返信は ASC API に無いので、必要なら下の英文を ASC の App Review ページから送る
   （再提出だけでも審査は進む）。
