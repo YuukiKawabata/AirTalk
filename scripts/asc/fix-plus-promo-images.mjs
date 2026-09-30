@@ -4,7 +4,7 @@
 // 使い方: node scripts/asc/fix-plus-promo-images.mjs
 // 詳細: docs/app-review-reply-plus-promo-2.3.2.md
 import { execFileSync } from "node:child_process";
-import { dirname, join } from "node:path";
+import { basename, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { asc } from "./asc-lib.mjs";
 
@@ -28,6 +28,7 @@ async function imageStates(subscriptionId) {
 
 // 却下された Plus の提出（未解決の問題）。開いている間は商品がロックされ、画像を消すことも
 // 追加することもできない（409 "version is not editable" / "change pending review"）。
+const APP_ID = "6760606408";
 const REJECTED_SUBMISSION_ID = "33ddeb23-4fb0-4771-b7db-c7ae44ed05e2";
 // 提出項目 ID は base64("<提出ID>|<種類>|<対象ID>")。18 = サブスクリプション、19 = サブスクリプショングループ、
 // 6 = アプリのバージョン。アプリのバージョンを巻き込まないよう、Plus の項目だけの提出に限って取り消す。
@@ -88,6 +89,15 @@ await unlockRejectedSubmission(REJECTED_SUBMISSION_ID);
 // （却下理由の「スクショのプロモーション画像」はなくなり、Apple も削除を解決策として挙げている）。
 const withImage = [];
 for (const plan of PLANS) {
+  // 再実行時は、アップロード済みの新しい画像をそのまま使う
+  const current = (await asc(`/v1/subscriptions/${plan.id}/images?limit=20`)).data ?? [];
+  if (current.length > 0 && current.every((item) =>
+    item.attributes?.fileName === basename(plan.image) &&
+    !["REJECTED", "FAILED", "AWAITING_UPLOAD"].includes(item.attributes?.state))) {
+    console.log(`${plan.id}: new image already uploaded (${current.map((item) => item.attributes?.state).join(", ")})`);
+    withImage.push(plan);
+    continue;
+  }
   try {
     run("upload-subscription-images.mjs", [plan.image, plan.id]);
     withImage.push(plan);
@@ -118,4 +128,39 @@ for (const plan of withImage) {
   }
 }
 
-run("submit-subscriptions.mjs", []);
+// 提出。9/26 は subscriptionSubmissions で提出できたが、提出を取り消した後は
+// 409 "has no pending version for submission" が返り、変更は下書きの提出（READY_FOR_REVIEW）側に入る。
+try {
+  run("submit-subscriptions.mjs", []);
+} catch {
+  console.log("subscriptionSubmissions did not submit; checking open review submissions");
+}
+
+const OPEN_STATES = ["READY_FOR_REVIEW", "WAITING_FOR_REVIEW", "IN_REVIEW", "UNRESOLVED_ISSUES"];
+const open = (await asc(`/v1/reviewSubmissions?filter[app]=${APP_ID}&filter[state]=${OPEN_STATES.join(",")}&limit=10`)).data ?? [];
+let plusSubmitted = false;
+for (const submission of open) {
+  const items = (await asc(`/v1/reviewSubmissions/${submission.id}/items?limit=20`)).data ?? [];
+  const types = items.map((item) => itemType(item.id));
+  const state = submission.attributes.state;
+  console.log(`review submission ${submission.id}: ${state} items=${types.join(",") || "(none)"}`);
+  const plusOnly = items.length > 0 && types.every((type) => PLUS_ITEM_TYPES.has(type));
+  if (!plusOnly) continue;
+  if (state === "WAITING_FOR_REVIEW" || state === "IN_REVIEW") {
+    plusSubmitted = true;
+  } else if (state === "READY_FOR_REVIEW") {
+    await asc(`/v1/reviewSubmissions/${submission.id}`, {
+      method: "PATCH",
+      body: { data: { type: "reviewSubmissions", id: submission.id, attributes: { submitted: true } } },
+    });
+    console.log(`  submitted: ${await submissionState(submission.id)}`);
+    plusSubmitted = true;
+  }
+}
+
+if (plusSubmitted) {
+  console.log("✓ AirTalk Plus is submitted for review");
+} else {
+  console.log("✗ Plus の提出が見つかりません。ASC の「配信」>「App Review」で下書きの提出を確認してください");
+  process.exitCode = 1;
+}
