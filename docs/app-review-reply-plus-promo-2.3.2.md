@@ -28,6 +28,9 @@ node scripts/asc/fix-plus-promo-images.mjs
   アップロードの失敗は3回までやり直す（年額は 2026-06 に `500 UNEXPECTED_ERROR` が出たことがある）。
 - 認証情報は `~/.appstoreconnect/asc.env`。無い環境では環境変数 `ASC_KEY_ID` / `ASC_ISSUER_ID` /
   `ASC_KEY_P8`（.p8 の中身）または `ASC_KEY_PATH` を読む。
+- 2026-09-30 の実行では、提出の取り消しと古い画像の削除は成功したが、新しい画像の作成（`POST /v1/subscriptionImages`）に
+  Apple が 500 を返し続けた。その場合スクリプトは画像なしで2商品を提出する（Apple も画像の削除を解決策として挙げている）。
+  画像はあとで ASC の Web 画面（サブスクリプション > 各プラン > App Store プロモーション）から `docs/screenshots/promo/` の JPG を追加できる。
 - 画像を作り直す場合は先に `node docs/make-subscription-promo-images.mjs`。
 - App Review への返信は ASC API に無いので、必要なら下の英文を ASC の App Review ページから送る
   （再提出だけでも審査は進む）。

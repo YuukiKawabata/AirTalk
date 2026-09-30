@@ -83,13 +83,31 @@ async function unlockRejectedSubmission(id) {
 
 await unlockRejectedSubmission(REJECTED_SUBMISSION_ID);
 
-// 画像のアップロード（5xx のやり直しと、公開中で消せない画像の扱いは upload-subscription-images.mjs 側）
+// 画像のアップロード。既存の画像（スクショ由来）は upload-subscription-images.mjs が先に削除する。
+// Apple が 5xx を返し続けて新しい画像を作れない商品は、画像なしのまま提出する
+// （却下理由の「スクショのプロモーション画像」はなくなり、Apple も削除を解決策として挙げている）。
+const withImage = [];
 for (const plan of PLANS) {
-  run("upload-subscription-images.mjs", [plan.image, plan.id]);
+  try {
+    run("upload-subscription-images.mjs", [plan.image, plan.id]);
+    withImage.push(plan);
+  } catch (error) {
+    if (error.status !== 3) throw error;
+    // 500 でも途中まで作られた（アップロード待ちの）画像が残ることがあるので消しておく
+    const left = (await asc(`/v1/subscriptions/${plan.id}/images?limit=20`)).data ?? [];
+    for (const image of left.filter((item) => item.attributes?.state === "AWAITING_UPLOAD")) {
+      await asc(`/v1/subscriptionImages/${encodeURIComponent(image.id)}`, { method: "DELETE" });
+    }
+    const remaining = left.filter((item) => item.attributes?.state !== "AWAITING_UPLOAD");
+    if (remaining.length > 0) {
+      throw new Error(`${plan.id} に古い画像が残っています (${remaining.map((item) => item.attributes?.state).join(", ")})`);
+    }
+    console.log(`⚠︎ ${plan.id}: 新しい画像を作れなかったため、画像なしで提出します（あとで ASC の Web 画面から追加できます）`);
+  }
 }
 
 // Apple 側の画像処理が終わるまで待つ（最大 5 分）
-for (const plan of PLANS) {
+for (const plan of withImage) {
   for (let i = 0; ; i++) {
     const states = await imageStates(plan.id);
     console.log(`${plan.id} images: ${states.join(", ") || "(none)"}`);

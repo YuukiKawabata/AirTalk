@@ -1,4 +1,5 @@
 import fs from "node:fs/promises";
+import { basename } from "node:path";
 import { asc, makeToken } from "./asc-lib.mjs";
 
 const [, , imagePath, ...subscriptionIds] = process.argv;
@@ -51,15 +52,15 @@ async function deleteExistingImages(subscriptionId) {
   }
 }
 
-// 5xx（過去に年額で 500 UNEXPECTED_ERROR が出た）は数回やり直す
+// 5xx（2026-06 の年額、2026-09 の月額で 500 UNEXPECTED_ERROR が出た）は数回やり直す
 async function withRetry(fn) {
   for (let attempt = 1; ; attempt++) {
     try {
       return await fn();
     } catch (error) {
-      if (!(error.status >= 500) || attempt >= 3) throw error;
+      if (!(error.status >= 500) || attempt >= 4) throw error;
       console.log(`retry after ${error.status} (${attempt})`);
-      await sleep(5000 * attempt);
+      await sleep(10000 * attempt);
     }
   }
 }
@@ -75,7 +76,7 @@ async function uploadSubscriptionImage(subscriptionId, filePath) {
       data: {
         type: "subscriptionImages",
         attributes: {
-          fileName: "SOURCE",
+          fileName: basename(filePath),
           fileSize: stat.size,
         },
         relationships: {
@@ -106,7 +107,15 @@ async function uploadSubscriptionImage(subscriptionId, filePath) {
 
 for (const subscriptionId of subscriptionIds) {
   console.log(`Subscription: ${subscriptionId}`);
-  const image = await uploadSubscriptionImage(subscriptionId, imagePath);
+  let image;
+  try {
+    image = await uploadSubscriptionImage(subscriptionId, imagePath);
+  } catch (error) {
+    if (!(error.status >= 500)) throw error;
+    // Apple 側の障害で画像を作れない。呼び出し側が区別できるよう終了コード 3 で終える
+    console.error(`image upload failed with ${error.status}: ${error.body?.errors?.[0]?.detail ?? ""}`);
+    process.exit(3);
+  }
   console.log(
     JSON.stringify(
       {
