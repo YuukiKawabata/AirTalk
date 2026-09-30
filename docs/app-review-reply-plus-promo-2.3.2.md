@@ -21,7 +21,7 @@
 node scripts/asc/fix-plus-promo-images.mjs
 ```
 
-- 月額・年額の画像を差し替え（既存画像は削除）、Apple 側の処理完了を待ってから2商品を再提出する。
+- 月額・年額の画像を差し替え（既存画像は削除。公開中で削除できない画像は残し、新しい画像の承認時に差し替わる）、Apple 側の処理完了を待ってから2商品を再提出する。
   アップロードの失敗は3回までやり直す（年額は 2026-06 に `500 UNEXPECTED_ERROR` が出たことがある）。
 - 認証情報は `~/.appstoreconnect/asc.env`。無い環境では環境変数 `ASC_KEY_ID` / `ASC_ISSUER_ID` /
   `ASC_KEY_P8`（.p8 の中身）または `ASC_KEY_PATH` を読む。

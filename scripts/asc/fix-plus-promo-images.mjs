@@ -25,18 +25,9 @@ async function imageStates(subscriptionId) {
   return (body.data ?? []).map((item) => item.attributes?.state);
 }
 
-// 画像のアップロード（年額は過去に 500 が返ったことがあるので数回やり直す）
+// 画像のアップロード（5xx のやり直しと、公開中で消せない画像の扱いは upload-subscription-images.mjs 側）
 for (const plan of PLANS) {
-  for (let attempt = 1; ; attempt++) {
-    try {
-      run("upload-subscription-images.mjs", [plan.image, plan.id]);
-      break;
-    } catch (error) {
-      if (attempt >= 3) throw error;
-      console.log(`retry ${plan.id} (${attempt})`);
-      await sleep(5000 * attempt);
-    }
-  }
+  run("upload-subscription-images.mjs", [plan.image, plan.id]);
 }
 
 // Apple 側の画像処理が終わるまで待つ（最大 5 分）

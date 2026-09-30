@@ -29,16 +29,38 @@ async function uploadChunk(operation, buffer) {
   }
 }
 
-async function currentImageIds(subscriptionId) {
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+async function currentImages(subscriptionId) {
   const body = await asc(`/v1/subscriptions/${encodeURIComponent(subscriptionId)}/images?limit=20`);
-  return (body.data ?? []).map((item) => item.id);
+  return body.data ?? [];
 }
 
+// 公開中（承認済み）の画像は削除できず 409 が返る。その場合は残したまま新しい画像を追加し、
+// 新しい画像が承認されると差し替わる。
 async function deleteExistingImages(subscriptionId) {
-  const ids = await currentImageIds(subscriptionId);
-  for (const id of ids) {
-    await asc(`/v1/subscriptionImages/${encodeURIComponent(id)}`, { method: "DELETE" });
-    console.log(`deleted existing image ${id}`);
+  for (const image of await currentImages(subscriptionId)) {
+    const state = image.attributes?.state;
+    try {
+      await asc(`/v1/subscriptionImages/${encodeURIComponent(image.id)}`, { method: "DELETE" });
+      console.log(`deleted existing image ${image.id} (${state})`);
+    } catch (error) {
+      if (error.status !== 409) throw error;
+      console.log(`kept existing image ${image.id} (${state}): ${error.body?.errors?.[0]?.title ?? "not deletable"}`);
+    }
+  }
+}
+
+// 5xx（過去に年額で 500 UNEXPECTED_ERROR が出た）は数回やり直す
+async function withRetry(fn) {
+  for (let attempt = 1; ; attempt++) {
+    try {
+      return await fn();
+    } catch (error) {
+      if (!(error.status >= 500) || attempt >= 3) throw error;
+      console.log(`retry after ${error.status} (${attempt})`);
+      await sleep(5000 * attempt);
+    }
   }
 }
 
@@ -47,7 +69,7 @@ async function uploadSubscriptionImage(subscriptionId, filePath) {
 
   const buffer = await fs.readFile(filePath);
   const stat = await fs.stat(filePath);
-  const createBody = await asc("/v1/subscriptionImages", {
+  const createBody = await withRetry(() => asc("/v1/subscriptionImages", {
     method: "POST",
     body: {
       data: {
@@ -63,7 +85,7 @@ async function uploadSubscriptionImage(subscriptionId, filePath) {
         },
       },
     },
-  });
+  }));
 
   const image = createBody.data;
   for (const operation of image.attributes.uploadOperations ?? []) {
