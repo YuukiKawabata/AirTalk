@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import { basename } from "node:path";
-import { asc, makeToken } from "./asc-lib.mjs";
+import { createHash } from "node:crypto";
+import { asc } from "./asc-lib.mjs";
 
 const [, , imagePath, ...subscriptionIds] = process.argv;
 
@@ -13,14 +14,11 @@ async function uploadChunk(operation, buffer) {
   const offset = Number(operation.offset ?? 0);
   const length = Number(operation.length ?? buffer.length);
   const chunk = buffer.subarray(offset, offset + length);
-  const token = makeToken();
 
+  // 署名付き URL なので、指定されたヘッダー以外（ASC の Authorization など）を付けると 400 になる
   const response = await fetch(operation.url, {
     method: operation.method ?? "PUT",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      ...Object.fromEntries((operation.requestHeaders ?? []).map((header) => [header.name, header.value])),
-    },
+    headers: Object.fromEntries((operation.requestHeaders ?? []).map((header) => [header.name, header.value])),
     body: chunk,
   });
 
@@ -99,7 +97,7 @@ async function uploadSubscriptionImage(subscriptionId, filePath) {
       data: {
         type: "subscriptionImages",
         id: image.id,
-        attributes: { uploaded: true },
+        attributes: { uploaded: true, sourceFileChecksum: createHash("md5").update(buffer).digest("hex") },
       },
     },
   });
