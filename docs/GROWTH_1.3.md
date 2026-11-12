@@ -166,3 +166,7 @@
 API キーにはクラウド署名の権限が無いため、`build/ExportOptions-Upload.plist`（自動署名で直接アップロード）は
 "Cloud signing permission error" で失敗する。`upload-build.mjs` は API で App Store 用のプロファイルを作成してから、
 手元の Apple Distribution 証明書で手動署名した IPA を altool でアップロードする。
+
+## 2週後の測定（2026-10-12）
+
+- 1.3 公開 9/26 23:06 UTC。9/27〜10/10（UTC、14日）と直前4週の週平均を比較: 検索表示 312→702、閲覧 45.5→54、新規DL 12→18、閲覧→DL 26.4%→33.3%、表示→閲覧 14.1%→7.2%（半減）、削除率 25%→28%、レビュー0件のまま。DL増は可能性が高いが断定せず。詳細: `/Users/yuki/dev/APP_METRICS_REVIEW_2026-10-12.md`

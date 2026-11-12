@@ -323,7 +323,7 @@ class MultipeerManager: NSObject, ObservableObject {
                 pendingInvitation = (peerID: inviter.peerID, name: inviter.profile.name)
             }
 
-        case .discovery, .onboarding:
+        case .discovery, .onboarding, .encounters, .online, .onlinePeople, .onlineInbox, .onlineChat, .onlineConnections:
             break
         }
     }

@@ -1,0 +1,7 @@
+// Development-signed build for registered pilot devices.
+INFOPLIST_FILE = Config/OnlinePilot-Info.plist
+CODE_SIGN_ENTITLEMENTS = Config/OnlinePilot.entitlements
+AIRTALK_ONLINE_BASE_URL = https:/$()/airtalk-online-pilot.yorozu-works.workers.dev
+MARKETING_VERSION = 1.4.1
+CURRENT_PROJECT_VERSION = 11
+AIRTALK_PRIVACY_MANIFEST = Config/Pilot/PrivacyInfo.xcprivacy

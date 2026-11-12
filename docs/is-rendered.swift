@@ -3,12 +3,33 @@
 // 白画面（起動直後）・黒画面（ブート中）・ホーム画面を弾くための簡易判定。
 // 使い方: is-rendered <png>   終了コード 0 = 描画済み / 1 = 未描画
 import AppKit
+import Vision
 
 guard CommandLine.arguments.count > 1,
       let image = NSImage(contentsOfFile: CommandLine.arguments[1]),
       let cg = image.cgImage(forProposedRect: nil, context: nil, hints: nil),
       let data = cg.dataProvider?.data,
       let ptr = CFDataGetBytePtr(data) else { exit(1) }
+
+// Online preview scenes contain explicit fictional-data labels in both languages.
+if CommandLine.arguments.dropFirst(2).first?.hasPrefix("online") == true {
+    let request = VNRecognizeTextRequest()
+    request.recognitionLevel = .accurate
+    request.recognitionLanguages = ["ja-JP", "en-US"]
+    do { try VNImageRequestHandler(cgImage: cg).perform([request]) } catch { exit(1) }
+    let text = (request.results ?? []).compactMap { $0.topCandidates(1).first?.string }.joined(separator: " ")
+    exit(text.contains("架空") || text.contains("fictional") ? 0 : 1)
+}
+
+// The internal encounter screen uses a plain list rather than the Aurora background.
+if CommandLine.arguments.dropFirst(2).first == "encounters" {
+    let request = VNRecognizeTextRequest()
+    request.recognitionLevel = .accurate
+    request.recognitionLanguages = ["ja-JP", "en-US"]
+    do { try VNImageRequestHandler(cgImage: cg).perform([request]) } catch { exit(1) }
+    let text = (request.results ?? []).compactMap { $0.topCandidates(1).first?.string }.joined(separator: " ")
+    exit(text.contains("すれ違い検証") || text.contains("Encounter experiment") ? 0 : 1)
+}
 
 let bpp = cg.bitsPerPixel / 8, bpr = cg.bytesPerRow
 var r = 0.0, g = 0.0, b = 0.0, n = 0.0

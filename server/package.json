@@ -1,0 +1,25 @@
+{
+  "name": "airtalk-online-pilot",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "WRANGLER_SEND_METRICS=false wrangler dev --local --ip 127.0.0.1 --config wrangler.local.jsonc",
+    "check": "tsc --noEmit",
+    "test": "tsx --test test/*.test.ts",
+    "bundle": "WRANGLER_SEND_METRICS=false wrangler deploy --dry-run --outdir dist",
+    "pretest": "npm run bundle"
+  },
+  "dependencies": {
+    "jose": "^6.1.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261104.1",
+    "@types/node": "^24.0.0",
+    "miniflare": "5.20261104.0-beta",
+    "prettier": "^3.9.10",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0",
+    "wrangler": "^4.45.0",
+    "ws": "^8.22.1"
+  }
+}

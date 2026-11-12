@@ -208,3 +208,12 @@ App Store Connect で手動公開
 - [docs/SPEC.md](SPEC.md) — 技術仕様
 - [docs/RELEASE.md](RELEASE.md) — App Store リリース手順・審査メモ英文・チェックリスト
 - [CLAUDE.md](../CLAUDE.md) — 開発ガイド
+
+
+## 2026-11-07: 1.4 オンライン限定検証のローカル実装
+
+- ユーザー指示で実機テストを延期し、承認待ちで止まらずローカル実装・検証を先行。
+- 既存オフラインを残し、任意のすれ違い・相互承認・オンライン1対1・相互つながり保存を追加。通常ビルドは設定なしで無効。
+- iOS外部SDKは追加せず、バックエンドはWorkers + SQLite Durable Object。会話本文は永続化しない。オンラインはE2EEではなくTLS/WSS。
+- 実装・環境設定・確認結果・公開前残項目: `docs/ONLINE_1.4_RUNBOOK.md`。基準値／施策記録: `docs/GROWTH_1.4.md`。
+- 無料検証から開始。有料化、審査提出・公開、ASC商品／価格変更、git pushは実行前確認。いずれも未実施。

@@ -12,6 +12,7 @@ struct DiscoveryView: View {
     @State private var showInvitationAlert = false
     @State private var showDeclinedAlert = false
     @State private var showingInvite = false
+    @State private var showingOnline = false
     @Environment(\.requestReview) private var requestReview
 
     @State private var myProfile: UserProfile?
@@ -49,6 +50,12 @@ struct DiscoveryView: View {
                     .accessibilityLabel(Text("近くの友だちを誘う"))
                 }
                 ToolbarItem(placement: .topBarTrailing) {
+                    if OnlineConfiguration.current != nil && !DemoMode.isEnabled {
+                        Button { showingOnline = true } label: { Image(systemName: "person.2.wave.2") }
+                            .accessibilityLabel("すれ違い")
+                    }
+                }
+                ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         showingProfileEditor = true
                     } label: {
@@ -74,6 +81,18 @@ struct DiscoveryView: View {
                     showInvitationAlert = true
                 }
             }
+        }
+        .onChange(of: showingOnline) { _, visible in
+            guard !DemoMode.isEnabled else { return }
+            if visible {
+                multipeerManager.clearAll()
+            } else if let profile = UserProfile.load() {
+                multipeerManager.configure(with: profile)
+                multipeerManager.start()
+            }
+        }
+        .sheet(isPresented: $showingOnline) {
+            OnlineView()
         }
         .sheet(isPresented: $showingInvite) {
             InviteFriendsView(themeColor: myTheme)

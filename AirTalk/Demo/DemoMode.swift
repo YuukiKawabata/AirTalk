@@ -14,6 +14,8 @@ import Foundation
 enum DemoMode {
 
     enum Scene: String {
+        case online, onlinePeople, onlineInbox, onlineChat, onlineConnections // オンライン画面試作（Debugのみ）
+        case encounters  // BLE試作画面（Debugのみ、実通信なし）
         case discovery   // レーダー（周囲のピア一覧）
         case chat        // 1対1チャット
         case invite      // チャットリクエスト着信

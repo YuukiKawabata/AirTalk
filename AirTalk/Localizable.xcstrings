@@ -193,6 +193,39 @@
         }
       }
     },
+    "18歳以上です": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I am 18 or older"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "18歳以上です"
+          }
+        }
+      }
+    },
+    "18歳以上です（初版の提案）": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "18歳以上です（初版の提案）"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I am 18 or older (proposed for v1)"
+          }
+        }
+      }
+    },
     "1か月": {
       "localizations": {
         "en": {
@@ -545,6 +578,121 @@
         }
       }
     },
+    "Appleでサインインすると、近くで出会った相手と、お互いが承認したときだけ話せます。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sign in with Apple to talk with people you passed nearby, only when you both approve."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Appleでサインインすると、近くで出会った相手と、お互いが承認したときだけ話せます。"
+          }
+        }
+      }
+    },
+    "Appleでサインインする準備": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prepare to sign in with Apple"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Appleでサインインする準備"
+          }
+        }
+      }
+    },
+    "Appleの利用者識別子、ニックネーム、ひとこと、同意状態を保存します。Bluetooth検出を選ぶと、署名の照合に必要な情報とすれ違いを最大24時間保持します。通知を許可すると配信用の端末トークンを登録します。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "We keep your Apple user identifier, nickname, introduction and consent choices. If you enable Bluetooth encounters, encounter tokens, proofs and encounters expire within 24 hours. If you enable notifications, we register a device token for delivery."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Appleの利用者識別子、ニックネーム、ひとこと、同意状態を保存します。Bluetooth検出を選ぶと、署名の照合に必要な情報とすれ違いを最大24時間保持します。通知を許可すると配信用の端末トークンを登録します。"
+          }
+        }
+      }
+    },
+    "Bluetoothの使用を許可してください": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bluetoothの使用を許可してください"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Allow Bluetooth access in Settings"
+          }
+        }
+      }
+    },
+    "Bluetoothの準備を待っています": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bluetoothの準備を待っています"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Waiting for Bluetooth"
+          }
+        }
+      }
+    },
+    "Bluetooth処理に失敗しました。一度停止して再開してください": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bluetooth処理に失敗しました。一度停止して再開してください"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bluetooth failed. Turn detection off, then on again."
+          }
+        }
+      }
+    },
+    "Bluetooth検出は任意です。位置情報を取得せず、常時の発見や距離は保証しません。強制終了中は検出できません。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bluetooth detection is optional. We do not collect location or guarantee detection or distance. Detection stops when you force-quit the app."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bluetooth検出は任意です。位置情報を取得せず、常時の発見や距離は保証しません。強制終了中は検出できません。"
+          }
+        }
+      }
+    },
     "Connected": {
       "localizations": {
         "en": {
@@ -657,6 +805,22 @@
         }
       }
     },
+    "ONLINE_REQUEST_NOTIFICATION": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You have a new AirTalk request. Open the app to review it."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AirTalkに新しいリクエストがあります。アプリで確認してください。"
+          }
+        }
+      }
+    },
     "Questions, abuse reports, and support requests can be sent to %@. Support information is available at %@. Terms of Use: %@. Privacy Policy: %@.": {
       "localizations": {
         "en": {
@@ -705,6 +869,22 @@
         }
       }
     },
+    "あとで": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Later"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "あとで"
+          }
+        }
+      }
+    },
     "あなた": {
       "localizations": {
         "en": {
@@ -721,6 +901,40 @@
         }
       }
     },
+    "あなたの希望を受け付けました": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "あなたの希望を受け付けました"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your wish to reconnect is noted"
+          }
+        }
+      }
+    },
+    "いいですね。またお話ししましょう！": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "いいですね。またお話ししましょう！"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sounds great. Let's talk again!"
+          }
+        }
+      }
+    },
     "おたがいにWi-FiとBluetoothをオンにしてください（インターネット接続は不要です）": {
       "localizations": {
         "en": {
@@ -733,6 +947,56 @@
           "stringUnit": {
             "state": "translated",
             "value": "おたがいにWi-FiとBluetoothをオンにしてください（インターネット接続は不要です）"
+          }
+        }
+      }
+    },
+    "お互いに、また話したい人": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "お互いに、また話したい人"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "People who want to talk again, too"
+          }
+        }
+      }
+    },
+    "お互いの希望が一致しました。つながりを保存しました。": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "お互いの希望が一致しました。つながりを保存しました。"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You both want to talk again. Connection saved."
+          }
+        }
+      }
+    },
+    "お知らせ": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notice"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "お知らせ"
           }
         }
       }
@@ -801,6 +1065,108 @@
         }
       }
     },
+    "この操作はデモの状態だけを消します。既存のプロフィール・購入情報には影響しません。": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "この操作はデモの状態だけを消します。既存のプロフィール・購入情報には影響しません。"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This only erases the demo state. Your existing profile and purchases are not affected."
+          }
+        }
+      }
+    },
+    "この相手を通報・ブロックしますか？": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "この相手を通報・ブロックしますか？"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Report and block this person?"
+          }
+        }
+      }
+    },
+    "この端末では検証できません": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "この端末では検証できません"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bluetooth testing is unavailable on this device"
+          }
+        }
+      }
+    },
+    "これは同意画面の試作です。Appleでのサインインやアカウント作成はまだ行いません。": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "これは同意画面の試作です。Appleでのサインインやアカウント作成はまだ行いません。"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This is a consent screen preview. It does not sign in with Apple or create an account."
+          }
+        }
+      }
+    },
+    "こんにちは。旅行の話、私も好きです！": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "こんにちは。旅行の話、私も好きです！"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hi! I love talking about travel too."
+          }
+        }
+      }
+    },
+    "こんにちは！最近よかった場所はありますか？": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "こんにちは！最近よかった場所はありますか？"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hi! Have you been anywhere nice lately?"
+          }
+        }
+      }
+    },
     "こんにちは！近くにいたので話しかけてみました": {
       "localizations": {
         "en": {
@@ -833,6 +1199,221 @@
         }
       }
     },
+    "しばらく待ってからお試しください。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Please wait a moment and try again."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "しばらく待ってからお試しください。"
+          }
+        }
+      }
+    },
+    "すれ違い": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "すれ違い"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Encounters"
+          }
+        }
+      }
+    },
+    "すれ違いから、つながる": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "すれ違いから、つながる"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "From passing by to saying hi"
+          }
+        }
+      }
+    },
+    "すれ違いから、もう一度話そう。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cross paths. Talk again."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "すれ違いから、もう一度話そう。"
+          }
+        }
+      }
+    },
+    "すれ違いは24時間で消えます。検出を有効にして、友だちとアプリを開いてみましょう。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Encounters expire after 24 hours. Enable detection and try opening the app with a friend."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "すれ違いは24時間で消えます。検出を有効にして、友だちとアプリを開いてみましょう。"
+          }
+        }
+      }
+    },
+    "すれ違いを検証中": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "すれ違いを検証中"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Testing encounter detection"
+          }
+        }
+      }
+    },
+    "すれ違い検出": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "すれ違い検出"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Encounter detection"
+          }
+        }
+      }
+    },
+    "すれ違い検出とリクエスト通知をオンにしますか？": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn on encounter detection and request notifications?"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "すれ違い検出とリクエスト通知をオンにしますか？"
+          }
+        }
+      }
+    },
+    "すれ違い検出を停止": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop encounter detection"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "すれ違い検出を停止"
+          }
+        }
+      }
+    },
+    "すれ違い検出を有効にしますか？": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "すれ違い検出を有効にしますか？"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enable encounter detection?"
+          }
+        }
+      }
+    },
+    "すれ違い検出を開始": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start encounter detection"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "すれ違い検出を開始"
+          }
+        }
+      }
+    },
+    "すれ違い検証": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "すれ違い検証"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Encounter experiment"
+          }
+        }
+      }
+    },
+    "すれ違った、その先も。": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "すれ違った、その先も。"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A passing moment. A new connection."
+          }
+        }
+      }
+    },
     "そうです、窓際の席です ☕️": {
       "localizations": {
         "en": {
@@ -845,6 +1426,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "そうです、窓際の席です ☕️"
+          }
+        }
+      }
+    },
+    "その他": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Other"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "その他"
           }
         }
       }
@@ -877,6 +1474,39 @@
           "stringUnit": {
             "state": "translated",
             "value": "つぎへ"
+          }
+        }
+      }
+    },
+    "つながり": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "つながり"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connections"
+          }
+        }
+      }
+    },
+    "つながりを解除": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove connection"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "つながりを解除"
           }
         }
       }
@@ -993,6 +1623,90 @@
         }
       }
     },
+    "また話したい": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "また話したい"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I'd like to talk again"
+          }
+        }
+      }
+    },
+    "また話したい気持ちが一致したら、つながりを保存": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "また話したい気持ちが一致したら、つながりを保存"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stay connected only if you both want to talk again."
+          }
+        }
+      }
+    },
+    "まだ検出記録はありません": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "まだ検出記録はありません"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No encounters recorded yet"
+          }
+        }
+      }
+    },
+    "まだ相手がいません": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No one here yet"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "まだ相手がいません"
+          }
+        }
+      }
+    },
+    "まだ表示する相手はいません。近くでの会話から始めてみましょう。": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "まだ表示する相手はいません。近くでの会話から始めてみましょう。"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No one to show yet. Try starting a nearby conversation."
+          }
+        }
+      }
+    },
     "もう一度さがす": {
       "localizations": {
         "en": {
@@ -1005,6 +1719,39 @@
           "stringUnit": {
             "state": "translated",
             "value": "もう一度さがす"
+          }
+        }
+      }
+    },
+    "もう一度サインインしてください。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Please sign in again."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "もう一度サインインしてください。"
+          }
+        }
+      }
+    },
+    "もう一度話したい": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "もう一度話したい"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ask to talk again"
           }
         }
       }
@@ -1053,6 +1800,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "アイスブレイク"
+          }
+        }
+      }
+    },
+    "アカウントとつながりを削除しますか？": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete your account and connections?"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アカウントとつながりを削除しますか？"
           }
         }
       }
@@ -1153,6 +1916,23 @@
         }
       }
     },
+    "オフ": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "オフ"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Off"
+          }
+        }
+      }
+    },
     "オレンジ、ピンク、ミントなど7色のテーマカラー": {
       "localizations": {
         "en": {
@@ -1165,6 +1945,202 @@
           "stringUnit": {
             "state": "translated",
             "value": "オレンジ、ピンク、ミントなど7色のテーマカラー"
+          }
+        }
+      }
+    },
+    "オン": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "オン"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "On"
+          }
+        }
+      }
+    },
+    "オンにする": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn On"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "オンにする"
+          }
+        }
+      }
+    },
+    "オンラインではプロフィール・申請・つながりをサーバーに保存します。会話本文は保存しません。通信路は暗号化しますが、E2EEではありません。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Online profiles, requests and connections are stored on a server. Conversation messages are not stored. Transport is encrypted, but it is not end-to-end encryption."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "オンラインではプロフィール・申請・つながりをサーバーに保存します。会話本文は保存しません。通信路は暗号化しますが、E2EEではありません。"
+          }
+        }
+      }
+    },
+    "オンラインで共有される情報に同意します": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I agree to the information shared online"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "オンラインで共有される情報に同意します"
+          }
+        }
+      }
+    },
+    "オンラインで共有する情報を確認しました": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "オンラインで共有する情報を確認しました"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I have reviewed what will be shared online"
+          }
+        }
+      }
+    },
+    "オンラインの会話は暗号化した通信路でサーバーが中継します。中継中はサーバーで本文を読めます。本文は保存せず、双方が「また話したい」を選んだ場合につながりを保存します。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The server relays conversations over an encrypted connection and can read messages during relay. Messages are not stored. A connection is saved when both people choose Talk again."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "オンラインの会話は暗号化した通信路でサーバーが中継します。中継中はサーバーで本文を読めます。本文は保存せず、双方が「また話したい」を選んだ場合につながりを保存します。"
+          }
+        }
+      }
+    },
+    "オンライン利用条件と問い合わせ": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Online terms and support"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "オンライン利用条件と問い合わせ"
+          }
+        }
+      }
+    },
+    "オンライン検証環境が設定されていません。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The online pilot is not configured."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "オンライン検証環境が設定されていません。"
+          }
+        }
+      }
+    },
+    "オンライン機能ではプロフィールと接続関係をサーバーで扱います。すれ違い検出は別途オンにする方式を検討しています。": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "オンライン機能ではプロフィールと接続関係をサーバーで扱います。すれ違い検出は別途オンにする方式を検討しています。"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Online features require a server for profiles and connections. Encounter detection will have a separate opt-in."
+          }
+        }
+      }
+    },
+    "オンライン機能は18歳以上が対象です。相手が承認すると会話できます。嫌がらせ、脅迫、性的搾取、なりすまし、迷惑な勧誘は禁止です。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Online features are for people aged 18 and over. Both people must agree to chat. Harassment, threats, sexual exploitation, impersonation and unwanted solicitation are prohibited."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "オンライン機能は18歳以上が対象です。相手が承認すると会話できます。嫌がらせ、脅迫、性的搾取、なりすまし、迷惑な勧誘は禁止です。"
+          }
+        }
+      }
+    },
+    "オンライン機能を始める": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start using online features"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "オンライン機能を始める"
+          }
+        }
+      }
+    },
+    "オンライン設定": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "オンライン設定"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Online settings"
           }
         }
       }
@@ -1185,6 +2161,23 @@
         }
       }
     },
+    "カフェ・旅行": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "カフェ・旅行"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cafés & travel"
+          }
+        }
+      }
+    },
     "キャンセル": {
       "localizations": {
         "en": {
@@ -1197,6 +2190,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "キャンセル"
+          }
+        }
+      }
+    },
+    "サインアウト": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sign out"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "サインアウト"
           }
         }
       }
@@ -1265,6 +2274,108 @@
         }
       }
     },
+    "デモでは通報を送信せず、この相手との接続を解除します。会話本文は添付しません。": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "デモでは通報を送信せず、この相手との接続を解除します。会話本文は添付しません。"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In this demo, no report is sent. The connection is removed and no chat content is attached."
+          }
+        }
+      }
+    },
+    "デモで送信": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "デモで送信"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send in demo"
+          }
+        }
+      }
+    },
+    "デモのオンラインデータを削除": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "デモのオンラインデータを削除"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete online demo data"
+          }
+        }
+      }
+    },
+    "デモのオンラインデータを削除しますか？": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "デモのオンラインデータを削除しますか？"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete online demo data?"
+          }
+        }
+      }
+    },
+    "デモ内でブロックしました": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "デモ内でブロックしました"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blocked in this demo"
+          }
+        }
+      }
+    },
+    "デモ：実際の検出ではありません": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "デモ：実際の検出ではありません"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Demo: these are not real encounters"
+          }
+        }
+      }
+    },
     "ニックネーム": {
       "localizations": {
         "en": {
@@ -1281,6 +2392,57 @@
         }
       }
     },
+    "ニックネーム・アイコン・興味・承認した接続関係": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ニックネーム・アイコン・興味・承認した接続関係"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nickname, icon, interests and approved connections"
+          }
+        }
+      }
+    },
+    "バックグラウンドBLEの実機検証用です。オンライン接続やプロフィール交換は行いません。": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "バックグラウンドBLEの実機検証用です。オンライン接続やプロフィール交換は行いません。"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "An on-device background BLE experiment. No online connections or profiles are exchanged."
+          }
+        }
+      }
+    },
+    "バックグラウンドで成功": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "バックグラウンドで成功"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reads in background"
+          }
+        }
+      }
+    },
     "フレーム": {
       "localizations": {
         "en": {
@@ -1293,6 +2455,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "フレーム"
+          }
+        }
+      }
+    },
+    "ブロック": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ブロック"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Block"
           }
         }
       }
@@ -1425,6 +2604,22 @@
         }
       }
     },
+    "プロフィールとつながりが削除され、会話も終了します。通報対応の記録は所定の期間保持されます。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your profile and connections will be deleted and your conversation will end. Safety reports are retained for the stated period."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "プロフィールとつながりが削除され、会話も終了します。通報対応の記録は所定の期間保持されます。"
+          }
+        }
+      }
+    },
     "プロフィールとローカルデータを完全に削除します。この操作は取り消せません。": {
       "localizations": {
         "en": {
@@ -1521,6 +2716,23 @@
         }
       }
     },
+    "メッセージ（デモ）": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "メッセージ（デモ）"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Message (demo)"
+          }
+        }
+      }
+    },
     "ユーザーは不適切なメッセージを通報できます。また、迷惑行為を行うユーザーをブロックできます。ブロックすると、そのユーザーとの会話は端末上から直ちに削除され、そのユーザーはレーダーや招待に表示されなくなります。通報またはブロック時には、開発者へ内容を通知するためのメール作成画面が開きます。": {
       "localizations": {
         "en": {
@@ -1553,6 +2765,23 @@
         }
       }
     },
+    "リクエスト": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "リクエスト"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Requests"
+          }
+        }
+      }
+    },
     "リクエスト拒否": {
       "localizations": {
         "en": {
@@ -1565,6 +2794,38 @@
           "stringUnit": {
             "state": "translated",
             "value": "リクエスト拒否"
+          }
+        }
+      }
+    },
+    "リクエスト通知を許可": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Allow request notifications"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "リクエスト通知を許可"
+          }
+        }
+      }
+    },
+    "リンクや一部の不適切な内容は送信できません。": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "リンクや一部の不適切な内容は送信できません。"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Links and some inappropriate content cannot be sent."
           }
         }
       }
@@ -1601,6 +2862,72 @@
         }
       }
     },
+    "ローカル検証に入る": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enter local testing"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ローカル検証に入る"
+          }
+        }
+      }
+    },
+    "ローカル開発環境：Apple認証を使用しません。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Local development: Apple authentication is not used."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ローカル開発環境：Apple認証を使用しません。"
+          }
+        }
+      }
+    },
+    "一時識別子を検出": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "一時識別子を検出"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Temporary token detected"
+          }
+        }
+      }
+    },
+    "不適切な内容": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "不適切な内容"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inappropriate content"
+          }
+        }
+      }
+    },
     "不適切な内容や迷惑行為を許容しないポリシーを含みます。": {
       "localizations": {
         "en": {
@@ -1613,6 +2940,74 @@
           "stringUnit": {
             "state": "translated",
             "value": "不適切な内容や迷惑行為を許容しないポリシーを含みます。"
+          }
+        }
+      }
+    },
+    "今回の開始": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今回の開始"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Started this run"
+          }
+        }
+      }
+    },
+    "件数は人物数ではありません。識別子の更新で同じ端末が別件になります。診断カウンターは再起動でリセットされます。": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "件数は人物数ではありません。識別子の更新で同じ端末が別件になります。診断カウンターは再起動でリセットされます。"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Counts are not people. A rotating token can create another record for the same device. Diagnostic counters reset on relaunch."
+          }
+        }
+      }
+    },
+    "会話の本文は、終了時に消去": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "会話の本文は、終了時に消去"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chat content disappears when the conversation ends."
+          }
+        }
+      }
+    },
+    "会話は、承認してから": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "会話は、承認してから"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A conversation starts with consent"
           }
         }
       }
@@ -1633,6 +3028,105 @@
         }
       }
     },
+    "会話は終了しました。メッセージは消去されました。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The conversation ended. Messages have been cleared."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "会話は終了しました。メッセージは消去されました。"
+          }
+        }
+      }
+    },
+    "会話を始める": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "会話を始める"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start chatting"
+          }
+        }
+      }
+    },
+    "会話を終える": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "会話を終える"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "End chat"
+          }
+        }
+      }
+    },
+    "会話を終了": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "End conversation"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "会話を終了"
+          }
+        }
+      }
+    },
+    "会話中に双方が「また話したい」を選ぶと、ここにつながりが残ります。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "When you both choose “Talk again” during a conversation, your connection will appear here."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "会話中に双方が「また話したい」を選ぶと、ここにつながりが残ります。"
+          }
+        }
+      }
+    },
+    "低電力モード": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "低電力モード"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Low Power Mode"
+          }
+        }
+      }
+    },
     "保存": {
       "localizations": {
         "en": {
@@ -1649,6 +3143,56 @@
         }
       }
     },
+    "保存する情報": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Information we keep"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存する情報"
+          }
+        }
+      }
+    },
+    "停止中": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "停止中"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stopped"
+          }
+        }
+      }
+    },
+    "共有するもの（提案）": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "共有するもの（提案）"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What is shared (proposal)"
+          }
+        }
+      }
+    },
     "切り替える": {
       "localizations": {
         "en": {
@@ -1661,6 +3205,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "切り替える"
+          }
+        }
+      }
+    },
+    "利用できる方": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Who can participate"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "利用できる方"
           }
         }
       }
@@ -1729,6 +3289,39 @@
         }
       }
     },
+    "削除・利用停止について問い合わせる": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contact support about deletion or suspension"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "削除・利用停止について問い合わせる"
+          }
+        }
+      }
+    },
+    "動作中": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "動作中"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Running"
+          }
+        }
+      }
+    },
     "半径50mの一期一会チャット": {
       "localizations": {
         "en": {
@@ -1793,6 +3386,23 @@
         }
       }
     },
+    "双方の端末で検出をオンにしてください。ロック中の探索頻度はiOSが調整するため、短いすれ違いは検出できない場合があります。強制終了後はアプリを開き直してください。": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "双方の端末で検出をオンにしてください。ロック中の探索頻度はiOSが調整するため、短いすれ違いは検出できない場合があります。強制終了後はアプリを開き直してください。"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enable detection on both devices. iOS controls scanning while locked, so brief encounters may be missed. Reopen the app after force-quitting."
+          }
+        }
+      }
+    },
     "同じイベントに参加していますか？": {
       "localizations": {
         "en": {
@@ -1805,6 +3415,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "同じイベントに参加していますか？"
+          }
+        }
+      }
+    },
+    "同意して有効にする": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "同意して有効にする"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Agree and enable"
+          }
+        }
+      }
+    },
+    "同意後の画面を試す": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "同意後の画面を試す"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try the preview"
           }
         }
       }
@@ -1857,6 +3501,55 @@
         }
       }
     },
+    "嫌がらせ": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Harassment"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "嫌がらせ"
+          }
+        }
+      }
+    },
+    "安全メニュー": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Safety options"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "安全メニュー"
+          }
+        }
+      }
+    },
+    "実際の通報は送信されていません。": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "実際の通報は送信されていません。"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No real report has been sent."
+          }
+        }
+      }
+    },
     "少しだけ話しませんか？": {
       "localizations": {
         "en": {
@@ -1873,6 +3566,39 @@
         }
       }
     },
+    "年齢に関する懸念": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Age concern"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "年齢に関する懸念"
+          }
+        }
+      }
+    },
+    "広告": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "広告"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Advertising"
+          }
+        }
+      }
+    },
     "復元できるAirTalk Plusの購入が見つかりませんでした。": {
       "localizations": {
         "en": {
@@ -1885,6 +3611,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "復元できるAirTalk Plusの購入が見つかりませんでした。"
+          }
+        }
+      }
+    },
+    "性的な内容": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sexual content"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "性的な内容"
           }
         }
       }
@@ -1921,6 +3663,39 @@
         }
       }
     },
+    "承認する": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "承認する"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Accept"
+          }
+        }
+      }
+    },
+    "承認を待っています": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Waiting for approval"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "承認を待っています"
+          }
+        }
+      }
+    },
     "承認待ち...": {
       "localizations": {
         "en": {
@@ -1933,6 +3708,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "承認待ち..."
+          }
+        }
+      }
+    },
+    "技術試作": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "技術試作"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Technical prototype"
           }
         }
       }
@@ -1953,6 +3745,23 @@
         }
       }
     },
+    "探索": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "探索"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scanning"
+          }
+        }
+      }
+    },
     "新しい出会いを探し中 ✨": {
       "localizations": {
         "en": {
@@ -1965,6 +3774,56 @@
           "stringUnit": {
             "state": "translated",
             "value": "新しい出会いを探し中 ✨"
+          }
+        }
+      }
+    },
+    "更新": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Refresh"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "更新"
+          }
+        }
+      }
+    },
+    "最近よかった映画や曲を教えてください。": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "最近よかった映画や曲を教えてください。"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tell me about a movie or song you enjoyed recently."
+          }
+        }
+      }
+    },
+    "最近見つけた、お気に入りの場所を話したいです。": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "最近見つけた、お気に入りの場所を話したいです。"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I'd love to talk about favorite places I've discovered."
           }
         }
       }
@@ -2017,6 +3876,140 @@
         }
       }
     },
+    "本・ものづくり": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "本・ものづくり"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Books & making things"
+          }
+        }
+      }
+    },
+    "検出がオンの場合、新しい記録は引き続き追加されます。": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "検出がオンの場合、新しい記録は引き続き追加されます。"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "If detection is on, new records will continue to be added."
+          }
+        }
+      }
+    },
+    "検出記録を消去しますか？": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "検出記録を消去しますか？"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erase encounter records?"
+          }
+        }
+      }
+    },
+    "検証時の注意": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "検証時の注意"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Testing notes"
+          }
+        }
+      }
+    },
+    "検証用の名前": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Test name"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "検証用の名前"
+          }
+        }
+      }
+    },
+    "正確な場所・時刻・すれ違い回数は相手に表示しません。": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "正確な場所・時刻・すれ違い回数は相手に表示しません。"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your exact location, encounter time and encounter count are not shown."
+          }
+        }
+      }
+    },
+    "消去": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "消去"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erase"
+          }
+        }
+      }
+    },
+    "現在、新規登録の受付数が上限に達しています。しばらくしてからお試しください。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New sign-ups have reached the current limit. Please try again later."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "現在、新規登録の受付数が上限に達しています。しばらくしてからお試しください。"
+          }
+        }
+      }
+    },
     "現在のチャットは終了し、メッセージは破棄されます。": {
       "localizations": {
         "en": {
@@ -2029,6 +4022,88 @@
           "stringUnit": {
             "state": "translated",
             "value": "現在のチャットは終了し、メッセージは破棄されます。"
+          }
+        }
+      }
+    },
+    "理由を送信してブロックします。会話本文は送信しません。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send the reason and block this person. Conversation messages are not included."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "理由を送信してブロックします。会話本文は送信しません。"
+          }
+        }
+      }
+    },
+    "画面を離れると会話は終了し、メッセージが消えます。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Leaving this screen ends the conversation and clears messages."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "画面を離れると会話は終了し、メッセージが消えます。"
+          }
+        }
+      }
+    },
+    "画面ロック中もBluetoothで一時識別子を交換し、検出時刻とともに端末内へ保存します。いつでも停止・削除できます。サーバーには送信しません。": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "画面ロック中もBluetoothで一時識別子を交換し、検出時刻とともに端末内へ保存します。いつでも停止・削除できます。サーバーには送信しません。"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exchange temporary tokens over Bluetooth, including while locked, and store them locally with detection times. You can stop and erase them anytime. Nothing is sent to a server."
+          }
+        }
+      }
+    },
+    "画面試作・すべて架空のデータです。通信・登録・送信は行いません。": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "画面試作・すべて架空のデータです。通信・登録・送信は行いません。"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Interactive preview. All people are fictional. Nothing is registered or sent."
+          }
+        }
+      }
+    },
+    "相手が会話を開くのを待っています": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "相手が会話を開くのを待っています"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Waiting for the other person to open the conversation"
           }
         }
       }
@@ -2049,6 +4124,172 @@
         }
       }
     },
+    "相手の「また話したい」を再現（デモ）": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "相手の「また話したい」を再現（デモ）"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simulate their wish to reconnect (demo)"
+          }
+        }
+      }
+    },
+    "相手のメニューから理由を選んで通報すると、その相手をブロックします。通報理由と当事者の識別子は90日、利用停止後の再登録を防ぐ照合情報は最大180日保持します。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reporting a person from their menu also blocks them. We keep the report reason and participant IDs for 90 days, and a matching value used to prevent re-registration after suspension for up to 180 days."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "相手のメニューから理由を選んで通報すると、その相手をブロックします。通報理由と当事者の識別子は90日、利用停止後の再登録を防ぐ照合情報は最大180日保持します。"
+          }
+        }
+      }
+    },
+    "相手の希望も一致するとつながります": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You will connect if they also want to talk again"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "相手の希望も一致するとつながります"
+          }
+        }
+      }
+    },
+    "相手の承認または新しいすれ違いが必要です。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You need their approval or a new encounter."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "相手の承認または新しいすれ違いが必要です。"
+          }
+        }
+      }
+    },
+    "相手の承認を待っています": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "相手の承認を待っています"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Waiting for their approval"
+          }
+        }
+      }
+    },
+    "相手の承諾を再現（デモ）": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "相手の承諾を再現（デモ）"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simulate their approval (demo)"
+          }
+        }
+      }
+    },
+    "相手の返信を再現（デモ）": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "相手の返信を再現（デモ）"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simulate a reply (demo)"
+          }
+        }
+      }
+    },
+    "相手への操作": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "相手への操作"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Actions for this person"
+          }
+        }
+      }
+    },
+    "相手を選んで、双方が承認": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "相手を選んで、双方が承認"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose someone. Both agree."
+          }
+        }
+      }
+    },
+    "端末の安全な保存領域を利用できません。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Secure storage is unavailable on this device."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "端末の安全な保存領域を利用できません。"
+          }
+        }
+      }
+    },
     "端末内のプロフィールとAirTalkデータを削除しました。": {
       "localizations": {
         "en": {
@@ -2061,6 +4302,140 @@
           "stringUnit": {
             "state": "translated",
             "value": "端末内のプロフィールとAirTalkデータを削除しました。"
+          }
+        }
+      }
+    },
+    "終了・バックグラウンド移行で本文が消えます": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "終了・バックグラウンド移行で本文が消えます"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chat clears when ended or backgrounded"
+          }
+        }
+      }
+    },
+    "表示": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "表示"
+          }
+        }
+      }
+    },
+    "表示する一覧": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "表示する一覧"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show"
+          }
+        }
+      }
+    },
+    "表示を更新": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "表示を更新"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Refresh"
+          }
+        }
+      }
+    },
+    "見送る": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "見送る"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Decline"
+          }
+        }
+      }
+    },
+    "記録とカウンターを消去": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "記録とカウンターを消去"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erase records and counters"
+          }
+        }
+      }
+    },
+    "記録はこの端末内だけに保持し、24時間後の次回動作時に削除します。検出をオフにしても既存の記録は残ります。位置情報・名前・会話本文は記録しません。": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "記録はこの端末内だけに保持し、24時間後の次回動作時に削除します。検出をオフにしても既存の記録は残ります。位置情報・名前・会話本文は記録しません。"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Records stay on this device and expire on the next processing event after 24 hours. Turning detection off keeps existing records. Location, names and chat content are not recorded."
+          }
+        }
+      }
+    },
+    "設定の「アカウントを削除」でプロフィールとつながりを削除できます。バックアップは最大30日、Appleの認証を取り消すための暗号化された資格情報は処理完了まで最大35日残る場合があります。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose Delete account in settings to remove your profile and connections. Backups can remain for up to 30 days. An encrypted Apple credential can remain for up to 35 days while revocation is processed."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "設定の「アカウントを削除」でプロフィールとつながりを削除できます。バックアップは最大30日、Appleの認証を取り消すための暗号化された資格情報は処理完了まで最大35日残る場合があります。"
           }
         }
       }
@@ -2081,6 +4456,57 @@
         }
       }
     },
+    "診断": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "診断"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diagnostics"
+          }
+        }
+      }
+    },
+    "試作の識別子交換は本人確認や暗号化を実装していません。検証協力者の端末だけで利用してください。": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "試作の識別子交換は本人確認や暗号化を実装していません。検証協力者の端末だけで利用してください。"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This prototype does not authenticate or encrypt token exchanges. Use only with participating test devices."
+          }
+        }
+      }
+    },
+    "話してみたい": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "話してみたい"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I'd like to talk"
+          }
+        }
+      }
+    },
     "詳細": {
       "localizations": {
         "en": {
@@ -2093,6 +4519,57 @@
           "stringUnit": {
             "state": "translated",
             "value": "詳細"
+          }
+        }
+      }
+    },
+    "読み取り失敗": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "読み取り失敗"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Failed reads"
+          }
+        }
+      }
+    },
+    "読み取り成功": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "読み取り成功"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Successful reads"
+          }
+        }
+      }
+    },
+    "読んでいる本や、作っているものの話をしましょう。": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "読んでいる本や、作っているものの話をしましょう。"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Let's talk about what we're reading or making."
           }
         }
       }
@@ -2177,6 +4654,56 @@
         }
       }
     },
+    "近くですれ違った参加者を記録し、会話のリクエストが届いたときにお知らせします。右上の歯車ボタンからいつでも変更できます。通知はiPhoneの設定アプリでもオフにできます。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AirTalk records participants you pass nearby and lets you know when a chat request arrives. You can change this anytime with the gear button at the top right. You can also turn off notifications in the iPhone Settings app."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "近くですれ違った参加者を記録し、会話のリクエストが届いたときにお知らせします。右上の歯車ボタンからいつでも変更できます。通知はiPhoneの設定アプリでもオフにできます。"
+          }
+        }
+      }
+    },
+    "近くで出会った人と、お互いが望んだときだけオンラインで話せます。今までのオフラインチャットは、そのまま無料です。": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "近くで出会った人と、お互いが望んだときだけオンラインで話せます。今までのオフラインチャットは、そのまま無料です。"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Talk online with someone you crossed paths with, only when you both agree. Your existing offline chat stays free."
+          }
+        }
+      }
+    },
+    "近くで話す": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "近くで話す"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nearby chat"
+          }
+        }
+      }
+    },
     "近くにAirTalkユーザーがいません": {
       "localizations": {
         "en": {
@@ -2225,6 +4752,22 @@
         }
       }
     },
+    "近くのチャットは、これまでどおり登録不要です。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nearby chat still works without registration."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "近くのチャットは、これまでどおり登録不要です。"
+          }
+        }
+      }
+    },
     "近くのデバイスに接続できません": {
       "localizations": {
         "en": {
@@ -2257,6 +4800,22 @@
         }
       }
     },
+    "近くの友だちと試したり、あとで更新してみましょう。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try it with a nearby friend, or refresh later."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "近くの友だちと試したり、あとで更新してみましょう。"
+          }
+        }
+      }
+    },
     "近くの友だちを誘う": {
       "localizations": {
         "en": {
@@ -2269,6 +4828,39 @@
           "stringUnit": {
             "state": "translated",
             "value": "近くの友だちを誘う"
+          }
+        }
+      }
+    },
+    "迷惑行為": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "迷惑行為"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Harassment"
+          }
+        }
+      }
+    },
+    "迷惑行為・宣伝": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spam or advertising"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "迷惑行為・宣伝"
           }
         }
       }
@@ -2305,6 +4897,38 @@
         }
       }
     },
+    "通信を確認して、もう一度お試しください。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Check your connection and try again."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "通信を確認して、もう一度お試しください。"
+          }
+        }
+      }
+    },
+    "通報してブロック": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Report and block"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "通報してブロック"
+          }
+        }
+      }
+    },
     "通報する": {
       "localizations": {
         "en": {
@@ -2317,6 +4941,138 @@
           "stringUnit": {
             "state": "translated",
             "value": "通報する"
+          }
+        }
+      }
+    },
+    "通報する理由": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reason for reporting"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "通報する理由"
+          }
+        }
+      }
+    },
+    "通報・ブロック": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "通報・ブロック"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Report & block"
+          }
+        }
+      }
+    },
+    "通報・停止・削除": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reports, suspension and deletion"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "通報・停止・削除"
+          }
+        }
+      }
+    },
+    "通報理由は90日保持します。アカウント削除後もバックアップには一定期間残る場合があります。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Report reasons are retained for 90 days. Backups may retain data for a period after account deletion."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "通報理由は90日保持します。アカウント削除後もバックアップには一定期間残る場合があります。"
+          }
+        }
+      }
+    },
+    "通常の会話本文はサーバーに保存しません。通報で送る情報は別途確認します。": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "通常の会話本文はサーバーに保存しません。通報で送る情報は別途確認します。"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Normal chat content is not stored on the server. Any information submitted with a report is confirmed separately."
+          }
+        }
+      }
+    },
+    "進行中の会話": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Active conversation"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "進行中の会話"
+          }
+        }
+      }
+    },
+    "過去24時間のすれ違い（デモ）": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "過去24時間のすれ違い（デモ）"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Encounters in the last 24 hours (demo)"
+          }
+        }
+      }
+    },
+    "過去24時間の検出": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "過去24時間の検出"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Detections in the last 24 hours"
           }
         }
       }
@@ -2381,6 +5137,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "音楽の話しよう 🎧"
+          }
+        }
+      }
+    },
+    "音楽・映画": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "音楽・映画"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Music & movies"
           }
         }
       }

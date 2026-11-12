@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AirTalkOnlineBaseURL</key>
+	<string>$(AIRTALK_ONLINE_BASE_URL)</string>
+	<key>AirTalkOnlinePilotEnabled</key>
+	<true/>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>近くのデバイスを発見するためにBluetoothを使用します。</string>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_airtalk._tcp</string>
+		<string>_airtalk._udp</string>
+	</array>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>周囲のユーザーと通信するためにローカルネットワークを使用します。</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>bluetooth-central</string>
+		<string>bluetooth-peripheral</string>
+	</array>
+</dict>
+</plist>

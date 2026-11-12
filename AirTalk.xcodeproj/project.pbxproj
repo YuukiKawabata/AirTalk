@@ -14,6 +14,7 @@
 		A1B2C3D4E5F60010AIRTALK /* Exceptions for "AirTalk" folder in "AirTalk" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				PrivacyInfo.xcprivacy,
 				Info.plist,
 			);
 			target = A1B2C3D4E5F60006AIRTALK /* AirTalk */;
@@ -60,6 +61,20 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXShellScriptBuildPhase section */
+        E409BB1E46144EB883873D20 /* Bundle privacy manifest */ = {
+            isa = PBXShellScriptBuildPhase;
+            buildActionMask = 2147483647;
+            files = ();
+            inputPaths = ("$(SRCROOT)/$(AIRTALK_PRIVACY_MANIFEST)");
+            outputPaths = ("$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/PrivacyInfo.xcprivacy");
+            name = "Bundle privacy manifest";
+            runOnlyForDeploymentPostprocessing = 0;
+            shellPath = /bin/sh;
+            shellScript = "set -eu\n/bin/cp \"$SCRIPT_INPUT_FILE_0\" \"$SCRIPT_OUTPUT_FILE_0\"\n";
+        };
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXNativeTarget section */
 		A1B2C3D4E5F60006AIRTALK /* AirTalk */ = {
 			isa = PBXNativeTarget;
@@ -68,6 +83,7 @@
 				A1B2C3D4E5F60007AIRTALK /* Sources */,
 				A1B2C3D4E5F60003AIRTALK /* Frameworks */,
 				A1B2C3D4E5F60008AIRTALK /* Resources */,
+				E409BB1E46144EB883873D20 /* Bundle privacy manifest */,
 			);
 			buildRules = (
 			);
@@ -261,6 +277,7 @@
 		A1B2C3D4E5F6000EAIRTALK /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				AIRTALK_PRIVACY_MANIFEST = AirTalk/PrivacyInfo.xcprivacy;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -268,7 +285,7 @@
 				DEVELOPMENT_TEAM = 976WT2WW6X;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = AirTalk/Info.plist;
+				INFOPLIST_FILE = Config/EncounterDebug-Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = AirTalk;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -291,6 +308,7 @@
 		A1B2C3D4E5F6000FAIRTALK /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				AIRTALK_PRIVACY_MANIFEST = AirTalk/PrivacyInfo.xcprivacy;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;

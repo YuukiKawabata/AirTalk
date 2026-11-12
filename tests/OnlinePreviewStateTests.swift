@@ -1,0 +1,51 @@
+import Foundation
+
+@main
+struct OnlinePreviewStateTests {
+    static func main() {
+        let now = Date()
+        var state = OnlinePreviewState(now: now)
+        precondition(!state.request("demo-aoi", now: now))
+        precondition(!state.startChat("demo-sora", now: now))
+        state.optedIn = true
+        precondition(!state.startChat("demo-aoi", now: now))
+        precondition(!state.accept("demo-aoi", now: now))
+        precondition(state.request("demo-aoi", now: now))
+        precondition(!state.request("demo-aoi", now: now))
+        precondition(state.simulatePeerAcceptance("demo-aoi", now: now))
+        precondition(state.startChat("demo-aoi", now: now))
+        precondition(!state.startChat("demo-sora", now: now))
+        precondition(state.send("hello"))
+        precondition(!state.send("  \n"))
+        precondition(!state.send(String(repeating: "x", count: 1001)))
+        for _ in 0..<205 { state.send("test") }
+        precondition(state.messages.count == 200)
+        state.wantReconnect("demo-aoi")
+        precondition(state.relationship("demo-aoi") == .accepted)
+        state.wantReconnect("demo-aoi", fromPeer: true)
+        precondition(state.connections.contains("demo-aoi"))
+        state.endChat()
+        precondition(state.messages.isEmpty && state.activePeer == nil)
+        precondition(!state.startChat("demo-aoi", now: now.addingTimeInterval(90000)))
+        precondition(state.request("demo-aoi", now: now.addingTimeInterval(90000)))
+        precondition(state.simulatePeerAcceptance("demo-aoi", now: now.addingTimeInterval(90000)))
+        precondition(state.startChat("demo-aoi", now: now.addingTimeInterval(90000)))
+        state.send("not persisted")
+        state.reportAndBlock("demo-aoi")
+        precondition(state.messages.isEmpty && state.activePeer == nil)
+        precondition(!state.myReconnect.contains("demo-aoi") && !state.peerReconnect.contains("demo-aoi"))
+        precondition(!state.startChat("demo-aoi", now: now) && !state.request("demo-aoi", now: now))
+        precondition(state.reported.contains("demo-aoi"))
+        precondition(!state.request("demo-ren", now: now.addingTimeInterval(86400)))
+        precondition(state.accept("demo-sora", now: now))
+        precondition(state.startChat("demo-sora", now: now))
+        state.wantReconnect("demo-sora")
+        state.endChat()
+        precondition(state.relationship("demo-sora") == .declined)
+        precondition(!state.myReconnect.contains("demo-sora"))
+        state.deleteAccount()
+        precondition(!state.optedIn && state.relationships.isEmpty && state.reported.isEmpty)
+        precondition(!state.send("after deletion"))
+        print("Online preview: consent, approval, expiry, mutual intent, erase, block and account deletion passed")
+    }
+}

@@ -3,3 +3,11 @@
 xcuserdata/
 DerivedData/
 build/
+
+# Online pilot: local tools, credentials and database state
+server/node_modules/
+server/.wrangler/
+server/dist/
+server/.dev.vars*
+server/.env*
+Config/Online.local.xcconfig

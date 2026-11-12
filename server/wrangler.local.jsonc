@@ -1,0 +1,16 @@
+{
+  "name": "airtalk-online-local",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-01-01",
+  "workers_dev": false,
+  "observability": { "enabled": false },
+  "vars": {
+    "MODE": "local",
+    "ONLINE_ENABLED": "true",
+    "APPLE_CLIENT_ID": "com.yuuki.AirTalk",
+  },
+  "durable_objects": {
+    "bindings": [{ "name": "PILOT", "class_name": "PilotHub" }],
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["PilotHub"] }],
+}

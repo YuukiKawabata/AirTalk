@@ -81,7 +81,7 @@ capture_device() {  # $1=クラス名(iphone/ipad)  $2=デバイス表示名  $3
     for i in $(seq "$TRIES"); do
       sleep "$WAIT"
       xcrun simctl io "$udid" screenshot "$out/$2" >/dev/null 2>&1 || continue
-      if "$CHECKER" "$out/$2"; then
+      if "$CHECKER" "$out/$2" "$1"; then
         sleep 1   # アニメーションが落ち着くのを待って撮り直す
         xcrun simctl io "$udid" screenshot "$out/$2" >/dev/null
         echo "  ✓ $lang/$class/$2"
@@ -90,6 +90,17 @@ capture_device() {  # $1=クラス名(iphone/ipad)  $2=デバイス表示名  $3
     done
     echo "  ✗ $lang/$class/$2（描画を確認できませんでした）"
   }
+  # Optional internal BLE screen; never used as a public Store panel.
+  if [ "${ENCOUNTER_PROTOTYPE:-0}" = "1" ]; then
+    shot encounters  05-encounters-prototype.png
+  fi
+  if [ "${ONLINE_PREVIEW:-0}" = "1" ]; then
+    shot online             06-online-intro.png
+    shot onlinePeople       07-online-encounters.png
+    shot onlineInbox        08-online-inbox.png
+    shot onlineChat         09-online-chat.png
+    shot onlineConnections  10-online-connections.png
+  fi
   shot discovery  01-discovery.png
   shot invite     02-invite.png
   shot chat       03-chat.png
